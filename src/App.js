@@ -1,22 +1,31 @@
-import './App.css';
+import { BrowserRouter, Redirect, Route, Switch } from "react-router-dom";
+import "./App.css";
+import Home from "./HomePage/Home";
+import Login from "./LoginPage/Login";
+import Profile from "./Profile/Profile";
 
 function App() {
+  let user = "test";
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <BrowserRouter>
+      <div className="App">
+        <Switch>
+          <Route path="/login">
+            <Login />
+          </Route>
+
+          <Route path="/profile/:id">
+            <Profile />
+          </Route>
+
+          <Route exact path="/">
+            {user ? <Home /> : <Redirect to="/login" />}
+          </Route>
+
+        </Switch>
+      </div>
+    </BrowserRouter>
   );
 }
 
