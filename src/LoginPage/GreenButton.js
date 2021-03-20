@@ -14,6 +14,7 @@ const styles = {
       padding: '0 16px',
       width: '302px',
       size: '20px',
+      fontWeight:'bold',
       '&:hover': {
        background: '#3f932e',
       },
