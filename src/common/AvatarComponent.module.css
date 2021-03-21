@@ -1,0 +1,13 @@
+.link {
+  text-decoration: none;
+}
+
+.avatar_wrapper > div {
+  height: 28px;
+  width: 28px;
+  margin-right: 6px;
+}
+
+.avatar_text {
+  font-weight: 700;
+}

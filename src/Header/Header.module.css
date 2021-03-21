@@ -94,14 +94,6 @@ li.selected {
   padding: 3px;
   padding-right: 10px;
   margin-right: 10px;
-  font-weight: 700;
-  cursor: pointer;
-}
-
-.header__info > div {
-  height: 28px;
-  width: 28px;
-  margin-right: 6px;
 }
 
 button.icon_btn {
@@ -113,7 +105,7 @@ button.arrow_btn {
   padding: 2.5px;
 }
 
-@media (max-width: 1260px) {
+@media (max-width: 1200px) {
   .header__left {
     width: auto;
   }
@@ -130,10 +122,6 @@ button.arrow_btn {
     width: 40px;
     padding-left: 24px;
   }
-
-  .header__info {
-    display: none;
-  }
 }
 
 @media (max-width: 700px) {
@@ -144,6 +132,10 @@ button.arrow_btn {
   .header__left > button {
     display: inline-flex;
     margin-left: 8px;
+  }
+
+  .header__info {
+    display: none;
   }
 }
 
