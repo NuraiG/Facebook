@@ -4,20 +4,22 @@ import {Link} from 'react-router-dom';
 import styles from './Login.module.css';
 import BlueButton from './BlueButton';
 import GreenButton from './GreenButton';
-import Modal from '@material-ui/core/Modal';
 import Registration from './Registration';
+import Dialog from '@material-ui/core/Dialog';
 
 
 export default function Login() {
 
     const [open, setOpen] = React.useState(false);
-  
+    const [email, setEmail] = React.useState('');
+    const [password, setPassword] = React.useState('');
+
     const handleOpen = () => {
-      setOpen(true);
+        setOpen(true);
     };
-  
-    const handleClose = () => {
-      setOpen(false);
+
+    function handleClose() {
+        setOpen(false);
     }
     return (
         <>
@@ -28,21 +30,27 @@ export default function Login() {
                 <div className={
                     styles.input
                 }>
-                    <TextField id="outlined-basic" placeholder="Имейл" variant="outlined" required/>
-                    <TextField id="outlined-basic" placeholder="Парола" variant="outlined" required type="password"/>
+                    <TextField id="email"
+                        value={email}
+                        placeholder="Имейл"
+                        variant="outlined"
+                        required/>
+                    <TextField id="password"
+                        value={password}
+                        placeholder="Парола"
+                        variant="outlined"
+                        required
+                        type="password"/>
                 </div>
+                {/* todo: create 1 custom button */}
                 <BlueButton>ВХОД</BlueButton>
                 <Link to='/forgottenPassword'>Забравена парола ?</Link>
-                <Divider flexItem/> {/* import modal for register */}
-                <GreenButton onClick={
-                        handleOpen
-                }>Създаване на нов профил</GreenButton>
-
-                <Modal open={open}
+                <Divider flexItem/> {/* todo: fix the bug && create 1 custom button */}
+                <GreenButton onClick={handleOpen}>Създаване на нов профил</GreenButton>
+                <Dialog open={open}
                     onClose={handleClose}>
                     <Registration></Registration>
-                </Modal>
-
+                </Dialog>
             </form>
         </>
     )
