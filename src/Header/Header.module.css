@@ -64,6 +64,10 @@
   opacity: 0;
 }
 
+.header__left > button {
+  display: none;
+}
+
 .header__middle li {
   line-height: 1;
   height: 52px;
@@ -107,4 +111,54 @@ button.icon_btn {
 
 button.arrow_btn {
   padding: 2.5px;
+}
+
+@media (max-width: 1260px) {
+  .header__left {
+    width: auto;
+  }
+
+  .header__input {
+    margin-left: 10px;
+  }
+
+  .header__input > svg {
+    left: 8px;
+  }
+
+  .header__input input {
+    width: 40px;
+    padding-left: 24px;
+  }
+
+  .header__info {
+    display: none;
+  }
+}
+
+@media (max-width: 700px) {
+  .header__middle {
+    display: none;
+  }
+
+  .header__left > button {
+    display: inline-flex;
+    margin-left: 8px;
+  }
+}
+
+@media (max-width: 370px) {
+  .header__right > button:first-of-type {
+    display: none;
+  }
+
+  .header {
+    padding: 0px 5px;
+  }
+}
+
+@media (max-width: 300px) {
+  .header {
+    padding: 0px;
+  }
 }
