@@ -3,6 +3,7 @@ import "./App.css";
 import Home from "./HomePage/Home";
 import Login from "./LoginPage/Login";
 import Profile from "./Profile/Profile";
+import SignUp from "./LoginPage/SignUp";
 
 function App() {
   let user = "test";
@@ -14,7 +15,9 @@ function App() {
           <Route path="/login">
             <Login />
           </Route>
-
+          <Route path="/signUp">
+            <SignUp />
+          </Route>
           <Route path="/profile/:id">
             <Profile />
           </Route>

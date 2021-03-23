@@ -72,6 +72,7 @@ export default function Registration() {
     }
     return (
         <>
+        <div className={styles.signUp}>
             <div className={
                 styles.container1
             }>
@@ -172,6 +173,7 @@ export default function Registration() {
                 <ThemeProvider theme={customButton}>
                     <Button color="secondary" variant="contained" size="large">Sign Up</Button>
                 </ThemeProvider>
+            </div>
             </div>
         </>
     )
