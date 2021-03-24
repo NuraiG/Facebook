@@ -2,7 +2,6 @@
   color: rgb(129, 123, 123);
 }
 .container1 {
-  text-align: center;
   padding: 16px;
   background: #fff;
   border-radius: 8px;
@@ -30,4 +29,12 @@
   align-content: center;
   background: #f0f2f5;
   height: 100vh;
+}
+@media only screen and (max-width: 1075px) {
+  .signUp {
+    padding: 0;
+    width: auto;
+  }
+}
+@media only screen and (max-width: 900px) {
 }

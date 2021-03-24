@@ -15,16 +15,7 @@ const customButton = createMuiTheme({
         secondary: {
             main: '#42b72a',
             dark: '#3f932e',
-            contrastText: '#fff',
-            background: '#42b72a',
-            borderRadius: '6px',
-            border: 0,
-            color: 'white',
-            height: 48,
-            padding: '0 16px',
-            width: '302px',
-            size: '20px',
-            fontWeight: 'bold'
+            contrastText: '#fff'
         }
     }
 });
@@ -34,21 +25,25 @@ export default function Login() {
     const [email, setEmail] = React.useState('');
     const [password, setPassword] = React.useState('');
 
-    const setHandlerInputEmail=(e)=>{
+    const setHandlerInputEmail = (e) => {
         e.preventDefault();
         console.log(e.target.value);
         setEmail(e.target.value);
     }
-    const setHandlerInputPassword=(e)=>{
+    const setHandlerInputPassword = (e) => {
         e.preventDefault();
         console.log(e.target.value);
         setPassword(e.target.value);
     }
     return (
-        <>
-            <div className={styles.loginPage}>
-            <div className={styles.leftSide}>
-                <img src={facebook} alt="Facebook"></img>
+        <div className={
+            styles.loginPage
+        }>
+            <div className={
+                styles.leftSide
+            }>
+                <img src={facebook}
+                    alt="Facebook"></img>
                 <h2>Connect with friends and the world around you on Facebook.</h2>
             </div>
             <form className={
@@ -63,26 +58,33 @@ export default function Login() {
                         placeholder="Email"
                         variant="outlined"
                         required
-                        onChange={(e) => setHandlerInputEmail(e)}/>
+                        onChange={
+                            (e) => setHandlerInputEmail(e)
+                        }/>
                     <TextField id="password"
                         value={password}
                         placeholder="Password"
                         variant="outlined"
                         required
                         type="password"
-                        onChange={(e) => setHandlerInputPassword(e)}/>
+                        onChange={
+                            (e) => setHandlerInputPassword(e)
+                        }/>
                 </div>
                 <ThemeProvider theme={customButton}>
                     <Button color="primary" variant="contained" size="large">Log In</Button>
                 </ThemeProvider>
                 <Link to='/forgottenPassword'>Forgot Password?</Link>
-                <Divider flexItem/>
-                {/* todo: onClick=> login with email and password */}
-                <ThemeProvider theme={customButton}> 
-                   <Link to='/signUp'style={{ textDecoration: 'none' }}><Button color="secondary" variant="contained" size="large">Create New Account</Button></Link> 
+                <Divider flexItem/> {/* todo: onClick=> login with email and password */}
+                <ThemeProvider theme={customButton}>
+                    <Link to='/signUp'
+                        style={
+                            {textDecoration: 'none'}
+                    }>
+                        <Button color="secondary" variant="contained" size="large">Create New Account</Button>
+                    </Link>
                 </ThemeProvider>
             </form>
-            </div>
-        </>
+        </div>
     )
 }
