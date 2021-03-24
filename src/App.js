@@ -2,6 +2,7 @@ import { BrowserRouter, Redirect, Route, Switch } from "react-router-dom";
 import Home from "./HomePage/Home";
 import Login from "./LoginPage/Login";
 import Profile from "./Profile/Profile";
+import SignUp from "./LoginPage/SignUp";
 
 // styles
 import "./App.css";
@@ -22,6 +23,10 @@ function App() {
             <Switch>
               <Route path="/login">
                 <Login />
+              </Route>
+
+              <Route path="/signUp">
+                <SignUp />
               </Route>
 
               <Route path="/profile/:id">

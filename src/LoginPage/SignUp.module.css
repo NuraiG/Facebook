@@ -1,0 +1,54 @@
+.container1 > p {
+  color: rgb(129, 123, 123);
+}
+.container1 {
+  padding: 16px;
+  background: #fff;
+  border-radius: 8px;
+  border-top: 1px solid #dadde1;
+  margin: auto;
+  width: 432px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgb(0 0 0 / 10%), 0 8px 16px rgb(0 0 0 / 10%);
+}
+.names {
+  display: flex;
+  align-items: center;
+}
+.names > div {
+  padding: 5px;
+}
+.additional {
+  display: flex;
+  flex-direction: column;
+}
+.additional > div {
+  padding: 5px;
+}
+.signUp {
+  align-content: center;
+  background: #f0f2f5;
+  height: 100vh;
+  padding: 30px;
+}
+@media only screen and (max-width: 1075px) {
+  .signUp {
+    padding: 5px;
+    width: auto;
+  }
+  .container1 {
+    padding-top: 10px;
+    width: 340px;
+  }
+
+}
+@media only screen and (max-width: 900px) {
+  .signUp {
+    padding: 0;
+    width: auto;
+  }
+  .container1 {
+    padding-top: 5px;
+    
+  }
+}
