@@ -1,12 +1,14 @@
-import React, { useState } from "react";
-import styles from "./Header.module.css";
+import React from "react";
+import Tooltip from "@material-ui/core/Tooltip";
 
-export default function HeaderNavOption({ startingState, outline, filled }) {
-  let [selected, setSelected] = useState(startingState);
+import styles from "./Header.module.scss";
 
+export default function HeaderNavOption({ selected, outline, filled, tooltip, onClick, className }) {
   return (
-    <li onClick={() => setSelected(true)} className={selected ? (styles.selected) : ""}>
-      {selected ? filled : outline}
-    </li>
+    <Tooltip title={tooltip} placement="bottom">
+      <div onClick={onClick} className={`${className} ${selected ? (styles.selected) : ""}`}>
+        {selected ? filled : outline}
+      </div>
+    </Tooltip>
   );
 }

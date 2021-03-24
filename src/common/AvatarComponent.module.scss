@@ -1,0 +1,21 @@
+.link {
+  text-decoration: none;
+  color: inherit;
+  font-family: Segoe UI Historic, Segoe UI, Helvetica, Arial, sans-serif;
+
+  :active {
+    color: inherit;
+  }
+
+  .avatar_wrapper > span > div {
+    height: 28px;
+    width: 28px;
+    margin-right: 6px;
+  }
+
+  .avatar_text {
+    text-transform: none;
+    font-weight: 700;
+    font-family: inherit;
+  }
+}

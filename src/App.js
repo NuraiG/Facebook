@@ -1,30 +1,40 @@
 import { BrowserRouter, Redirect, Route, Switch } from "react-router-dom";
-import "./App.css";
 import Home from "./HomePage/Home";
 import Login from "./LoginPage/Login";
 import Profile from "./Profile/Profile";
+
+// styles
+import "./App.css";
+import { globalTheme } from "./customThemes";
+
+// Material-UI
+import { Paper } from "@material-ui/core";
+import { ThemeProvider } from "@material-ui/core/styles";
 
 function App() {
   let user = "test";
 
   return (
     <BrowserRouter>
-      <div className="App primary_bg">
-        <Switch>
-          <Route path="/login">
-            <Login />
-          </Route>
+      <ThemeProvider theme={globalTheme}>
+        <Paper>
+          <div className="App light">
+            <Switch>
+              <Route path="/login">
+                <Login />
+              </Route>
 
-          <Route path="/profile/:id">
-            <Profile />
-          </Route>
+              <Route path="/profile/:id">
+                <Profile />
+              </Route>
 
-          <Route exact path="/">
-            {user ? <Home /> : <Redirect to="/login" />}
-          </Route>
-
-        </Switch>
-      </div>
+              <Route exact path="/">
+                {user ? <Home /> : <Redirect to="/login" />}
+              </Route>
+            </Switch>
+          </div>
+        </Paper>
+      </ThemeProvider>
     </BrowserRouter>
   );
 }

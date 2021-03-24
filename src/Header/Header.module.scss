@@ -1,0 +1,198 @@
+// light theme
+$primary-txt: rgb(5, 5, 5);
+$primary-bg: rgb(240, 242, 245);
+
+.header {
+  height: 56px;
+
+  .header__wrapper {
+    align-items: flex-start;
+    height: 56px;
+
+    .header__container {
+      width: 100%;
+      height: 56px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      .header__left {
+        display: flex;
+        align-items: center;
+        width: 290px;
+        justify-content: space-between;
+
+        img {
+          height: 40px;
+        }
+        > div {
+          display: none;
+        }
+        .header__input {
+          display: flex;
+          align-items: center;
+          position: relative;
+
+          > svg {
+            position: absolute;
+            left: 12px;
+            transition-timing-function: linear;
+            transition-property: opacity, transform;
+            transition-duration: 0.1s;
+          }
+          > input {
+            width: 240px;
+            height: 40px;
+            border-radius: 999px;
+            border: none;
+            outline-width: 0px;
+            padding: 9px 16px 7px 36px;
+            font-size: 15px;
+            box-sizing: border-box;
+            transition-timing-function: linear;
+            transition-property: padding;
+            transition-duration: 0.1s;
+          }
+          > input:focus {
+            padding-left: 16px;
+
+            + svg {
+              transform: translateX(-11px);
+              opacity: 0;
+            }
+          }
+        }
+
+        @media (max-width: 700px) {
+          > div {
+            display: inline-flex;
+            margin-left: 8px;
+          }
+        }
+      }
+
+      @media (max-width: 1200px) {
+        .header__left {
+          width: auto;
+          .header__input {
+            margin-left: 10px;
+
+            > svg {
+              left: 8px;
+            }
+            input {
+              width: 40px;
+              padding-left: 24px;
+            }
+          }
+        }
+      }
+
+      .header__middle {
+        display: flex;
+        align-items: center;
+
+        div {
+          line-height: 1;
+          height: 52px;
+          display: flex;
+          align-items: center;
+          cursor: pointer;
+          border-bottom: 4px solid transparent;
+
+          > svg {
+            width: 110px;
+            height: 48px;
+            padding: 6px;
+            box-sizing: border-box;
+            border-radius: 8px;
+          }
+        }
+      }
+
+      @media (max-width: 700px) {
+        .header__middle {
+          display: none;
+        }
+      }
+
+      .header__right {
+        display: flex;
+        align-items: center;
+
+        .header__info {
+          display: flex;
+          align-items: center;
+          border-radius: 18px;
+          padding: 3px;
+          padding-right: 10px;
+          margin-right: 10px;
+        }
+
+        @media (max-width: 700px) {
+          .header__info {
+            display: none;
+          }
+        }
+
+        @media (max-width: 370px) {
+          > button:first-of-type {
+            display: none;
+          }
+        }
+      }
+    }
+
+    div.header_btn {
+      line-height: 1;
+      height: 52px;
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+      border-bottom: 4px solid transparent;
+
+      > svg {
+        width: 60px;
+        height: 48px;
+        padding: 6px;
+        box-sizing: border-box;
+        border-radius: 8px;
+      }
+    }
+
+    div.header_btn.selected {
+      color: rgb(24, 119, 242);
+      border-bottom: 4px solid rgb(24, 119, 242);
+    }
+
+    button.icon_btn {
+      padding: 8px;
+      margin-right: 8px;
+    }
+    
+    button.arrow_btn {
+      padding: 2.5px;
+    }
+  }
+
+  @media (max-width: 370px) {
+    .header__wrapper {
+      padding: 0px 5px;
+    }
+  }
+
+  @media (max-width: 300px) {
+    .header__wrapper {
+      padding: 0px;
+    }
+  }
+}
+
+:global(.light) {
+  .header__input {
+    > input {
+      color: $primary-txt;
+      background-color: $primary-bg;
+    }
+  }
+}
