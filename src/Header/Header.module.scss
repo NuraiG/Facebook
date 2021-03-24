@@ -1,6 +1,7 @@
 // light theme
 $primary-txt: rgb(5, 5, 5);
 $primary-bg: rgb(240, 242, 245);
+$accent: rgb(24, 119, 242);
 
 .header {
   height: 56px;
@@ -161,8 +162,8 @@ $primary-bg: rgb(240, 242, 245);
     }
 
     div.header_btn.selected {
-      color: rgb(24, 119, 242);
-      border-bottom: 4px solid rgb(24, 119, 242);
+      color: $accent;
+      border-bottom: 4px solid $accent;
     }
 
     button.icon_btn {

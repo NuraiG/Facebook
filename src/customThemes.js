@@ -10,6 +10,16 @@ const globalTheme = createMuiTheme({
       "sans-serif",
     ].join(","),
   },
+  overrides: {
+    MuiPaper: {
+      root: {
+        backgroundColor: "#f0f2f5",
+      },
+      rounded: {
+        borderRadius: "0",
+      },
+    },
+  },
 });
 
 // light gray - white
@@ -22,16 +32,6 @@ const grayTheme = createMuiTheme({
     secondary: {
       main: "#fff",
       dark: "#fff",
-    },
-  },
-  overrides: {
-    MuiPaper: {
-      root: {
-        backgroundColor: "#f0f2f5",
-      },
-      rounded: {
-        borderRadius: "0",
-      },
     },
   },
 });
