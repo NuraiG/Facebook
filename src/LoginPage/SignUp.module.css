@@ -29,12 +29,26 @@
   align-content: center;
   background: #f0f2f5;
   height: 100vh;
+  padding: 30px;
 }
 @media only screen and (max-width: 1075px) {
+  .signUp {
+    padding: 5px;
+    width: auto;
+  }
+  .container1 {
+    padding-top: 10px;
+    width: 340px;
+  }
+
+}
+@media only screen and (max-width: 900px) {
   .signUp {
     padding: 0;
     width: auto;
   }
-}
-@media only screen and (max-width: 900px) {
+  .container1 {
+    padding-top: 5px;
+    
+  }
 }
