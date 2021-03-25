@@ -2,8 +2,20 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import styles from "./Post.module.scss";
 import { calculateAndFormatTime } from "../../utils";
+import { grayTheme, grayButtonTheme } from "../../customThemes";
 
-import { Avatar, Box, Button, Card, Grid, Tooltip } from "@material-ui/core";
+import {
+  Avatar,
+  Box,
+  Button,
+  Card,
+  Grid,
+  IconButton,
+  ThemeProvider,
+  Tooltip,
+} from "@material-ui/core";
+
+import { makeStyles } from "@material-ui/core/styles";
 
 import MoreHorizIcon from "@material-ui/icons/MoreHoriz";
 import PlayArrowRoundedIcon from "@material-ui/icons/PlayArrowRounded";
@@ -11,23 +23,19 @@ import ThumbUpAltIcon from "@material-ui/icons/ThumbUpAlt";
 import ThumbUpAltOutlinedIcon from "@material-ui/icons/ThumbUpAltOutlined";
 import ChatBubbleOutlineRoundedIcon from "@material-ui/icons/ChatBubbleOutlineRounded";
 
-// let postObj = {
-//   author: "id",
-//   authorName: "John Doe",
-//   authorPhoto: "",
-//   postTarget: "id", // where the post was made
-//   postTargetDesc: "wall", // wall/page/group
-//   date: "",
-//   likes: ["id", "id2"],
-//   comments: [],
-//   content: "",
-// };
+let currentUser = {
+  id: "id",
+  // ...
+};
 
 export default function Post({ postObj }) {
-  let currentUser = {
-    id: "id",
-    // ...
+  let checkIfUserHasLiked = () => {
+    return postObj.likes.some((id) => id === currentUser.id);
   };
+
+  let [postIsLiked, setPostIsLiked] = useState(checkIfUserHasLiked());
+  let [commentsAreExpanded, setCommentsAreExpanded] = useState(false);
+  let [postTargetName, setPostTargetName] = useState(null);
 
   // get the time for the post, formatted based on how long ago it was made
   let timeToDisplay = calculateAndFormatTime(
@@ -36,13 +44,6 @@ export default function Post({ postObj }) {
   );
   // need this for the date tooltip
   let fullDatePrettified = new Date(postObj.timestamp * 1000).toUTCString();
-
-  let checkIfUserHasLiked = () => {
-    return postObj.likes.some((id) => id === currentUser.id);
-  };
-
-  let [postIsLiked, setPostIsLiked] = useState(checkIfUserHasLiked());
-  let [postTargetName, setPostTargetName] = useState(null);
 
   useEffect(() => {
     if (postObj.author !== postObj.postTarget) {
@@ -56,60 +57,111 @@ export default function Post({ postObj }) {
     // TODO: send request to add the user to the liked list
   };
 
-  return (
-    <Card>
-      <Grid container className={styles.post_header}>
-        <Avatar src={postObj.authorPhoto} />
-        <Grid item className={styles.post_info}>
-          <h3>
-            <Link to={`/profile/${postObj.author}`}>{postObj.authorName}</Link>
-            {postTargetName && (
-              <>
-                <PlayArrowRoundedIcon />
-                <Link to={`/profile/${postObj.postTarget}`}>
-                  {postTargetName}
-                </Link>
-              </>
-            )}
-          </h3>
-          <Tooltip title={fullDatePrettified}>
-            <p className={styles.timestamp}>{timeToDisplay}</p>
-          </Tooltip>
-        </Grid>
-        <Grid item>
-          <MoreHorizIcon />
-        </Grid>
-      </Grid>
+  let expandComments = () => {
+    setCommentsAreExpanded(!commentsAreExpanded);
+    commentsAreExpanded
+      ? console.log("hiding comments")
+      : console.log("expanding comments");
+    // TODO: also expand comments
+  };
 
-      <Box className={styles.post_content}>{postObj.content}</Box>
-      <div className={styles.post_footer}>
-        <Grid container className={styles.post_stats}>
-          {postObj.likes.length > 0 && (
+  const useStyles = makeStyles(() => ({
+    btnContainer: {
+      borderTop: 1,
+      borderColor: grayButtonTheme.palette.secondary.main,
+      borderStyle: "solid",
+      paddingTop: "5px",
+    },
+    commentsExpanded: {
+      borderBottom: 1,
+    },
+  }));
+
+  const classes = useStyles();
+
+  return (
+    <ThemeProvider theme={grayTheme}>
+      <Card color="secondary" className={styles.card}>
+        <Box className={styles.post_header}>
+          <Avatar src={postObj.authorPhoto} />
+          <Box className={styles.post_info}>
+            <h3>
+              <Link to={`/profile/${postObj.author}`}>
+                {postObj.authorName}
+              </Link>
+              {postTargetName && (
+                <>
+                  <PlayArrowRoundedIcon fontSize="small" />
+                  <Link to={`/profile/${postObj.postTarget}`}>
+                    {postTargetName}
+                  </Link>
+                </>
+              )}
+            </h3>
+            <Tooltip title={fullDatePrettified} placement="bottom">
+              <span className={styles.timestamp}>{timeToDisplay}</span>
+            </Tooltip>
+          </Box>
+          <IconButton className={styles.more_btn}>
+            <MoreHorizIcon />
+          </IconButton>
+        </Box>
+
+        <Box className={styles.post_content}>{postObj.content}</Box>
+        <div className={styles.post_footer}>
+          <Grid container className={styles.post_stats} justify="space-between">
             <Grid item>
-              {/* some icon or img */}
-              {postObj.likes.length}
+              {postObj.likes.length > 0 && (
+                <span className={styles.stats_link}>
+                  <div className={styles.likes_icon}>
+                    <ThumbUpAltIcon/>
+                  </div>
+                  {postObj.likes.length}
+                </span>
+              )}
             </Grid>
-          )}
-          {postObj.comments.length > 0 && (
-            <Grid item>{`${postObj.comments.length} Comments`}</Grid>
-          )}
-        </Grid>
-        <Grid container className={styles.post_react}>
-          <Grid item>
-            <Button
-              startIcon={
-                postIsLiked ? <ThumbUpAltIcon /> : <ThumbUpAltOutlinedIcon />
-              }
-              onClick={likePost}
-            >
-              Like
-            </Button>
-            <Button startIcon={<ChatBubbleOutlineRoundedIcon />}>
-              Comment
-            </Button>
+            <Grid item>
+              <span onClick={expandComments} className={styles.stats_link}>
+                {postObj.comments.length > 0 &&
+                  `${postObj.comments.length} Comments`}
+              </span>
+            </Grid>
           </Grid>
-        </Grid>
-      </div>
-    </Card>
+          <ThemeProvider theme={grayButtonTheme}>
+            <Grid
+              container
+              className={`${styles.post_react} ${classes.btnContainer}`}
+            >
+              <Grid item xs={6}>
+                <Button
+                  fullWidth
+                  startIcon={
+                    postIsLiked ? (
+                      <ThumbUpAltIcon />
+                    ) : (
+                      <ThumbUpAltOutlinedIcon />
+                    )
+                  }
+                  onClick={likePost}
+                  color="secondary"
+                  className={postIsLiked ? styles.liked : ""}
+                >
+                  Like
+                </Button>
+              </Grid>
+              <Grid item xs={6}>
+                <Button
+                  fullWidth
+                  startIcon={<ChatBubbleOutlineRoundedIcon />}
+                  color="secondary"
+                >
+                  Comment
+                </Button>
+              </Grid>
+            </Grid>
+          </ThemeProvider>
+        </div>
+      </Card>
+    </ThemeProvider>
   );
 }

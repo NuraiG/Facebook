@@ -5,7 +5,21 @@ import Header from "../Header/Header";
 
 export default function Home() {
   // for testing only
-  let postObj = {
+  let posts = [{
+    postId: 1,
+    author: "id",
+    authorName: "John Doe",
+    authorPhoto: "",
+    postTarget: "id2", // where the post was made
+    postTargetDesc: "wall", // wall/page/group
+    date: "",
+    likes: ["id", "id2"],
+    comments: [""],
+    content: "Wow",
+    timestamp: 1616672141132,
+  },
+  {
+    postId: 2,
     author: "id",
     authorName: "John Doe",
     authorPhoto: "",
@@ -13,10 +27,11 @@ export default function Home() {
     postTargetDesc: "wall", // wall/page/group
     date: "",
     likes: ["id", "id2"],
-    comments: [],
-    content: "",
-    timestamp: 1616672141132
-  };
+    comments: [""],
+    content: "Wow",
+    timestamp: 1616672141132,
+  }
+];
 
   return (
     <div>
@@ -25,8 +40,12 @@ export default function Home() {
         <Grid item xs={3}>
           {/* placeholder */}
         </Grid>
-        <Grid item xs={9}>
-          <Post postObj={postObj}/>
+        <Grid item xs={6}>
+          <Post postObj={posts[0]} />
+          <Post postObj={posts[1]} />
+        </Grid>
+        <Grid item xs={3}>
+          {/* placeholder */}
         </Grid>
       </Grid>
     </div>
