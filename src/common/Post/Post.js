@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import styles from "./Post.module.scss";
+import { calculateAndFormatTime } from "../../utils";
 
 import { Avatar, Box, Button, Card, Grid, Tooltip } from "@material-ui/core";
 
@@ -28,6 +29,14 @@ export default function Post({ postObj }) {
     // ...
   };
 
+  // get the time for the post, formatted based on how long ago it was made
+  let timeToDisplay = calculateAndFormatTime(
+    new Date().getTime(),
+    postObj.timestamp
+  );
+  // need this for the date tooltip
+  let fullDatePrettified = new Date(postObj.timestamp * 1000).toUTCString();
+
   let checkIfUserHasLiked = () => {
     return postObj.likes.some((id) => id === currentUser.id);
   };
@@ -45,12 +54,12 @@ export default function Post({ postObj }) {
   let likePost = () => {
     setPostIsLiked(!postIsLiked);
     // TODO: send request to add the user to the liked list
-  }
+  };
 
   return (
     <Card>
       <Grid container className={styles.post_header}>
-        <Avatar />
+        <Avatar src={postObj.authorPhoto} />
         <Grid item className={styles.post_info}>
           <h3>
             <Link to={`/profile/${postObj.author}`}>{postObj.authorName}</Link>
@@ -63,10 +72,8 @@ export default function Post({ postObj }) {
               </>
             )}
           </h3>
-          <Tooltip title={postObj.timestamp}>
-            <p className={styles.timestamp}>
-              {/* TODO: calculate how long ago the post was made and show that */}
-            </p>
+          <Tooltip title={fullDatePrettified}>
+            <p className={styles.timestamp}>{timeToDisplay}</p>
           </Tooltip>
         </Grid>
         <Grid item>
