@@ -114,14 +114,19 @@ export default function Post({ postObj }) {
               {postObj.likes.length > 0 && (
                 <span className={styles.stats_link}>
                   <div className={styles.likes_icon}>
-                    <ThumbUpAltIcon/>
+                    <ThumbUpAltIcon />
                   </div>
                   {postObj.likes.length}
                 </span>
               )}
             </Grid>
             <Grid item>
-              <span onClick={expandComments} className={styles.stats_link}>
+              <span
+                onClick={expandComments}
+                className={`${styles.stats_link} ${
+                  commentsAreExpanded ? classes.commentsExpanded : ""
+                }`}
+              >
                 {postObj.comments.length > 0 &&
                   `${postObj.comments.length} Comments`}
               </span>
