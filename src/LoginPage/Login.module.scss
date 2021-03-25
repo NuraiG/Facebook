@@ -7,7 +7,7 @@
   line-height: 1.34;
   border: none;
   border-radius: 8px;
-  box-shadow: 0 2px 4px rgb(0 0 0 / 10%), 0 8px 16px rgb(0 0 0 / 10%);
+  box-shadow: 0px 5px 7px -7px rgba($color: #000000, $alpha: 0.75);
   box-sizing: border-box;
   max-width: 376px;
   padding-bottom: 24px;
@@ -67,16 +67,16 @@
     margin: auto;
     width: 300px;
   }
-  .input{
+  .input {
     width: 292px;
   }
   .leftSide {
     align-self: center;
   }
-  .leftSide > h2{
+  .leftSide > h2 {
     text-align: center;
   }
-  .leftSide > img{
+  .leftSide > img {
     margin: auto;
   }
 }

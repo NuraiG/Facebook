@@ -8,7 +8,7 @@ import {
     Radio,
     Button
 } from '@material-ui/core';
-import styles from './SignUp.module.css';
+import styles from './SignUp.module.scss';
 import {createMuiTheme} from '@material-ui/core/styles';
 import {ThemeProvider} from '@material-ui/styles';
 const customButton = createMuiTheme({

@@ -1,7 +1,7 @@
 import React from 'react';
 import {TextField, Divider, Button} from '@material-ui/core';
 import {Link} from 'react-router-dom';
-import styles from './Login.module.css';
+import styles from './Login.module.scss';
 import {createMuiTheme} from '@material-ui/core/styles';
 import {ThemeProvider} from '@material-ui/styles';
 import facebook from './facebook-loginPage.svg';

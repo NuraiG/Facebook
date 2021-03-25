@@ -1,7 +1,6 @@
 import Avatar from '@material-ui/core/Avatar';
 import styles from './Comment.module.scss';
 import {Link} from "react-router-dom";
-import useState from 'react';
 
 export default function Comment(body, authorName, authorImage, likes) {
     authorName = 'Tom Herzler';
@@ -18,6 +17,7 @@ export default function Comment(body, authorName, authorImage, likes) {
             description.substring(0, maxLength)
         }...`;
     }
+    // todo: add likes, likes'length on click show the userNames
     const addLikes=()=>{
         // ++this.comment.likes;
         likes.push('Mari');
@@ -30,7 +30,7 @@ export default function Comment(body, authorName, authorImage, likes) {
             <div className={
                 styles.imageWrapper
             }>
-                <Link to='/login'>
+                <Link to='/profile/'>
                     <Avatar alt={authorName}
                         src={authorImage}/>
                 </Link>
