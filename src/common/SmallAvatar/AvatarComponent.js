@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { Avatar, Button, ThemeProvider } from "@material-ui/core";
 import styles from "./AvatarComponent.module.scss";
-import { grayButtonTheme } from "../customThemes";
+import { grayButtonTheme } from "../../customThemes";
 
 export default function AvatarComponent({
   className,
