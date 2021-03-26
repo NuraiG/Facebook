@@ -89,4 +89,12 @@
       }
     }
   }
+
+  .comments_container {
+    display: block;
+
+    &.hidden {
+      display: none;
+    }
+  }
 }

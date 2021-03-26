@@ -22,10 +22,13 @@ import PlayArrowRoundedIcon from "@material-ui/icons/PlayArrowRounded";
 import ThumbUpAltIcon from "@material-ui/icons/ThumbUpAlt";
 import ThumbUpAltOutlinedIcon from "@material-ui/icons/ThumbUpAltOutlined";
 import ChatBubbleOutlineRoundedIcon from "@material-ui/icons/ChatBubbleOutlineRounded";
+import Comment from "../Comment/Comment";
+import EmptyComment from "../Comment/EmptyComment";
 
 let currentUser = {
   id: "id",
-  // ...
+  img: "",
+  //...
 };
 
 export default function Post({ postObj }) {
@@ -59,11 +62,12 @@ export default function Post({ postObj }) {
 
   let expandComments = () => {
     setCommentsAreExpanded(!commentsAreExpanded);
-    commentsAreExpanded
-      ? console.log("hiding comments")
-      : console.log("expanding comments");
-    // TODO: also expand comments
   };
+
+  let moveToAddComment = () => {
+    // eslint-disable-next-line no-restricted-globals
+    location.hash = "#" + postObj.postId;
+  }
 
   const useStyles = makeStyles(() => ({
     btnContainer: {
@@ -161,6 +165,7 @@ export default function Post({ postObj }) {
                   fullWidth
                   startIcon={<ChatBubbleOutlineRoundedIcon />}
                   color="secondary"
+                  onClick={moveToAddComment}
                 >
                   Comment
                 </Button>
@@ -168,8 +173,16 @@ export default function Post({ postObj }) {
             </Grid>
           </ThemeProvider>
         </div>
-        <div>
+        <div className={`${styles.comments_container} ${
+                !commentsAreExpanded ? styles.hidden : null
+              }`}>
           {/* comments container */}
+          {postObj.comments.map(comment => {
+            return <Comment key={comment.commentId} commentObj={({...comment})} />
+          })}
+        </div>
+        <div className={styles.add_comment_container}>
+          <EmptyComment postId={postObj.postId} authorImage={currentUser.img}/>
         </div>
       </Card>
     </ThemeProvider>
