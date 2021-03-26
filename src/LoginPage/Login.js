@@ -1,24 +1,10 @@
 import React from 'react';
 import {TextField, Divider, Button} from '@material-ui/core';
 import {Link} from 'react-router-dom';
-import styles from './Login.module.css';
-import {createMuiTheme} from '@material-ui/core/styles';
+import styles from './Login.module.scss';
 import {ThemeProvider} from '@material-ui/styles';
 import facebook from './facebook-loginPage.svg';
-const customButton = createMuiTheme({
-    palette: {
-        primary: {
-            main: '#1877f2',
-            dark: '#1f65c0',
-            contrastText: '#fff'
-        },
-        secondary: {
-            main: '#42b72a',
-            dark: '#3f932e',
-            contrastText: '#fff'
-        }
-    }
-});
+import { customButtonBlueGreen } from "../customThemes";
 
 export default function Login() {
 
@@ -71,12 +57,12 @@ export default function Login() {
                             (e) => setHandlerInputPassword(e)
                         }/>
                 </div>
-                <ThemeProvider theme={customButton}>
+                <ThemeProvider theme={customButtonBlueGreen}>
                     <Button color="primary" variant="contained" size="large">Log In</Button>
                 </ThemeProvider>
                 <Link to='/forgottenPassword'>Forgot Password?</Link>
                 <Divider flexItem/> {/* todo: onClick=> login with email and password */}
-                <ThemeProvider theme={customButton}>
+                <ThemeProvider theme={customButtonBlueGreen}>
                     <Link to='/signUp'
                         style={
                             {textDecoration: 'none'}
