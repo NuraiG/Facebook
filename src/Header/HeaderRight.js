@@ -1,5 +1,5 @@
 import React from "react";
-import AvatarComponent from "../common/AvatarComponent";
+import AvatarComponent from "../common/SmallAvatar/AvatarComponent";
 
 import styles from "./Header.module.scss";
 import { grayButtonTheme } from "../customThemes";

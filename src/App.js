@@ -36,6 +36,10 @@ function App() {
               <Route exact path="/">
                 {user ? <Home /> : <Redirect to="/login" />}
               </Route>
+
+              <Route path="*">
+                {/* error page */}
+              </Route>
             </Switch>
           </div>
         </Paper>

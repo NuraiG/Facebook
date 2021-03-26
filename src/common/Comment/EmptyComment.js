@@ -4,7 +4,7 @@ import InsertEmoticonSharpIcon from '@material-ui/icons/InsertEmoticonSharp';
 import Avatar from '@material-ui/core/Avatar';
 import styles from './EmptyComment.module.scss';
 
-export default function EmptyComment(postId, authorName, authorId, authorImage) {
+export default function EmptyComment({postId, authorName, authorId, authorImage}) {
     const [comment, setComment] = useState("");
     const addComment = () => {
         if (comment.length) {
@@ -30,7 +30,7 @@ export default function EmptyComment(postId, authorName, authorId, authorImage) 
                     src={authorImage}/>
             </div>
             <form>
-                <input type="text" id="input"
+                <input type="text" id={postId}
                     value={comment}
                     label="Your comment here"
                     placeholder="Write a comment..."
