@@ -92,6 +92,8 @@
 
     .post_react {
       button {
+        text-transform: none;
+        font-size: 15px;
         font-weight: 700;
 
         &.liked {
