@@ -9,8 +9,7 @@ import "./App.css";
 import { globalTheme } from "./customThemes";
 
 // Material-UI
-import { Paper } from "@material-ui/core";
-import { ThemeProvider } from "@material-ui/core/styles";
+import { Paper, ThemeProvider } from "@material-ui/core";
 
 function App() {
   let user = "test";

@@ -3,7 +3,7 @@ import styles from "./Comment.module.scss";
 import { Link } from "react-router-dom";
 import ThumbUpAltIcon from "@material-ui/icons/ThumbUpAlt";
 import { useState, useCallback } from "react";
-import { getShortDate } from "../../utils";
+import { getShortDate } from "../../timeUtils";
 import { Tooltip } from "@material-ui/core";
 
 export default function Comment({ commentObj }) {

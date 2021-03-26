@@ -1,9 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import Comment from "../Comment/Comment";
+import EmptyComment from "../Comment/EmptyComment";
+import { calculateAndFormatTime } from "../../timeUtils";
+
+// styles
 import styles from "./Post.module.scss";
-import { calculateAndFormatTime } from "../../utils";
 import { grayTheme, grayButtonTheme } from "../../customThemes";
 
+// Material-UI
 import {
   Avatar,
   Box,
@@ -13,17 +18,15 @@ import {
   IconButton,
   ThemeProvider,
   Tooltip,
+  makeStyles,
 } from "@material-ui/core";
-
-import { makeStyles } from "@material-ui/core/styles";
-
+// icons
 import MoreHorizIcon from "@material-ui/icons/MoreHoriz";
 import PlayArrowRoundedIcon from "@material-ui/icons/PlayArrowRounded";
 import ThumbUpAltIcon from "@material-ui/icons/ThumbUpAlt";
 import ThumbUpAltOutlinedIcon from "@material-ui/icons/ThumbUpAltOutlined";
 import ChatBubbleOutlineRoundedIcon from "@material-ui/icons/ChatBubbleOutlineRounded";
-import Comment from "../Comment/Comment";
-import EmptyComment from "../Comment/EmptyComment";
+import { truncateString } from "../../utils";
 
 let currentUser = {
   id: "id",
@@ -39,6 +42,14 @@ export default function Post({ postObj }) {
   let [postIsLiked, setPostIsLiked] = useState(checkIfUserHasLiked());
   let [commentsAreExpanded, setCommentsAreExpanded] = useState(false);
   let [postTargetName, setPostTargetName] = useState(null);
+  let [truncatedContent, setTruncatedContent] = useState(
+    truncateString(postObj.content, 300)
+  );
+  let isStringTruncated = truncatedContent !== postObj.content ? true : false;
+
+  let [wholeContentIsShown, setWholeContentIsShown] = useState(
+    !isStringTruncated
+  );
 
   // get the time for the post, formatted based on how long ago it was made
   let timeToDisplay = calculateAndFormatTime(
@@ -63,11 +74,6 @@ export default function Post({ postObj }) {
   let expandComments = () => {
     setCommentsAreExpanded(!commentsAreExpanded);
   };
-
-  let moveToAddComment = () => {
-    // eslint-disable-next-line no-restricted-globals
-    location.hash = "#" + postObj.postId;
-  }
 
   const useStyles = makeStyles(() => ({
     btnContainer: {
@@ -113,7 +119,20 @@ export default function Post({ postObj }) {
           </IconButton>
         </Box>
 
-        <Box className={styles.post_content}>{postObj.content}</Box>
+        <Box className={styles.post_content}>
+          {/* {postObj.content} */}
+          {truncatedContent}
+          {!wholeContentIsShown && isStringTruncated && (
+            <span className={styles.expand_content}
+              onClick={() => {
+                setTruncatedContent(postObj.content);
+                setWholeContentIsShown(true);
+              }}
+            >
+              See More
+            </span>
+          )}
+        </Box>
         <div className={styles.post_footer}>
           <Grid container className={styles.post_stats} justify="space-between">
             <Grid item>
@@ -127,10 +146,7 @@ export default function Post({ postObj }) {
               )}
             </Grid>
             <Grid item>
-              <span
-                onClick={expandComments}
-                className={styles.stats_link}
-              >
+              <span onClick={expandComments} className={styles.stats_link}>
                 {postObj.comments.length > 0 &&
                   `${postObj.comments.length} Comments`}
               </span>
@@ -161,28 +177,31 @@ export default function Post({ postObj }) {
                 </Button>
               </Grid>
               <Grid item xs={6}>
-                <Button
-                  fullWidth
-                  startIcon={<ChatBubbleOutlineRoundedIcon />}
-                  color="secondary"
-                  onClick={moveToAddComment}
-                >
-                  Comment
-                </Button>
+                <a href={`#${postObj.postId}`} className={styles.comment_link}>
+                  <Button
+                    fullWidth
+                    startIcon={<ChatBubbleOutlineRoundedIcon />}
+                    color="secondary"
+                  >
+                    Comment
+                  </Button>
+                </a>
               </Grid>
             </Grid>
           </ThemeProvider>
         </div>
-        <div className={`${styles.comments_container} ${
-                !commentsAreExpanded ? styles.hidden : null
-              }`}>
+        <div
+          className={`${styles.comments_container} ${
+            !commentsAreExpanded ? styles.hidden : null
+          }`}
+        >
           {/* comments container */}
-          {postObj.comments.map(comment => {
-            return <Comment key={comment.commentId} commentObj={comment} />
+          {postObj.comments.map((comment) => {
+            return <Comment key={comment.commentId} commentObj={comment} />;
           })}
         </div>
         <div className={styles.add_comment_container}>
-          <EmptyComment postId={postObj.postId} authorImage={currentUser.img}/>
+          <EmptyComment postId={postObj.postId} authorImage={currentUser.img} />
         </div>
       </Card>
     </ThemeProvider>

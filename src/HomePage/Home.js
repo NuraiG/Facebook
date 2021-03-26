@@ -3,7 +3,7 @@ import React from "react";
 import Post from "../common/Post/Post";
 import Header from "../Header/Header";
 
-import {posts} from "../staticData";
+import { posts } from "../staticData";
 
 export default function Home() {
   return (
