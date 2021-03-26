@@ -178,7 +178,7 @@ export default function Post({ postObj }) {
               }`}>
           {/* comments container */}
           {postObj.comments.map(comment => {
-            return <Comment key={comment.commentId} commentObj={({...comment})} />
+            return <Comment key={comment.commentId} commentObj={comment} />
           })}
         </div>
         <div className={styles.add_comment_container}>
