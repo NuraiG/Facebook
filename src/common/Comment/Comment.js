@@ -2,28 +2,20 @@ import Avatar from '@material-ui/core/Avatar';
 import styles from './Comment.module.scss';
 import {Link} from "react-router-dom";
 import ThumbUpAltIcon from '@material-ui/icons/ThumbUpAlt';
-import {useState, useCallback, useEffect} from 'react';
+import {useState, useCallback} from 'react';
 
-export default function Comment(body, authorName, authorImage, likes) {
+export default function Comment(commentId, author, authorName, likes,content,timestamp,images,authorPhoto) {
     authorName = 'Tom Herzler';
     likes = ['Tom', 'George', 'Alice'];
     // likes=[];
-    body = "I like it";
-    authorImage = 'https://dthezntil550i.cloudfront.net/1f/latest/1f1812170212508330007997070/494e2362-6d3c-40b3-8bf5-192fcea38a2f.png';
+    content = "I like it";
+    authorPhoto = 'https://dthezntil550i.cloudfront.net/1f/latest/1f1812170212508330007997070/494e2362-6d3c-40b3-8bf5-192fcea38a2f.png';
 
     const [isLiked, setIsLiked] = useState(0);
     // to like or unlike the comment
     const toggle = useCallback(() => setIsLiked(!isLiked), [
         isLiked, setIsLiked
     ],);
-    // const changeTheLikes = useEffect(() => {
-    //     if (isLiked) {
-    //         // push current user
-    //     } else {
-    //         //unshift current user from likes
-    //     }
-    // }, [])
-
 
     const truncateString = (description, maxLength) => {
         if (!description) 
@@ -47,7 +39,7 @@ export default function Comment(body, authorName, authorImage, likes) {
             }>
                 <Link to='/'>
                     <Avatar alt={authorName}
-                        src={authorImage}/>
+                        src={authorPhoto}/>
                 </Link>
             </div>
             <div className={
@@ -58,7 +50,7 @@ export default function Comment(body, authorName, authorImage, likes) {
                 }>
                     <p> {authorName}</p>
                     <div> {
-                        truncateString(body, 100)
+                        truncateString(content, 100)
                     }</div>
                     {
                     likes.length ? <div className={
@@ -69,9 +61,9 @@ export default function Comment(body, authorName, authorImage, likes) {
                         }>
                             <ThumbUpAltIcon fontSize='small'/>
                         </div>
-                        <span>{
+                        <p>{
                             likes.length
-                        }</span>
+                        }</p>
                     </div> : null
                 } </div>
                 {
