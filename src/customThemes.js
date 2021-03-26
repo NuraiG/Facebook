@@ -93,10 +93,26 @@ const redOrangeTheme = createMuiTheme({
   },
 });
 
+const customButtonBlueGreen = createMuiTheme({
+  palette: {
+      primary: {
+          main: '#1877f2',
+          dark: '#1f65c0',
+          contrastText: '#fff'
+      },
+      secondary: {
+          main: '#42b72a',
+          dark: '#3f932e',
+          contrastText: '#fff'
+      }
+  }
+});
+
 export {
   globalTheme,
   grayTheme,
   grayButtonTheme,
   blueGreenTheme,
   redOrangeTheme,
+  customButtonBlueGreen,
 };

@@ -8,23 +8,10 @@ import {
     Radio,
     Button
 } from '@material-ui/core';
-import styles from './SignUp.module.css';
-import {createMuiTheme} from '@material-ui/core/styles';
+import styles from './SignUp.module.scss';
+import { customButtonBlueGreen } from "../customThemes";
 import {ThemeProvider} from '@material-ui/styles';
-const customButton = createMuiTheme({
-    palette: {
-        primary: {
-            main: '#1877f2',
-            dark: '#1f65c0',
-            contrastText: '#fff'
-        },
-        secondary: {
-            main: '#42b72a',
-            dark: '#3f932e',
-            contrastText: '#fff'
-        }
-    }
-});
+
 export default function Registration() {
 
     const [email, setEmail] = React.useState('');
@@ -179,7 +166,7 @@ export default function Registration() {
                         . You may receive SMS Notifications from us and can opt out any time.
                     </p>
                     {/* todo: sign up on click */}
-                    <ThemeProvider theme={customButton}>
+                    <ThemeProvider theme={customButtonBlueGreen}>
                         <Button color="secondary" variant="contained" size="large">Sign Up</Button>
                     </ThemeProvider>
                 </div>
