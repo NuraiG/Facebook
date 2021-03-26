@@ -9,11 +9,11 @@ export default function EmptyComment(postId, authorName, authorId, authorImage) 
     const addComment = () => {
         if (comment.length) {
             setComment("");
-            // add to commenst of a post with id === postId;!!!!
+            // add to commenst of a post with id === postId;
             // comment{
             // body:comment,
             // author:authorId, from id we get can a user image and user name;
-            // likes:0// 0 initial value;
+            // likes:0//
             // toPost: postId
             // }
         }

@@ -1,12 +1,29 @@
 import Avatar from '@material-ui/core/Avatar';
 import styles from './Comment.module.scss';
 import {Link} from "react-router-dom";
+import ThumbUpAltIcon from '@material-ui/icons/ThumbUpAlt';
+import {useState, useCallback, useEffect} from 'react';
 
 export default function Comment(body, authorName, authorImage, likes) {
     authorName = 'Tom Herzler';
-    likes = ['Tom', 'George', 'Azis'];
-    body = "Waoww gjdshfdshjgdfsdfdgdfhgfhjuyjtyeurytesssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss ";
+    likes = ['Tom', 'George', 'Alice'];
+    // likes=[];
+    body = "I like it";
     authorImage = 'https://dthezntil550i.cloudfront.net/1f/latest/1f1812170212508330007997070/494e2362-6d3c-40b3-8bf5-192fcea38a2f.png';
+
+    const [isLiked, setIsLiked] = useState(0);
+    // to like or unlike the comment
+    const toggle = useCallback(() => setIsLiked(!isLiked), [
+        isLiked, setIsLiked
+    ],);
+    // const changeTheLikes = useEffect(() => {
+    //     if (isLiked) {
+    //         // push current user
+    //     } else {
+    //         //unshift current user from likes
+    //     }
+    // }, [])
+
 
     const truncateString = (description, maxLength) => {
         if (!description) 
@@ -17,11 +34,9 @@ export default function Comment(body, authorName, authorImage, likes) {
             description.substring(0, maxLength)
         }...`;
     }
-    // todo: add likes, likes'length on click show the userNames
-    const addLikes=()=>{
-        // ++this.comment.likes;
-        likes.push('Mari');
-        // likes.push(currentUser.name);
+    const addLikes = () => {
+        toggle();
+        // modify the likes array;
     }
     return (
         <div className={
@@ -30,7 +45,7 @@ export default function Comment(body, authorName, authorImage, likes) {
             <div className={
                 styles.imageWrapper
             }>
-                <Link to='/profile/'>
+                <Link to='/'>
                     <Avatar alt={authorName}
                         src={authorImage}/>
                 </Link>
@@ -45,10 +60,27 @@ export default function Comment(body, authorName, authorImage, likes) {
                     <div> {
                         truncateString(body, 100)
                     }</div>
-                </div>
-                <button onClick={()=>addLikes()}>Like</button>
-                <span>{likes.length}</span>
-            </div>
+                    {
+                    likes.length ? <div className={
+                        styles.likes
+                    }>
+                        <div className={
+                            styles.likeicon
+                        }>
+                            <ThumbUpAltIcon fontSize='small'/>
+                        </div>
+                        <span>{
+                            likes.length
+                        }</span>
+                    </div> : null
+                } </div>
+                {
+                isLiked ? <button onClick={
+                    () => addLikes()
+                }>Unlike</button> : <button onClick={
+                    () => addLikes()
+                }>Like</button>
+            } </div>
         </div>
     )
 }

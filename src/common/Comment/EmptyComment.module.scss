@@ -1,6 +1,7 @@
+$primary-background: #eff2f5;
 .emptyComment {
   display: flex;
-  border-bottom: 1px solid #eff2f5;
+  border-bottom: 1px solid $primary-background;
   padding: 15px;
   height: 30px;
   // must be inherit from a post component
@@ -12,14 +13,14 @@
     padding: 10px 10px;
     margin: 0 10px;
     border-radius: 999px;
-    background-color: #eff2f5;
+    background-color: $primary-background;
     justify-content: space-between;
     width: 460px;
     input {
       outline-width: 0;
       border: none;
       border-radius: 999px;
-      background-color: #eff2f5;
+      background-color: $primary-background;
       width: 80%;
     }
     .optional {
