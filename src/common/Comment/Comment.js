@@ -31,7 +31,7 @@ export default function Comment({ commentObj }) {
   return (
     <div className={styles.commentWrapper}>
       <div className={styles.imageWrapper}>
-        <Link to="/">
+      <Link to={`/profile/${commentObj.authorName}`}>
           <Avatar alt={commentObj.authorName} src={commentObj.authorPhoto} />
         </Link>
       </div>
