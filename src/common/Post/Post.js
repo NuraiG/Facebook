@@ -43,7 +43,7 @@ export default function Post({ postObj }) {
     postObj.timestamp
   );
   // need this for the date tooltip
-  let fullDatePrettified = new Date(postObj.timestamp * 1000).toUTCString();
+  let fullDatePrettified = new Date(postObj.timestamp).toUTCString();
 
   useEffect(() => {
     if (postObj.author !== postObj.postTarget) {
@@ -74,6 +74,8 @@ export default function Post({ postObj }) {
     },
     commentsExpanded: {
       borderBottom: 1,
+      borderBottomStyle: "solid",
+      paddingBottom: "5px",
     },
   }));
 
@@ -123,9 +125,7 @@ export default function Post({ postObj }) {
             <Grid item>
               <span
                 onClick={expandComments}
-                className={`${styles.stats_link} ${
-                  commentsAreExpanded ? classes.commentsExpanded : ""
-                }`}
+                className={styles.stats_link}
               >
                 {postObj.comments.length > 0 &&
                   `${postObj.comments.length} Comments`}
@@ -135,7 +135,9 @@ export default function Post({ postObj }) {
           <ThemeProvider theme={grayButtonTheme}>
             <Grid
               container
-              className={`${styles.post_react} ${classes.btnContainer}`}
+              className={`${styles.post_react} ${classes.btnContainer} ${
+                commentsAreExpanded ? classes.commentsExpanded : null
+              }`}
             >
               <Grid item xs={6}>
                 <Button
@@ -165,6 +167,9 @@ export default function Post({ postObj }) {
               </Grid>
             </Grid>
           </ThemeProvider>
+        </div>
+        <div>
+          {/* comments container */}
         </div>
       </Card>
     </ThemeProvider>

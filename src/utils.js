@@ -15,7 +15,7 @@ function timeDifference(timestamp1, timestamp2) {
 function calculateAndFormatTime(timestamp1, timestamp2) {
     let timeFromPostCreated = timeDifference(timestamp1, timestamp2);
       // depending on how long ago the post was made, display the date differently
-      let timeToDisplay = new Date((timestamp2 * 1000)).toUTCString();
+      let timeToDisplay = new Date(timestamp2).toUTCString();
       if (timeFromPostCreated.daysDifference < 1) {
         timeToDisplay =
           timeFromPostCreated.hoursDifference < 1

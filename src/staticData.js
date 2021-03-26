@@ -33,17 +33,18 @@ let posts = [
     postTargetDesc: "wall", // wall/page/group
     likes: ["id", "id2"],
     comments: [],
-    content: "Wow",
+    content:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse sit amet condimentum sem. Donec blandit lobortis augue, et porta orci vehicula vel. Proin sodales commodo diam, eu hendrerit arcu vestibulum malesuada. Nulla porta odio sed velit iaculis rhoncus. Quisque id metus non felis consequat porttitor id et elit. Nam scelerisque mollis velit eget eleifend. Proin sit amet vulputate nibh.",
     images: [],
-    timestamp: 1616672141132,
+    timestamp: 1616682161167,
   },
 ];
 
 let currentUser = {
-    id: 1,
-    profilePic: "",
-    firstName: "John",
-    lastName: "Doe",
-  };
+  id: 1,
+  profilePic: "",
+  firstName: "John",
+  lastName: "Doe",
+};
 
-export { posts, currentUser }
+export { posts, currentUser };
