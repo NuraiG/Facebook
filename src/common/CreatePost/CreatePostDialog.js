@@ -1,9 +1,8 @@
-import React from "react";
+import React, { useCallback } from "react";
 import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
-import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import {
   Avatar,
@@ -12,6 +11,7 @@ import {
   InputBase,
   makeStyles,
   ThemeProvider,
+  Tooltip,
 } from "@material-ui/core";
 
 import CloseIcon from "@material-ui/icons/Close";
@@ -19,8 +19,14 @@ import PhotoOutlinedIcon from "@material-ui/icons/PhotoOutlined";
 import LocalOfferOutlinedIcon from "@material-ui/icons/LocalOfferOutlined";
 import MoodOutlinedIcon from "@material-ui/icons/MoodOutlined";
 
-import { grayButtonTheme, blueGreenTheme, redOrangeTheme } from "../../customThemes";
+import {
+  grayButtonTheme,
+  blueGreenTheme,
+  redOrangeTheme,
+} from "../../customThemes";
 import styles from "./CreatePostDialog.module.scss";
+
+import { useDropzone } from "react-dropzone";
 
 export default function CreatePostDialog({
   state,
@@ -29,7 +35,24 @@ export default function CreatePostDialog({
   text,
   onInput,
   onSubmit,
+  onTag,
+  onDrag,
+  files
 }) {
+  const onDrop = useCallback(
+    (acceptedFiles) => {
+      onDrag([...files, ...acceptedFiles]);
+      console.log(files);
+      
+    },
+    [onDrag, files]
+  );
+  const {
+    getRootProps: getRootPropsNoClick,
+    getInputProps: getInputPropsNoClick,
+  } = useDropzone({ noClick: true, onDrop, accept: 'image/*' });
+  const { getRootProps, getInputProps } = useDropzone({ onDrop, accept: 'image/*' });
+
   const useStyles = makeStyles(() => ({
     greenBtn: {
       fill: blueGreenTheme.palette.secondary.main,
@@ -58,14 +81,14 @@ export default function CreatePostDialog({
             <IconButton color="primary" onClick={onClose}>
               <CloseIcon />
             </IconButton>
-          </ ThemeProvider>
+          </ThemeProvider>
         </DialogTitle>
         <form onSubmit={onSubmit}>
           <DialogContent className={styles.dialog_content}>
-            <DialogContentText className={styles.post_author}>
+            <Box className={styles.post_author}>
               <Avatar />
               <h3>John Doe</h3>
-            </DialogContentText>
+            </Box>
             <InputBase
               className={styles.dialog_input}
               inputProps={{ "aria-label": "naked" }}
@@ -78,18 +101,28 @@ export default function CreatePostDialog({
                 onInput(ev.target.value);
               }}
             />
+            <div {...getRootPropsNoClick()} className={styles.drag_file}>
+              <input {...getInputPropsNoClick()} />
+            </div>
             <Box className={styles.post_actions}>
               <span>Add to Your Post</span>
               <Box className={styles.action_buttons}>
-                <IconButton>
-                  <PhotoOutlinedIcon className={classes.greenBtn} />
-                </IconButton>
-                <IconButton>
-                  <LocalOfferOutlinedIcon className={classes.blueBtn} />
-                </IconButton>
-                <IconButton>
-                  <MoodOutlinedIcon className={classes.yellowBtn} />
-                </IconButton>
+                <input {...getInputProps()}></input>
+                <Tooltip title="Photo/Video" placement="top">
+                  <IconButton {...getRootProps({ className: "dropzone" })}>
+                    <PhotoOutlinedIcon className={classes.greenBtn} />
+                  </IconButton>
+                </Tooltip>
+                <Tooltip title="Tag Friends" placement="top">
+                  <IconButton onClick={onTag}>
+                    <LocalOfferOutlinedIcon className={classes.blueBtn} />
+                  </IconButton>
+                </Tooltip>
+                <Tooltip title="Feeling" placement="top">
+                  <IconButton>
+                    <MoodOutlinedIcon className={classes.yellowBtn} />
+                  </IconButton>
+                </Tooltip>
               </Box>
             </Box>
           </DialogContent>
@@ -101,7 +134,7 @@ export default function CreatePostDialog({
                 variant="contained"
                 onClick={onClose}
                 fullWidth
-                disabled={text.trim().length > 0 ? false : true}
+                disabled={text.trim().length > 0 || files.length > 0 ? false : true}
               >
                 Post
               </Button>

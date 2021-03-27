@@ -1,3 +1,4 @@
+import React, { useCallback, useState } from "react";
 import {
   Avatar,
   Button,
@@ -6,7 +7,7 @@ import {
   makeStyles,
   ThemeProvider,
 } from "@material-ui/core";
-import React, { useState } from "react";
+
 import styles from "./CreatePost.module.scss";
 
 import {
@@ -22,6 +23,8 @@ import PhotoOutlinedIcon from "@material-ui/icons/PhotoOutlined";
 import LocalOfferOutlinedIcon from "@material-ui/icons/LocalOfferOutlined";
 import MoodOutlinedIcon from "@material-ui/icons/MoodOutlined";
 import CreatePostDialog from "./CreatePostDialog";
+
+import { useDropzone } from "react-dropzone";
 
 // let possiblePlaceholders = [
 //   `What's on your mind, ${currentUser.firstName}?`,
@@ -39,13 +42,28 @@ export default function CreatePost({ placeholder }) {
     setIsDialogOpen(false);
   };
 
-  const [postValue, setPostValue] = useState("");
+  let [attachedFiles, setAttachedFiles] = useState([]);
+  const onDrop = useCallback(
+    (newFiles) => {
+      setAttachedFiles([...attachedFiles, ...newFiles]);
+      setIsDialogOpen(true);
+    },
+    [attachedFiles]
+  );
+  const { getRootProps, getInputProps } = useDropzone({ onDrop, accept: 'image/*' });
 
+  const [postValue, setPostValue] = useState("");
   const onSubmit = (ev) => {
     ev.preventDefault();
+    // TODO: send request to create post with postValue.trim()
     setPostValue("");
-    // TODO: send request to create post
-  }
+    setAttachedFiles([]);
+  };
+
+  const onTag = () => {
+    setPostValue(postValue + " @");
+    // on ' @' start suggesting friends and filter when typing
+  };
 
   const useStyles = makeStyles(() => ({
     btnContainer: {
@@ -79,6 +97,7 @@ export default function CreatePost({ placeholder }) {
               placeholder={placeholder}
               onClick={handleDialogOpen}
               value={postValue}
+              readOnly
             />
             <button type="submit"></button>
           </form>
@@ -89,7 +108,9 @@ export default function CreatePost({ placeholder }) {
             className={`${styles.post_actions} ${classes.btnContainer}`}
           >
             <Grid item xs={4}>
+              <input {...getInputProps()}></input>
               <Button
+                {...getRootProps({ className: "dropzone" })}
                 className={styles.actions_btn}
                 fullWidth
                 color="secondary"
@@ -111,6 +132,7 @@ export default function CreatePost({ placeholder }) {
                 startIcon={
                   <LocalOfferOutlinedIcon className={classes.blueBtn} />
                 }
+                onClick={onTag}
               >
                 Tag
               </Button>
@@ -122,7 +144,7 @@ export default function CreatePost({ placeholder }) {
                 color="secondary"
                 startIcon={<MoodOutlinedIcon className={classes.yellowBtn} />}
               >
-                Feeling/Activity
+                Feeling
               </Button>
             </Grid>
           </Grid>
@@ -135,6 +157,9 @@ export default function CreatePost({ placeholder }) {
         text={postValue}
         onInput={setPostValue}
         onSubmit={onSubmit}
+        onTag={onTag}
+        onDrag={setAttachedFiles}
+        files={attachedFiles}
       />
     </ThemeProvider>
   );

@@ -23,6 +23,7 @@
             top: 12px;
             right: 12px;
             padding: 8px;
+            z-index: 10;
           }
         }
       }
@@ -38,6 +39,7 @@
         }
         .dialog_input {
           font-size: 24px;
+          z-index: 10;
         }
         .post_actions {
           width: 100%;
@@ -54,6 +56,7 @@
           .action_buttons {
             > button {
               padding: 5px;
+              z-index: 10;
               svg {
                 font-size: 30px;
               }
@@ -67,4 +70,17 @@
       }
     }
   }
+}
+
+
+.drag_file {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    
+    > input {
+        outline: none;
+    }
 }
