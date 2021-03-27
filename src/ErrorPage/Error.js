@@ -5,11 +5,13 @@ import error from './404_error.svg';
 import { Button, Grid, Link } from '@material-ui/core';
 import { ThemeProvider } from '@material-ui/styles';
 import { customButtonBlueGreen } from '../customThemes';
+import { useHistory } from "react-router-dom";
 import Typography from '@material-ui/core/Typography';
 
 export default function Error() {
+	const history = useHistory();
 	const goBack=()=>{
-		// window.history.back();
+		history.goBack();
 	}
 	return (
 		<div>
@@ -25,14 +27,11 @@ export default function Error() {
 							trying to open is correct.
 						</p>
 						<ThemeProvider theme={customButtonBlueGreen}>
-							<Link to="/" style={{ textDecoration: 'none' }}>
-								<Button color="primary" variant="contained" size="medium"  onClick={()=>{console.log('click')}}>
+								<Button color="primary" variant="contained" size="medium"  onClick={()=>{ history.push('/')}}>
 									Go to News Feed
 								</Button>
-							</Link>
 							<Typography>
-								<Link href="">Go Back</Link>
-								{/* onClick={()=>{goBack()}} */}
+								<Link onClick={()=>{goBack()}} className={styles.cursor}>Go Back</Link>
 							</Typography>
 							<Typography>
 								{/* <Link href="https://www.facebook.com/help">Visit Help Centre</Link> */}
