@@ -3,6 +3,7 @@ import Home from "./HomePage/Home";
 import Login from "./LoginPage/Login";
 import Profile from "./Profile/Profile";
 import SignUp from "./LoginPage/SignUp";
+import Error from "./ErrorPage/Error";
 
 // styles
 import "./App.css";
@@ -38,7 +39,7 @@ function App() {
               </Route>
 
               <Route path="*">
-                {/* error page */}
+                <Error/>
               </Route>
             </Switch>
           </div>
