@@ -1,8 +1,70 @@
+@import "../../constants.scss";
+
 .dialog {
   > div:nth-of-type(3) {
     > div:nth-of-type(1) {
       width: 90%;
       max-width: 500px;
+      padding: 16px;
+      box-sizing: border-box;
+      position: relative;
+
+      .dialog_title {
+        border-bottom: 1px solid $inner-border;
+        padding-top: 0;
+        padding-bottom: 15px;
+        margin-bottom: 16px;
+        > h2 {
+          text-align: center;
+          font-weight: 700;
+
+          > button {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            padding: 8px;
+          }
+        }
+      }
+      .dialog_content {
+        padding: 0px;
+
+        .post_author {
+          display: flex;
+          > h3 {
+            margin-left: 10px;
+            font-weight: 700;
+          }
+        }
+        .dialog_input {
+          font-size: 24px;
+        }
+        .post_actions {
+          width: 100%;
+          border-radius: 8px;
+          border: 1px solid $divider;
+          padding: 8px 8px;
+          box-sizing: border-box;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          > span {
+            font-weight: 700;
+          }
+          .action_buttons {
+            > button {
+              padding: 5px;
+              svg {
+                font-size: 30px;
+              }
+            }
+          }
+        }
+      }
+      .dialog_actions {
+        padding: 0px;
+        padding-top: 16px;
+      }
     }
   }
 }

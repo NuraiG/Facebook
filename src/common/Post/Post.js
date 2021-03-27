@@ -120,7 +120,6 @@ export default function Post({ postObj }) {
         </Box>
 
         <Box className={styles.post_content}>
-          {/* {postObj.content} */}
           {truncatedContent}
           {!wholeContentIsShown && isStringTruncated && (
             <span className={styles.expand_content}
@@ -195,7 +194,6 @@ export default function Post({ postObj }) {
             !commentsAreExpanded ? styles.hidden : null
           }`}
         >
-          {/* comments container */}
           {postObj.comments.map((comment) => {
             return <Comment key={comment.commentId} commentObj={comment} />;
           })}

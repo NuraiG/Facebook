@@ -14,11 +14,12 @@ import {
   ThemeProvider,
 } from "@material-ui/core";
 
+import CloseIcon from "@material-ui/icons/Close";
 import PhotoOutlinedIcon from "@material-ui/icons/PhotoOutlined";
 import LocalOfferOutlinedIcon from "@material-ui/icons/LocalOfferOutlined";
 import MoodOutlinedIcon from "@material-ui/icons/MoodOutlined";
 
-import { blueGreenTheme, redOrangeTheme } from "../../customThemes";
+import { grayButtonTheme, blueGreenTheme, redOrangeTheme } from "../../customThemes";
 import styles from "./CreatePostDialog.module.scss";
 
 export default function CreatePostDialog({
@@ -51,14 +52,22 @@ export default function CreatePostDialog({
         aria-labelledby="form-dialog-title"
         className={styles.dialog}
       >
-        <DialogTitle id="form-dialog-title">Create Post</DialogTitle>
+        <DialogTitle id="form-dialog-title" className={styles.dialog_title}>
+          Create Post
+          <ThemeProvider theme={grayButtonTheme}>
+            <IconButton color="primary" onClick={onClose}>
+              <CloseIcon />
+            </IconButton>
+          </ ThemeProvider>
+        </DialogTitle>
         <form onSubmit={onSubmit}>
           <DialogContent className={styles.dialog_content}>
-            <DialogContentText>
+            <DialogContentText className={styles.post_author}>
               <Avatar />
               <h3>John Doe</h3>
             </DialogContentText>
             <InputBase
+              className={styles.dialog_input}
               inputProps={{ "aria-label": "naked" }}
               fullWidth
               multiline
@@ -69,21 +78,23 @@ export default function CreatePostDialog({
                 onInput(ev.target.value);
               }}
             />
-            <Box>
-              Add to Your Post
-              <IconButton>
-                <PhotoOutlinedIcon className={classes.greenBtn} />
-              </IconButton>
-              <IconButton>
-                <LocalOfferOutlinedIcon className={classes.blueBtn} />
-              </IconButton>
-              <IconButton>
-                <MoodOutlinedIcon className={classes.yellowBtn} />
-              </IconButton>
+            <Box className={styles.post_actions}>
+              <span>Add to Your Post</span>
+              <Box className={styles.action_buttons}>
+                <IconButton>
+                  <PhotoOutlinedIcon className={classes.greenBtn} />
+                </IconButton>
+                <IconButton>
+                  <LocalOfferOutlinedIcon className={classes.blueBtn} />
+                </IconButton>
+                <IconButton>
+                  <MoodOutlinedIcon className={classes.yellowBtn} />
+                </IconButton>
+              </Box>
             </Box>
           </DialogContent>
           <ThemeProvider theme={blueGreenTheme}>
-            <DialogActions>
+            <DialogActions className={styles.dialog_actions}>
               <Button
                 type="submit"
                 color="primary"
