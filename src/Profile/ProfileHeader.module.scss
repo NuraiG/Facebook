@@ -1,0 +1,28 @@
+
+img{
+    width: 100%;
+    object-fit: cover;
+    height: 360px;
+    position: relative;
+    border-radius: 10px;
+}
+.profilImage{
+    margin: 0 auto;
+    margin-top: -140px;
+    text-align: center;
+}
+h1{
+    text-align: center;
+    margin: 5px;
+    font-weight: 900;
+    font-size: 28px;
+}
+.camera{
+    position: absolute;
+    margin-top: -160;
+}
+.btn{
+    position: absolute;
+    margin-left: 760px;
+    margin-top: -80px;
+}
