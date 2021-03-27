@@ -18,6 +18,7 @@ import CloseIcon from "@material-ui/icons/Close";
 import PhotoOutlinedIcon from "@material-ui/icons/PhotoOutlined";
 import LocalOfferOutlinedIcon from "@material-ui/icons/LocalOfferOutlined";
 import MoodOutlinedIcon from "@material-ui/icons/MoodOutlined";
+import ArrowBackRoundedIcon from "@material-ui/icons/ArrowBackRounded";
 
 import {
   grayButtonTheme,
@@ -37,21 +38,27 @@ export default function CreatePostDialog({
   onSubmit,
   onTag,
   onDrag,
-  files
+  files,
+  setShowFeelingsModal,
+  showFeelingsModal,
+  postFeeling,
+  setPostFeeling,
 }) {
   const onDrop = useCallback(
     (acceptedFiles) => {
       onDrag([...files, ...acceptedFiles]);
       console.log(files);
-      
     },
     [onDrag, files]
   );
   const {
     getRootProps: getRootPropsNoClick,
     getInputProps: getInputPropsNoClick,
-  } = useDropzone({ noClick: true, onDrop, accept: 'image/*' });
-  const { getRootProps, getInputProps } = useDropzone({ onDrop, accept: 'image/*' });
+  } = useDropzone({ noClick: true, onDrop, accept: "image/*" });
+  const { getRootProps, getInputProps } = useDropzone({
+    onDrop,
+    accept: "image/*",
+  });
 
   const useStyles = makeStyles(() => ({
     greenBtn: {
@@ -76,56 +83,93 @@ export default function CreatePostDialog({
         className={styles.dialog}
       >
         <DialogTitle id="form-dialog-title" className={styles.dialog_title}>
-          Create Post
+          {showFeelingsModal ? "How are you feeling?" : "Create Post"}
           <ThemeProvider theme={grayButtonTheme}>
-            <IconButton color="primary" onClick={onClose}>
+            <IconButton
+              color="primary"
+              onClick={
+                showFeelingsModal ? () => setShowFeelingsModal(false) : onClose
+              }
+              className={showFeelingsModal ? styles.back_btn : styles.close_btn}
+            >
               <CloseIcon />
+              <ArrowBackRoundedIcon />
             </IconButton>
           </ThemeProvider>
         </DialogTitle>
         <form onSubmit={onSubmit}>
-          <DialogContent className={styles.dialog_content}>
-            <Box className={styles.post_author}>
-              <Avatar />
-              <h3>John Doe</h3>
-            </Box>
-            <InputBase
-              className={styles.dialog_input}
-              inputProps={{ "aria-label": "naked" }}
-              fullWidth
-              multiline
-              rows={4}
-              placeholder={placeholder}
-              value={text}
-              onInput={(ev) => {
-                onInput(ev.target.value);
-              }}
-            />
-            <div {...getRootPropsNoClick()} className={styles.drag_file}>
-              <input {...getInputPropsNoClick()} />
-            </div>
-            <Box className={styles.post_actions}>
-              <span>Add to Your Post</span>
-              <Box className={styles.action_buttons}>
-                <input {...getInputProps()}></input>
-                <Tooltip title="Photo/Video" placement="top">
-                  <IconButton {...getRootProps({ className: "dropzone" })}>
-                    <PhotoOutlinedIcon className={classes.greenBtn} />
-                  </IconButton>
-                </Tooltip>
-                <Tooltip title="Tag Friends" placement="top">
-                  <IconButton onClick={onTag}>
-                    <LocalOfferOutlinedIcon className={classes.blueBtn} />
-                  </IconButton>
-                </Tooltip>
-                <Tooltip title="Feeling" placement="top">
-                  <IconButton>
-                    <MoodOutlinedIcon className={classes.yellowBtn} />
-                  </IconButton>
-                </Tooltip>
+          {showFeelingsModal ? (
+            <DialogContent className={styles.dialog_content}>
+              <div className={styles.feelings_input_wrapper}>
+                <input
+                  className={styles.feelings_input}
+                  type="text"
+                  placeholder="How are you feeling?"
+                  value={postFeeling}
+                  onInput={(ev) => setPostFeeling(ev.target.value)}
+                />
+              </div>
+              <ThemeProvider theme={blueGreenTheme}>
+                <Button
+                  className={styles.feelings_btn}
+                  color="primary"
+                  variant="contained"
+                  onClick={() => setShowFeelingsModal(false)}
+                  fullWidth
+                  disabled={postFeeling.trim().length > 0 ? false : true}
+                >
+                  Select Feeling
+                </Button>
+              </ThemeProvider>
+            </DialogContent>
+          ) : (
+            <DialogContent className={styles.dialog_content}>
+              <Box className={styles.post_author}>
+                <Avatar />
+                <h3>
+                  John Doe
+                  {postFeeling.length > 0 ? " is feeling " + postFeeling : ""}
+                </h3>
               </Box>
-            </Box>
-          </DialogContent>
+              <InputBase
+                className={styles.dialog_input}
+                inputProps={{ "aria-label": "naked" }}
+                fullWidth
+                multiline
+                rows={4}
+                placeholder={placeholder}
+                value={text}
+                onInput={(ev) => {
+                  onInput(ev.target.value);
+                }}
+              />
+              <div {...getRootPropsNoClick()} className={styles.drag_file}>
+                <input {...getInputPropsNoClick()} />
+              </div>
+              <Box className={styles.post_actions}>
+                <span>Add to Your Post</span>
+                <Box className={styles.action_buttons}>
+                  <input {...getInputProps()}></input>
+                  <Tooltip title="Photo/Video" placement="top">
+                    <IconButton {...getRootProps({ className: "dropzone" })}>
+                      <PhotoOutlinedIcon className={classes.greenBtn} />
+                    </IconButton>
+                  </Tooltip>
+                  <Tooltip title="Tag Friends" placement="top">
+                    <IconButton onClick={onTag}>
+                      <LocalOfferOutlinedIcon className={classes.blueBtn} />
+                    </IconButton>
+                  </Tooltip>
+                  <Tooltip title="Feeling" placement="top">
+                    <IconButton onClick={() => setShowFeelingsModal(true)}>
+                      <MoodOutlinedIcon className={classes.yellowBtn} />
+                    </IconButton>
+                  </Tooltip>
+                </Box>
+              </Box>
+            </DialogContent>
+          )}
+
           <ThemeProvider theme={blueGreenTheme}>
             <DialogActions className={styles.dialog_actions}>
               <Button
@@ -134,7 +178,13 @@ export default function CreatePostDialog({
                 variant="contained"
                 onClick={onClose}
                 fullWidth
-                disabled={text.trim().length > 0 || files.length > 0 ? false : true}
+                disabled={
+                  text.trim().length > 0 ||
+                  files.length > 0 ||
+                  postFeeling.trim().length > 0
+                    ? false
+                    : true
+                }
               >
                 Post
               </Button>

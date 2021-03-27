@@ -50,14 +50,25 @@ export default function CreatePost({ placeholder }) {
     },
     [attachedFiles]
   );
-  const { getRootProps, getInputProps } = useDropzone({ onDrop, accept: 'image/*' });
+  const { getRootProps, getInputProps } = useDropzone({
+    onDrop,
+    accept: "image/*",
+  });
 
   const [postValue, setPostValue] = useState("");
+  const [postFeeling, setPostFeeling] = useState("");
+  const [showFeelingsModal, setShowFeelingsModal] = useState(false);
+  const openFeelingsModal = () => {
+    setShowFeelingsModal(true);
+    setIsDialogOpen(true);
+  }
+
   const onSubmit = (ev) => {
     ev.preventDefault();
     // TODO: send request to create post with postValue.trim()
     setPostValue("");
     setAttachedFiles([]);
+    setPostFeeling("");
   };
 
   const onTag = () => {
@@ -83,7 +94,6 @@ export default function CreatePost({ placeholder }) {
       fill: redOrangeTheme.palette.secondary.main,
     },
   }));
-
   const classes = useStyles();
 
   return (
@@ -139,6 +149,7 @@ export default function CreatePost({ placeholder }) {
             </Grid>
             <Grid item xs={4}>
               <Button
+                onClick={openFeelingsModal}
                 className={styles.actions_btn}
                 fullWidth
                 color="secondary"
@@ -160,6 +171,10 @@ export default function CreatePost({ placeholder }) {
         onTag={onTag}
         onDrag={setAttachedFiles}
         files={attachedFiles}
+        setShowFeelingsModal={setShowFeelingsModal}
+        showFeelingsModal={showFeelingsModal}
+        postFeeling={postFeeling}
+        setPostFeeling={setPostFeeling}
       />
     </ThemeProvider>
   );
