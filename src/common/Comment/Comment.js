@@ -6,12 +6,12 @@ import { useState, useCallback } from "react";
 import { getShortDate } from "../../timeUtils";
 import { Tooltip } from "@material-ui/core";
 
+import { truncateString } from "../../utils";
+import { MAX_COMMENT_LENGTH } from "../../constants";
+
 export default function Comment({ commentObj }) {
   // get the time for the post, formatted based on how long ago it was made
-  let timeToDisplay = getShortDate(
-    new Date().getTime(),
-    commentObj.timestamp
-  );
+  let timeToDisplay = getShortDate(new Date().getTime(), commentObj.timestamp);
   // need this for the date tooltip
   let fullDatePrettified = new Date(commentObj.timestamp).toUTCString();
 
@@ -19,15 +19,20 @@ export default function Comment({ commentObj }) {
   // to like or unlike the comment
   const toggle = useCallback(() => setIsLiked(!isLiked), [isLiked, setIsLiked]);
 
-  const truncateString = (description, maxLength) => {
-    if (!description) return null;
-    if (description.length <= maxLength) return description;
-    return `${description.substring(0, maxLength)}...`;
-  };
   const addLikes = () => {
     toggle();
     // modify the likes array;
   };
+
+  let [truncatedContent, setTruncatedContent] = useState(
+    truncateString(commentObj.content, MAX_COMMENT_LENGTH)
+  );
+  let isStringTruncated =
+    truncatedContent !== commentObj.content ? true : false;
+
+  let [wholeContentIsShown, setWholeContentIsShown] = useState(
+    !isStringTruncated
+  );
   return (
     <div className={styles.commentWrapper}>
       <div className={styles.imageWrapper}>
@@ -38,7 +43,20 @@ export default function Comment({ commentObj }) {
       <div className={styles.comment}>
         <div className={styles.commentBody}>
           <p> {commentObj.authorName}</p>
-          <div> {truncateString(commentObj.content, 100)}</div>
+          <div>
+            {truncatedContent}
+            {!wholeContentIsShown && isStringTruncated && (
+              <span
+                className={styles.expand_content}
+                onClick={() => {
+                  setTruncatedContent(commentObj.content);
+                  setWholeContentIsShown(true);
+                }}
+              >
+                See More
+              </span>
+            )}
+          </div>
           {commentObj.likes.length ? (
             <div className={styles.likes}>
               <div className={styles.likeicon}>

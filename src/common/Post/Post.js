@@ -27,6 +27,7 @@ import ThumbUpAltIcon from "@material-ui/icons/ThumbUpAlt";
 import ThumbUpAltOutlinedIcon from "@material-ui/icons/ThumbUpAltOutlined";
 import ChatBubbleOutlineRoundedIcon from "@material-ui/icons/ChatBubbleOutlineRounded";
 import { truncateString } from "../../utils";
+import { MAX_POST_LENGTH } from "../../constants";
 
 let currentUser = {
   id: "id",
@@ -43,7 +44,7 @@ export default function Post({ postObj }) {
   let [commentsAreExpanded, setCommentsAreExpanded] = useState(false);
   let [postTargetName, setPostTargetName] = useState(null);
   let [truncatedContent, setTruncatedContent] = useState(
-    truncateString(postObj.content, 300)
+    truncateString(postObj.content, MAX_POST_LENGTH)
   );
   let isStringTruncated = truncatedContent !== postObj.content ? true : false;
 
