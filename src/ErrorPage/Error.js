@@ -34,7 +34,7 @@ export default function Error() {
 								<Link onClick={()=>{goBack()}} className={styles.cursor}>Go Back</Link>
 							</Typography>
 							<Typography>
-								{/* <Link href="https://www.facebook.com/help">Visit Help Centre</Link> */}
+								<Link href="https://www.facebook.com/help">Visit Help Centre</Link>
 							</Typography> 
 						</ThemeProvider>
 					</div>
