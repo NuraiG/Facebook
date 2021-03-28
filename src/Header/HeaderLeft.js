@@ -34,7 +34,7 @@ export default function HeaderLeft() {
 
       <ThemeProvider theme={grayButtonTheme}>
         <HeaderNavOption
-          className={styles.header_btn}
+          className={`${styles.header_btn} ${styles.header_responsive_btn}`}
           key={"Menu"}
           tooltip={"Menu"}
           selected={btnSelected}

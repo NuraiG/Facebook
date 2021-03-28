@@ -11,14 +11,14 @@ import { grayTheme } from "../customThemes";
 import { AppBar, Toolbar } from "@material-ui/core";
 import { ThemeProvider } from "@material-ui/core/styles";
 
-export default function Header() {
+export default function Header({activeTab = "home"}) {
   return (
     <ThemeProvider theme={grayTheme}>
       <AppBar position="sticky" color="secondary" className={styles.header}>
         <Toolbar className={styles.header__wrapper}>
           <div className={styles.header__container}>
             <HeaderLeft />
-            <HeaderMiddle />
+            <HeaderMiddle activeTab={activeTab}/>
             <HeaderRight />
           </div>
         </Toolbar>

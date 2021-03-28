@@ -1,10 +1,12 @@
 import { Grid } from "@material-ui/core";
 import React from "react";
+import Header from "../Header/Header";
+import SideNavigation from "../SideNavigation"
 import CreatePost from "../common/CreatePost/CreatePost";
 import Post from "../common/Post/Post";
-import Header from "../Header/Header";
 
 import { posts, currentUser } from "../staticData";
+import styles from "./Home.module.scss";
 
 export default function Home() {
   return (
@@ -12,9 +14,9 @@ export default function Home() {
       <Header />
       <Grid container>
         <Grid item xs={3}>
-          {/* placeholder */}
+          <SideNavigation />
         </Grid>
-        <Grid item xs={6}>
+        <Grid item xs={6} className={styles.center_container}>
           <CreatePost placeholder={`What's on your mind, ${currentUser.firstName}?`}/>
           <Post postObj={posts[0]} />
           <Post postObj={posts[1]} />

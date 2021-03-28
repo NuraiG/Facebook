@@ -1,0 +1,44 @@
+@import "../constants.scss";
+
+aside.container {
+  padding-top: 20px;
+  padding-left: 10px;
+  padding-right: 35px;
+  .link {
+    text-decoration: none;
+    color: inherit;
+
+    &:active {
+      color: inherit;
+    }
+    &:visited {
+      color: inherit;
+    }
+  }
+  a.btn, button.btn {
+    text-transform: none;
+    font-weight: 700;
+    font-size: 15px;
+    height: 48px;
+    border-radius: 8px;
+    > span {
+      justify-content: flex-start;
+      > span {
+        > svg {
+          font-size: 28px;
+
+          &.hospital_icon {
+            color: #ae35be;
+          }
+          &.friends_icon {
+            color: $accent;
+          }
+        }
+        > div {
+          height: 28px;
+          width: 28px;
+        }
+      }
+    }
+  }
+}
