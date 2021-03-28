@@ -4,6 +4,7 @@ import Login from "./LoginPage/Login";
 import Profile from "./Profile/Profile";
 import SignUp from "./LoginPage/SignUp";
 import Error from "./ErrorPage/Error";
+import Header from "./Header/Header";
 
 // styles
 import "./App.css";
@@ -37,6 +38,7 @@ function App() {
               </Route>
 
               <Route exact path="/friends">
+                <Header activeTab="friends"/>
                 <h2>Friend requests page</h2>
               </Route>
 

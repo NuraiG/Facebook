@@ -13,18 +13,18 @@ import HomeRoundedIcon from "@material-ui/icons/HomeRounded";
 import PeopleAltOutlinedIcon from "@material-ui/icons/PeopleAltOutlined";
 import PeopleAltIcon from "@material-ui/icons/PeopleAlt";
 
-export default function HeaderMiddle() {
+export default function HeaderMiddle({activeTab}) {
   let [allHeaderOptions, setAllHeaderOptions] = useState([
     {
       tooltip: "Home",
-      selected: true,
+      selected: activeTab === "home",
       outline: <HomeOutlinedIcon color="secondary" fontSize="large" />,
       filled: <HomeRoundedIcon fontSize="large" />,
       linkTo: "/"
     },
     {
       tooltip: "Friends",
-      selected: false,
+      selected: activeTab === "friends",
       outline: <PeopleAltOutlinedIcon color="secondary" fontSize="large" />,
       filled: <PeopleAltIcon fontSize="large" />,
       linkTo: "/friends"

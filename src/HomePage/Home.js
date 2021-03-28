@@ -6,16 +6,17 @@ import CreatePost from "../common/CreatePost/CreatePost";
 import Post from "../common/Post/Post";
 
 import { posts, currentUser } from "../staticData";
+import styles from "./Home.module.scss";
 
 export default function Home() {
   return (
     <div>
       <Header />
-      <Grid container spacing={8}>
+      <Grid container>
         <Grid item xs={3}>
           <SideNavigation />
         </Grid>
-        <Grid item xs={6}>
+        <Grid item xs={6} className={styles.center_container}>
           <CreatePost placeholder={`What's on your mind, ${currentUser.firstName}?`}/>
           <Post postObj={posts[0]} />
           <Post postObj={posts[1]} />
