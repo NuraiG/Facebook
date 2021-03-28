@@ -1,0 +1,47 @@
+@import "../../constants.scss";
+
+.card {
+  padding: 15px 15px 10px 15px;
+  margin: 15px;
+}
+
+.form_wrapper {
+  display: flex;
+
+  form {
+    display: flex;
+    outline-width: 0;
+    border: none;
+    padding: 8px 12px;
+    margin: 0 10px;
+    border-radius: 999px;
+    background-color: $primary-bg;
+    justify-content: space-between;
+    width: 100%;
+    input {
+      outline-width: 0;
+      border: none;
+      border-radius: 999px;
+      background-color: $primary-bg;
+      width: 100%;
+      font-size: 17px;
+    }
+    button {
+      display: none;
+    }
+  }
+}
+
+.post_actions {
+  button.actions_btn {
+    text-transform: none;
+    font-size: 15px;
+    font-weight: 600;
+
+    svg {
+      font-size: 25px;
+    }
+  }
+}
+
+

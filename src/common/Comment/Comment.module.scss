@@ -35,6 +35,14 @@ $primary-background: #eff2f5;
         max-width: 300px;
         word-wrap: break-word;
       }
+      .expand_content {
+        cursor: pointer;
+        font-weight: 700;
+
+        &:hover {
+          text-decoration: underline;
+        }
+      }
       .likes {
         background-color: $primary-background;
         border-radius: 999px;

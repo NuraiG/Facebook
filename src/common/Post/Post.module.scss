@@ -49,6 +49,17 @@
     }
   }
 
+  .post_content {
+    .expand_content {
+      cursor: pointer;
+      font-weight: 700;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+
   .post_footer {
     .post_stats {
       padding: 7px 0;
@@ -81,10 +92,24 @@
 
     .post_react {
       button {
+        text-transform: none;
+        font-size: 15px;
         font-weight: 700;
 
         &.liked {
           color: $accent;
+        }
+      }
+
+      .comment_link {
+        text-decoration: none;
+        color: inherit;
+
+        &:active {
+          color: inherit;
+        }
+        &:visited {
+          color: inherit;
         }
       }
     }
