@@ -8,7 +8,8 @@ import {
   CardActions,
   CardActionArea,
   CardContent,
-  TextareaAutosize,
+  // TextareaAutosize,
+  Input,
 } from "@material-ui/core";
 import PhotoCameraIcon from "@material-ui/icons/PhotoCamera";
 
@@ -22,8 +23,8 @@ const currentUser = {
   lastName: "Doe",
   profile_image: "",
   cover_image: "",
-  id: 3,
-//   id:32,
+  // id: 3,
+  id:32,
 };
 export default function ProfileHeader({
   firstName,
@@ -45,9 +46,13 @@ export default function ProfileHeader({
   description = "Nature lover";
 
   //todo: add/change cover image
+  const changeCoverImage=()=>{}
+
   //todo: add/change profile image
-  //todo: add bio
-  //todo: change bio
+  const changeProfileimage=()=>{}
+
+  //todo: change bio/add bio
+   const changeBio=()=>{}
 
   // created custom avatar
   const StyledAvatar = withStyles({
@@ -83,7 +88,7 @@ export default function ProfileHeader({
               className={classes.button}
               size="large"
               startIcon={<PhotoCameraIcon />}
-              onClick={() => console.log("add cover image")}
+              onClick={() => {changeCoverImage()}}
             >
               {" "}
               Add Cover Photo
@@ -102,7 +107,7 @@ export default function ProfileHeader({
               badgeContent={
                 <PhotoCameraIcon
                   onClick={() => {
-                    console.log("change profile image");
+                    changeProfileimage()
                   }}
                   className={styles.icon}
                 />
@@ -123,14 +128,14 @@ export default function ProfileHeader({
         {/* view my profile and add bio */}
         {currentUser.id === id ? (
           <div className={styles.bio}>
-            {/* <p>{description}</p> */}
+          <p>{description}</p>
             {!isTextAreaOpen ? (
               <span
                 onClick={() => {
                   setTextArea(true);
                 }}
               >
-                Add Bio
+                {description ? 'Edit Bio' : 'Add Bio' }
               </span>
             ) : null}
             {isTextAreaOpen ? (
@@ -138,16 +143,16 @@ export default function ProfileHeader({
                 <Card>
                   <CardActionArea>
                     <CardContent>
-                      {/* <Input placeholder="Describe how your are"></Input> */}
-                      <TextareaAutosize
+                      <Input placeholder="Describe how your are"></Input>
+                      {/* <TextareaAutosize
                         aria-label="empty textarea"
                         placeholder="Describe how your are"
-                      />
+                      /> */}
                     </CardContent>
                   </CardActionArea>
                   <CardActions>
                     <Button onClick={() => setTextArea(false)}>Cancel</Button>
-                    <Button onClick={() => console.log("Save bio")}>
+                    <Button onClick={() => changeBio()}>
                       Save
                     </Button>
                   </CardActions>
