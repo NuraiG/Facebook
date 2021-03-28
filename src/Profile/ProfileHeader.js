@@ -1,29 +1,49 @@
 import React from 'react'
+//material ui
 import {Button, Avatar, Badge} from '@material-ui/core';
 import PhotoCameraIcon from '@material-ui/icons/PhotoCamera';
 import styles from './ProfileHeader.module.scss';
 import {withStyles} from '@material-ui/core/styles';
 import { makeStyles } from '@material-ui/core/styles';
 
-export default function ProfileHeader(userName, userImage, userCoverImage, userId) {
+//testing: current user;
+const currentUser = {firstName:'John',
+                    lastName:'Doe',
+                    // friends:[],
+                    profile_image: "",
+                    cover_image:"",
+                    // gender:'Male',
+                    // address:'Sofia',
+                    // birth_day:'',
+                    // id: 3,
+                    id:32,
+                    // posts:[],
+                }
+export default function ProfileHeader({firstName, profile_image, cover_image, id,lastName,friends}) {
 
     //for testing;
-    userName = "John Doe";
-    userImage = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRLVQKJyzWpzBfJQ4kH7H506LSloi9a7ThuuA&usqp=CAU";
-    userCoverImage = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSWMgXEhCQnvUB92US-XnJUWMnLtoy-zqqW2g&usqp=CAU";
-    userId = 3;
+    firstName = "John ";
+    lastName = "Doe";
+    profile_image = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRLVQKJyzWpzBfJQ4kH7H506LSloi9a7ThuuA&usqp=CAU";
+    cover_image = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSWMgXEhCQnvUB92US-XnJUWMnLtoy-zqqW2g&usqp=CAU";
+    id = 3;
+    friends=[];
 
     // created custom avatar 
     const StyledAvatar = withStyles({
         root: {
             width: 200,
             height: 200,
-        }
+            borderStyle: 'solid',
+            borderWidth: 7,
+            borderColor: 'white',
+        },
     })(Avatar);
 
     const useStyles = makeStyles((theme) => ({
         button: {
           margin: theme.spacing(3),
+          fontWeight:900,
         },
       }));
       const classes = useStyles();
@@ -32,20 +52,21 @@ export default function ProfileHeader(userName, userImage, userCoverImage, userI
         <>
             <div className={
                 styles.profileWrapper
-            }>
-                {/* <div className={styles.cover}> */}
-                <img src={userCoverImage}
-                    alt='cover'></img>
-                {/* </div> */}
-                {/* <div className={
-                    styles.profilImageWrapper
-                }> */}
+            }> <div className={styles.cover}>
+                {cover_image && <img src={cover_image}
+                    alt='cover'></img> }
+                    </div>
+                {currentUser.id === id &&
                 <div className={styles.btn}>
-                <Button variant="contained" color="default" className={classes.button} size="large"startIcon={<PhotoCameraIcon/>}> Add Cover Photo</Button>
+                    
+                <Button variant="contained" color="default"className={classes.button} size="large"startIcon={<PhotoCameraIcon/>}
+                onClick={()=>console.log("add cover image")}> Add Cover Photo</Button>
                 </div>
+}
                 <div className={
                     styles.profilImage
                 }>
+                    {currentUser.id === id ? 
                     <Badge overlap="circle"
                         anchorOrigin={
                             {
@@ -53,14 +74,13 @@ export default function ProfileHeader(userName, userImage, userCoverImage, userI
                                 horizontal: 'right'
                             }
                         }
-                        badgeContent={<PhotoCameraIcon style={
-                            {backgroundColor: "#eff2f5",
-                            borderRadius: '999px' ,padding: '2px'}
-                        }/>}>
-                        <StyledAvatar src={userImage}></StyledAvatar>
+                        badgeContent={<PhotoCameraIcon onClick={()=>{console.log("change profile image")}}
+                        className={styles.icon}/>}>
+                        <StyledAvatar src={profile_image}></StyledAvatar>
                     </Badge>
+: <StyledAvatar src={profile_image} className={styles.profilFriendImage}></StyledAvatar> }
                 </div>
-                <h1>{userName}</h1>
+                <h1>{firstName} {lastName}</h1>
             </div>
         </>
     );
