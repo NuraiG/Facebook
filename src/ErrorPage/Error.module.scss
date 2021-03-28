@@ -20,6 +20,10 @@
         width: 212px;
         align-self: center;
         margin: 20px;
+        @media only screen and(max-width: 900px) {
+            height: 112px;
+            width: 112px;
+        }
     }
     .cursor{
         cursor:pointer;

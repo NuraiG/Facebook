@@ -24,6 +24,9 @@
     position: absolute;
     margin-left: 760px;
     margin-top: -80px;
+    @media only screen and(max-width: 900px) {
+      display: none;
+    }
   }
   .profilImage {
     margin-top: -170px;
@@ -51,6 +54,9 @@
       cursor: pointer;
       &:hover {
         text-decoration: underline;
+      }
+      @media only screen and(max-width: 900px) {
+        // display: none;
       }
     }
   }

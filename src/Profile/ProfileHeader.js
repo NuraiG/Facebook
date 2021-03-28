@@ -11,11 +11,14 @@ import {
   // TextareaAutosize,
   Input,
 } from "@material-ui/core";
+
 import PhotoCameraIcon from "@material-ui/icons/PhotoCamera";
 
 import styles from "./ProfileHeader.module.scss";
 import { withStyles } from "@material-ui/core/styles";
 import { makeStyles } from "@material-ui/core/styles";
+
+// import { useDropzone } from "react-dropzone";
 
 //testing: current user;
 const currentUser = {
@@ -23,8 +26,8 @@ const currentUser = {
   lastName: "Doe",
   profile_image: "",
   cover_image: "",
-  // id: 3,
-  id:32,
+  id: 3,
+  // id:32,
 };
 export default function ProfileHeader({
   firstName,
@@ -51,7 +54,7 @@ export default function ProfileHeader({
   //todo: add/change profile image
   const changeProfileimage=()=>{}
 
-  //todo: change bio/add bio
+  //todo: edit bio/add bio
    const changeBio=()=>{}
 
   // created custom avatar
@@ -125,7 +128,7 @@ export default function ProfileHeader({
         <h1>
           {firstName} {lastName}
         </h1>
-        {/* view my profile and add bio */}
+        {/* view current user profile and add/edit bio */}
         {currentUser.id === id ? (
           <div className={styles.bio}>
           <p>{description}</p>
