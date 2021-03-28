@@ -20,12 +20,14 @@ export default function HeaderMiddle() {
       selected: true,
       outline: <HomeOutlinedIcon color="secondary" fontSize="large" />,
       filled: <HomeRoundedIcon fontSize="large" />,
+      linkTo: "/"
     },
     {
       tooltip: "Friends",
       selected: false,
       outline: <PeopleAltOutlinedIcon color="secondary" fontSize="large" />,
       filled: <PeopleAltIcon fontSize="large" />,
+      linkTo: "/friends"
     },
   ]);
 
@@ -54,6 +56,7 @@ export default function HeaderMiddle() {
             outline={option.outline}
             filled={option.filled}
             onClick={onSelect(option.tooltip)}
+            linkTo={option.linkTo}
           />
         ))}
       </div>

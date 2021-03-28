@@ -21,11 +21,14 @@ function App() {
         <Paper>
           <div className="App light">
             <Switch>
-              <Route path="/login">
+              <Route exact path="/login">
+                {/* when we stop testing, login and sign up page should not be openable when logged in */}
+                {/* {user ? <Redirect to="/" /> : <Login />} */}
                 <Login />
               </Route>
 
-              <Route path="/signUp">
+              <Route exact path="/signUp">
+                {/* {user ? <Redirect to="/" /> : <SignUp />} */}
                 <SignUp />
               </Route>
 
@@ -33,12 +36,16 @@ function App() {
                 <Profile />
               </Route>
 
+              <Route exact path="/friends">
+                <h2>Friend requests page</h2>
+              </Route>
+
               <Route exact path="/">
                 {user ? <Home /> : <Redirect to="/login" />}
               </Route>
 
               <Route path="*">
-                <Error/>
+                <Error />
               </Route>
             </Switch>
           </div>
