@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+
 //material ui
 import {
   Button,
@@ -8,10 +9,10 @@ import {
   CardActions,
   CardActionArea,
   CardContent,
-  // TextareaAutosize,
   Input,
 } from "@material-ui/core";
 
+//material icons
 import PhotoCameraIcon from "@material-ui/icons/PhotoCamera";
 
 import styles from "./ProfileHeader.module.scss";
@@ -41,12 +42,12 @@ export default function ProfileHeader({
   //for testing;
   firstName = "John ";
   lastName = "Doe";
-  profile_image =
-    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRLVQKJyzWpzBfJQ4kH7H506LSloi9a7ThuuA&usqp=CAU";
-  cover_image =
-    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSWMgXEhCQnvUB92US-XnJUWMnLtoy-zqqW2g&usqp=CAU";
+  // profile_image =
+  //   "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRLVQKJyzWpzBfJQ4kH7H506LSloi9a7ThuuA&usqp=CAU";
+  // cover_image =
+  //   "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSWMgXEhCQnvUB92US-XnJUWMnLtoy-zqqW2g&usqp=CAU";
   id = 3;
-  description = "Nature lover";
+  // description = "Nature lover";
 
   //todo: add/change cover image
   const changeCoverImage=()=>{}
@@ -146,11 +147,7 @@ export default function ProfileHeader({
                 <Card>
                   <CardActionArea>
                     <CardContent>
-                      <Input placeholder="Describe how your are"></Input>
-                      {/* <TextareaAutosize
-                        aria-label="empty textarea"
-                        placeholder="Describe how your are"
-                      /> */}
+                      <Input placeholder="Describe how your are" multiline></Input>
                     </CardContent>
                   </CardActionArea>
                   <CardActions>

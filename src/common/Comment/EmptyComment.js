@@ -1,7 +1,12 @@
 import React, { useState, useCallback } from "react";
+
+// material icons
 import PhotoCameraOutlinedIcon from "@material-ui/icons/PhotoCameraOutlined";
 import InsertEmoticonSharpIcon from "@material-ui/icons/InsertEmoticonSharp";
-import Avatar from "@material-ui/core/Avatar";
+
+//material ui
+import {Avatar} from "@material-ui/core";
+
 import styles from "./EmptyComment.module.scss";
 
 import { useDropzone } from "react-dropzone";
@@ -19,11 +24,11 @@ export default function EmptyComment({
     }
   };
   const addSmileToComment = () => {
-    let add = comment + " :) ";
+    let add = comment + " 😃";
     setComment(add);
   };
   
-  // todoadd image to comment
+  // todo add image to comment
 
   let [attachedFiles, setAttachedFiles] = useState([]);
   const onDrop = useCallback(
@@ -36,6 +41,8 @@ export default function EmptyComment({
     onDrop,
     accept: "image/*",
   });
+
+  
   return (
     <div className={styles.emptyComment}>
       <div className={styles.commentAuthor}>
@@ -52,6 +59,7 @@ export default function EmptyComment({
           label="Your comment here"
           placeholder="Write a comment..."
           onChange={(ev) => setComment(ev.target.value)}
+          multiple
         />
         <div className={styles.optional}>
           <InsertEmoticonSharpIcon
