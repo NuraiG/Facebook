@@ -6,6 +6,8 @@ import Intro from "./Intro";
 import CreatePost from "../common/CreatePost/CreatePost";
 
 import { Grid } from "@material-ui/core";
+import PostsFeed from "../PostsFeed";
+import { getAllPostsForUser } from "../service";
 
 export default function Profile({currentUser}) {
   const { id } = useParams();
@@ -24,6 +26,7 @@ export default function Profile({currentUser}) {
             </Grid>
             <Grid item xs={7}>
               <CreatePost currentUser={currentUser} target={({id: id, firstName: "John"})}/>
+              <PostsFeed getPostsFunction={getAllPostsForUser} userId={1}/>
             </Grid>
           </Grid>
         </Grid>

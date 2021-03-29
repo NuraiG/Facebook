@@ -28,9 +28,10 @@ import ThumbUpAltOutlinedIcon from "@material-ui/icons/ThumbUpAltOutlined";
 import ChatBubbleOutlineRoundedIcon from "@material-ui/icons/ChatBubbleOutlineRounded";
 import { truncateString } from "../../utils";
 import { MAX_POST_LENGTH } from "../../constants";
+import { getCommentsForPost, likePostRequest } from "../../service";
 
 let currentUser = {
-  id: "id",
+  id: "U99cAvfTmfhuHurhus6D5X2ejfo1",
   img: "",
   //...
 };
@@ -42,6 +43,7 @@ export default function Post({ postObj }) {
 
   let [postIsLiked, setPostIsLiked] = useState(checkIfUserHasLiked());
   let [commentsAreExpanded, setCommentsAreExpanded] = useState(false);
+  let [comments, setComments] = useState([]);
   let [postTargetName, setPostTargetName] = useState(null);
   let [truncatedContent, setTruncatedContent] = useState(
     truncateString(postObj.content, MAX_POST_LENGTH)
@@ -55,25 +57,37 @@ export default function Post({ postObj }) {
   // get the time for the post, formatted based on how long ago it was made
   let timeToDisplay = calculateAndFormatTime(
     new Date(),
-    new Date(postObj.timestamp)
+    new Date(postObj.timestamp?.toDate())
   );
   // need this for the date tooltip
-  let fullDatePrettified = new Date(postObj.timestamp).toUTCString();
+  let fullDatePrettified = new Date(postObj.timestamp?.toDate()).toUTCString();
 
   useEffect(() => {
-    if (postObj.author !== postObj.postTarget) {
+    if (postObj.createdById !== postObj.postTarget) {
       // TODO: make request to take the target name from db
       setPostTargetName("Other username");
     }
-  }, [postObj.author, postObj.postTarget]); // not sure about these dependencies
+  }, [postObj.createdById, postObj.postTarget]); // not sure about these dependencies
 
   let likePost = () => {
-    setPostIsLiked(!postIsLiked);
     // TODO: send request to add the user to the liked list
+    likePostRequest(postObj.id, currentUser.id, !postIsLiked);
+    setPostIsLiked(!postIsLiked);
   };
 
   let expandComments = () => {
     setCommentsAreExpanded(!commentsAreExpanded);
+    // TODO: show loader
+    getCommentsForPost(postObj.id)
+    .then(data => {
+      let dbComments = [];
+
+      data.forEach((doc) => {
+        dbComments.push({id: doc.id, ...doc.data()});
+      });
+
+      setComments(...comments, dbComments);
+    })
   };
 
   const useStyles = makeStyles(() => ({
@@ -96,11 +110,11 @@ export default function Post({ postObj }) {
     <ThemeProvider theme={grayTheme}>
       <Card color="secondary" className={styles.card}>
         <Box className={styles.post_header}>
-          <Avatar src={postObj.authorPhoto} />
+          <Avatar src={postObj.createdByPic} />
           <Box className={styles.post_info}>
             <h3>
-              <Link to={`/profile/${postObj.author}`}>
-                {postObj.authorName}
+              <Link to={`/profile/${postObj.createdById}`}>
+                {postObj.createdByFullName}
               </Link>
               {postTargetName && (
                 <>
@@ -123,7 +137,8 @@ export default function Post({ postObj }) {
         <Box className={styles.post_content}>
           {truncatedContent}
           {!wholeContentIsShown && isStringTruncated && (
-            <span className={styles.expand_content}
+            <span
+              className={styles.expand_content}
               onClick={() => {
                 setTruncatedContent(postObj.content);
                 setWholeContentIsShown(true);
@@ -147,8 +162,8 @@ export default function Post({ postObj }) {
             </Grid>
             <Grid item>
               <span onClick={expandComments} className={styles.stats_link}>
-                {postObj.comments.length > 0 &&
-                  `${postObj.comments.length} Comments`}
+                {postObj.numberOfComments > 0 &&
+                  `${postObj.numberOfComments} Comments`}
               </span>
             </Grid>
           </Grid>
@@ -195,9 +210,10 @@ export default function Post({ postObj }) {
             !commentsAreExpanded ? styles.hidden : null
           }`}
         >
-          {postObj.comments.map((comment) => {
-            return <Comment key={comment.commentId} commentObj={comment} />;
-          })}
+          {commentsAreExpanded &&
+            comments.map((comment) => {
+              return <Comment key={comment.id} commentObj={comment} />;
+            })}
         </div>
         <div className={styles.add_comment_container}>
           <EmptyComment postId={postObj.postId} authorImage={currentUser.img} />

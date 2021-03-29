@@ -30,7 +30,7 @@ import { createPost } from "../../service";
 //   `Write something to ${user.firstName}...`,
 // ];
 
-export default function CreatePost({ placeholder, currentUser, target }) {
+export default function CreatePost({ currentUser, target }) {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
 
   const handleDialogOpen = () => {
@@ -89,7 +89,7 @@ export default function CreatePost({ placeholder, currentUser, target }) {
 
   const onTag = () => {
     setPostValue(postValue + " @");
-    // on ' @' start suggesting friends and filter when typing
+    // TODO: on ' @' start suggesting friends and filter when typing
   };
 
   const useStyles = makeStyles(() => ({
@@ -112,6 +112,11 @@ export default function CreatePost({ placeholder, currentUser, target }) {
   }));
   const classes = useStyles();
 
+  let placeholder =
+    currentUser.id === target.id
+      ? `What's on your mind, ${currentUser.firstName}?`
+      : `Write something to ${target.firstName}...`;
+
   return (
     <ThemeProvider theme={grayTheme}>
       <Card color="secondary" className={styles.card}>
@@ -120,11 +125,7 @@ export default function CreatePost({ placeholder, currentUser, target }) {
           <form onSubmit={onSubmit}>
             <input
               type="text"
-              placeholder={
-                currentUser.id === target.id
-                  ? `What's on your mind, ${currentUser.firstName}?`
-                  : `Write something to ${target.firstName}...`
-              }
+              placeholder={placeholder}
               onClick={handleDialogOpen}
               value={postValue}
               readOnly

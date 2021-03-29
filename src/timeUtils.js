@@ -1,6 +1,5 @@
 function timeDifference(timestamp1, timestamp2) {
   let difference = timestamp1.getTime() - timestamp2.getTime();
-  console.log(difference);
 
   let yearsDifference = Math.floor(difference / 1000 / 60 / 60 / 24 / 365);
   difference -= yearsDifference * 1000 * 60 * 60 * 24 * 365;

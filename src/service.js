@@ -48,8 +48,22 @@ export function createPost(postData) {
     });
 }
 
-export function getAllPostsForUser(userId) {
-  return database.collection("posts").where("postTarget", "==", userId).get();
+export function getNumberOfPostsForUser(userId) {
+  return database
+    .collection("posts")
+    .where("postTargetId", "==", userId)
+    .get()
+    .then((querySnapshot) => querySnapshot.size);
+}
+
+export function getAllPostsForUser(userId, start = 0) {
+  return database
+    .collection("posts")
+    .where("postTargetId", "==", userId)
+    .orderBy("timestamp", "desc")
+    .startAfter(start)
+    .limit(2)
+    .get();
 }
 
 export function getAllPostsForNewsfeed(userId) {
@@ -74,21 +88,14 @@ export function updatePost(postId, dataToUpdate) {
     });
 }
 
-export function likePost(postId, currentUserId) {
+export function likePostRequest(postId, currentUserId, toLike) {
   return database
     .collection("posts")
     .doc(postId)
     .update({
-      likes: firebase.firestore.FieldValue.arrayUnion(currentUserId),
-    });
-}
-
-export function unlikePost(postId, currentUserId) {
-  return database
-    .collection("posts")
-    .doc(postId)
-    .update({
-      likes: firebase.firestore.FieldValue.arrayRemove(currentUserId),
+      likes: toLike
+        ? firebase.firestore.FieldValue.arrayUnion(currentUserId)
+        : firebase.firestore.FieldValue.arrayRemove(currentUserId),
     });
 }
 
@@ -113,20 +120,25 @@ export function createComment(postId, commentData) {
     );
 }
 
-export function likeComment(commentId, currentUserId) {
+export function likeCommentRequest(commentId, currentUserId, toLike) {
   return database
     .collection("comments")
     .doc(commentId)
     .update({
-      likes: firebase.firestore.FieldValue.arrayUnion(currentUserId),
+      likes: toLike
+        ? firebase.firestore.FieldValue.arrayUnion(currentUserId)
+        : firebase.firestore.FieldValue.arrayRemove(currentUserId),
     });
 }
 
-export function unlikeComment(commentId, currentUserId) {
-  return database
-    .collection("comments")
-    .doc(commentId)
-    .update({
-      likes: firebase.firestore.FieldValue.arrayRemove(currentUserId),
-    });
+export function getCommentsForPost(postId) {
+  return (
+    database
+      .collection("comments")
+      .where("postId", "==", postId + "")
+      .orderBy("timestamp", "desc")
+      // .startAfter(1)
+      // .limit(5)
+      .get()
+  );
 }
