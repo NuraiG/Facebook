@@ -17,21 +17,20 @@ import {
   redOrangeTheme,
 } from "../../customThemes";
 
-import { currentUser } from "../../staticData";
-
 import PhotoOutlinedIcon from "@material-ui/icons/PhotoOutlined";
 import LocalOfferOutlinedIcon from "@material-ui/icons/LocalOfferOutlined";
 import MoodOutlinedIcon from "@material-ui/icons/MoodOutlined";
 import CreatePostDialog from "./CreatePostDialog";
 
 import { useDropzone } from "react-dropzone";
+import { createPost } from "../../service";
 
 // let possiblePlaceholders = [
 //   `What's on your mind, ${currentUser.firstName}?`,
 //   `Write something to ${user.firstName}...`,
 // ];
 
-export default function CreatePost({ placeholder }) {
+export default function CreatePost({ placeholder, currentUser, target }) {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
 
   const handleDialogOpen = () => {
@@ -45,6 +44,7 @@ export default function CreatePost({ placeholder }) {
   let [attachedFiles, setAttachedFiles] = useState([]);
   const onDrop = useCallback(
     (newFiles) => {
+      // TODO: upload new image and push its url into the attachedFiles array
       setAttachedFiles([...attachedFiles, ...newFiles]);
       setIsDialogOpen(true);
     },
@@ -61,11 +61,27 @@ export default function CreatePost({ placeholder }) {
   const openFeelingsModal = () => {
     setShowFeelingsModal(true);
     setIsDialogOpen(true);
-  }
+  };
 
   const onSubmit = (ev) => {
     ev.preventDefault();
-    // TODO: send request to create post with postValue.trim()
+    // send request to create post with postValue.trim()
+    createPost({
+      createdById: currentUser.id,
+      createdByFullName: currentUser.firstName + " " + currentUser.lastName,
+      createdByPic: currentUser.profilePic,
+      postTargetId: target.id,
+      postTargetDesc: "wall",
+      attachedImages: attachedFiles,
+      content: postValue.trim(),
+      feeling: postFeeling.trim(),
+    })
+      .then(() => {
+        console.log("Document successfully written!");
+      })
+      .catch((error) => {
+        console.error("Error writing document: ", error);
+      });
     setPostValue("");
     setAttachedFiles([]);
     setPostFeeling("");
@@ -104,7 +120,11 @@ export default function CreatePost({ placeholder }) {
           <form onSubmit={onSubmit}>
             <input
               type="text"
-              placeholder={placeholder}
+              placeholder={
+                currentUser.id === target.id
+                  ? `What's on your mind, ${currentUser.firstName}?`
+                  : `Write something to ${target.firstName}...`
+              }
               onClick={handleDialogOpen}
               value={postValue}
               readOnly

@@ -14,7 +14,17 @@ import { globalTheme } from "./customThemes";
 import { Paper, ThemeProvider } from "@material-ui/core";
 
 function App() {
-  let user = "test";
+  let user = {
+    id: "U99cAvfTmfhuHurhus6D5X2ejfo1",
+    profilePic: "",
+    firstName: "Елица",
+    lastName: "Иванова",
+    registrationDate: "March 29, 2021 at 1:47:01 PM UTC+3",
+    birthDate: "March 29, 2000 at 1:47:01 PM UTC+3",
+    birthPlace: "Sofia",
+    residence: "Sofia",
+    gender: "Male",
+  };
 
   return (
     <BrowserRouter>
@@ -34,16 +44,16 @@ function App() {
               </Route>
 
               <Route path="/profile/:id">
-                <Profile />
+                <Profile currentUser={user}/>
               </Route>
 
               <Route exact path="/friends">
-                <Header activeTab="friends"/>
+                <Header activeTab="friends" />
                 <h2>Friend requests page</h2>
               </Route>
 
               <Route exact path="/">
-                {user ? <Home /> : <Redirect to="/login" />}
+                {user ? <Home user={user} /> : <Redirect to="/login" />}
               </Route>
 
               <Route path="*">

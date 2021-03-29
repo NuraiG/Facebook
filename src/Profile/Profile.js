@@ -4,12 +4,12 @@ import { useParams } from "react-router-dom";
 import ProfileHeader from "./ProfileHeader";
 import Intro from "./Intro";
 import CreatePost from "../common/CreatePost/CreatePost";
-import { currentUser } from "../staticData";
 
 import { Grid } from "@material-ui/core";
 
-export default function Profile() {
+export default function Profile({currentUser}) {
   const { id } = useParams();
+  // TODO: get profile by id and send it as target to the CreatePost component
 
   return (
     <div>
@@ -23,7 +23,7 @@ export default function Profile() {
               <Intro userProfileData={currentUser}/>
             </Grid>
             <Grid item xs={7}>
-              <CreatePost placeholder={`Write something to ${"John Doe"}...`} />
+              <CreatePost currentUser={currentUser} target={({id: id, firstName: "John"})}/>
             </Grid>
           </Grid>
         </Grid>
