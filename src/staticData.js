@@ -90,6 +90,11 @@ let currentUser = {
   profilePic: "",
   firstName: "John",
   lastName: "Doe",
+  registrationDate: 1616682161167,
+  birthDate: 1014682161167,
+  birthPlace: "Sofia",
+  residence: "Sofia",
+  gender: "male",
 };
 
 export { posts, currentUser };

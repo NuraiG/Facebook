@@ -1,0 +1,21 @@
+.card {
+  padding: 16px;
+  margin-top: 15px;
+
+  h2.heading {
+    font-weight: 700;
+    font-size: 20px;
+  }
+  
+  .profile_info {
+    padding-top: 16px;
+    font-size: 15px;
+    display: flex;
+    align-items: center;
+  
+    > svg {
+      padding-right: 5px;
+    }
+  }
+}
+
