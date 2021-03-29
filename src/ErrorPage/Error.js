@@ -15,7 +15,7 @@ export default function Error() {
 	}
 	return (
 		<div>
-			<Header />
+			<Header activeTab="none"/>
 			<Grid container>
 				<Grid item xs={4}></Grid>
 				<Grid item xs={4}>
