@@ -37,7 +37,6 @@ export default function CreatePostDialog({
   onInput,
   onSubmit,
   onTag,
-  // onDrag,
   onDrop,
   files,
   setShowFeelingsModal,
@@ -45,13 +44,6 @@ export default function CreatePostDialog({
   postFeeling,
   setPostFeeling,
 }) {
-  // const onDrop = useCallback(
-  //   (acceptedFiles) => {
-  //     onDrag([...files, ...acceptedFiles]);
-  //     console.log(files);
-  //   },
-  //   [onDrag, files]
-  // );
   const {
     getRootProps: getRootPropsNoClick,
     getInputProps: getInputPropsNoClick,

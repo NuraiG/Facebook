@@ -16,7 +16,7 @@ import { Paper, ThemeProvider } from "@material-ui/core";
 function App() {
   let user = {
     id: "U99cAvfTmfhuHurhus6D5X2ejfo1",
-    profilePic: "",
+    profile_image: "",
     firstName: "Елица",
     lastName: "Иванова",
     registrationDate: "March 29, 2021 at 1:47:01 PM UTC+3",

@@ -32,7 +32,14 @@ import { getCommentsForPost, likePostRequest } from "../../service";
 
 let currentUser = {
   id: "U99cAvfTmfhuHurhus6D5X2ejfo1",
-  img: "",
+  profile_image: "",
+  firstName: "Елица",
+  lastName: "Иванова",
+  registrationDate: "March 29, 2021 at 1:47:01 PM UTC+3",
+  birthDate: "March 29, 2000 at 1:47:01 PM UTC+3",
+  birthPlace: "Sofia",
+  residence: "Sofia",
+  gender: "Female",
   //...
 };
 
@@ -80,16 +87,15 @@ export default function Post({ postObj }) {
   let expandComments = () => {
     setCommentsAreExpanded(!commentsAreExpanded);
     // TODO: show loader
-    getCommentsForPost(postObj.id)
-    .then(data => {
+    getCommentsForPost(postObj.id).then((data) => {
       let dbComments = [];
 
       data.forEach((doc) => {
-        dbComments.push({id: doc.id, ...doc.data()});
+        dbComments.push({ id: doc.id, ...doc.data() });
       });
 
       setComments(...comments, dbComments);
-    })
+    });
   };
 
   const useStyles = makeStyles(() => ({
@@ -218,7 +224,7 @@ export default function Post({ postObj }) {
             })}
         </div>
         <div className={styles.add_comment_container}>
-          <EmptyComment postId={postObj.postId} authorImage={currentUser.img} />
+          <EmptyComment postId={postObj.id} currentUser={currentUser} />
         </div>
       </Card>
     </ThemeProvider>

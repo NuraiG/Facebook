@@ -65,16 +65,10 @@ export default function CreatePost({ currentUser, target }) {
             uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
               console.log("File available at", downloadURL);
               setAttachedFiles([...attachedFiles, downloadURL]);
-              console.log(attachedFiles);
-
-              //   Create posts
             });
           }
         );
       });
-
-      // TODO: upload new image and push its url into the attachedFiles array
-      // setAttachedFiles([...attachedFiles, ...newFiles]);
       setIsDialogOpen(true);
     },
     [attachedFiles, currentUser.id]
@@ -98,7 +92,7 @@ export default function CreatePost({ currentUser, target }) {
     createPost({
       createdById: currentUser.id,
       createdByFullName: currentUser.firstName + " " + currentUser.lastName,
-      createdByPic: currentUser.profilePic,
+      createdByPic: currentUser.profile_image,
       postTargetId: target.id,
       postTargetDesc: "wall",
       attachedImages: attachedFiles,
@@ -111,8 +105,11 @@ export default function CreatePost({ currentUser, target }) {
       .catch((error) => {
         console.error("Error writing document: ", error);
       });
+    if (attachedFiles.length > 0) {
+      // TODO: add images to profile
+      setAttachedFiles([]);
+    }
     setPostValue("");
-    setAttachedFiles([]);
     setPostFeeling("");
   };
 
@@ -150,7 +147,7 @@ export default function CreatePost({ currentUser, target }) {
     <ThemeProvider theme={grayTheme}>
       <Card color="secondary" className={styles.card}>
         <div className={styles.form_wrapper}>
-          <Avatar src={currentUser.profilePic} />
+          <Avatar src={currentUser.profile_image} />
           <form onSubmit={onSubmit}>
             <input
               type="text"
@@ -219,7 +216,6 @@ export default function CreatePost({ currentUser, target }) {
         onInput={setPostValue}
         onSubmit={onSubmit}
         onTag={onTag}
-        // onDrag={setAttachedFiles}
         onDrop={onDrop}
         files={attachedFiles}
         setShowFeelingsModal={setShowFeelingsModal}
