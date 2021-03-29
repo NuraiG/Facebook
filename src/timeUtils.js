@@ -1,5 +1,6 @@
 function timeDifference(timestamp1, timestamp2) {
-  let difference = timestamp1 - timestamp2;
+  let difference = timestamp1.getTime() - timestamp2.getTime();
+  console.log(difference);
 
   let yearsDifference = Math.floor(difference / 1000 / 60 / 60 / 24 / 365);
   difference -= yearsDifference * 1000 * 60 * 60 * 24 * 365;
@@ -53,4 +54,9 @@ function getShortDate(timestamp1, timestamp2) {
   return timeFromPostCreated.minutesDifference + "m";
 }
 
-export { timeDifference, calculateAndFormatTime, getShortDate };
+function getTimestampFromDate(date) {
+  date = date.split("-");
+  return new Date(date[0], date[1] - 1, date[2]);
+}
+
+export { timeDifference, calculateAndFormatTime, getShortDate, getTimestampFromDate };

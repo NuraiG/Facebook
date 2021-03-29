@@ -42,7 +42,7 @@ let posts = [
         // likes=[];
         content: "I like it",
         images: [],
-        timestamp: 1616683161167,
+        timestamp: "March 29, 2021 at 1:47:01 PM UTC+3",
       },
       {
         commentId: 3,
@@ -50,7 +50,7 @@ let posts = [
         authorName: "John Doe",
         authorPhoto: "",
         likes: ["", "", "", ""],
-        timestamp: 1616672141135,
+        timestamp: "March 29, 2021 at 1:47:01 PM UTC+3",
         images: [],
         content:
           "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse sit amet condimentum sem. Donec blandit lobortis augue, et porta orci vehicula vel. Proin sodales commodo diam, eu hendrerit arcu vestibulum malesuada. Nulla porta odio sed velit iaculis rhoncus. Quisque id metus non felis consequat porttitor id et elit. Nam scelerisque mollis velit eget eleifend. Proin sit amet vulputate nibh.",
@@ -61,7 +61,7 @@ let posts = [
         authorName: "John Doe",
         authorPhoto: "",
         likes: ["", "", "", ""],
-        timestamp: 1616672141135,
+        timestamp: "March 29, 2021 at 1:47:01 PM UTC+3",
         images: [],
         content:
           "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse sit amet condimentum sem. Donec blandit lobortis augue, et porta orci vehicula vel. Proin sodales commodo diam, eu hendrerit arcu vestibulum malesuada. Nulla porta odio sed velit iaculis rhoncus. Quisque id metus non felis consequat porttitor id et elit. Nam scelerisque mollis velit eget eleifend. Proin sit amet vulputate nibh.",
@@ -72,7 +72,7 @@ let posts = [
         authorName: "John Doe",
         authorPhoto: "",
         likes: [""],
-        timestamp: 1616672141135,
+        timestamp: "March 29, 2021 at 1:47:01 PM UTC+3",
         images: [],
         content:
           "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin sodales commodo diam, eu hendrerit arcu vestibulum malesuada. Nulla porta odio sed velit iaculis rhoncus. Quisque id metus non felis consequat porttitor id et elit. Nam scelerisque mollis velit eget eleifend.",
@@ -81,7 +81,7 @@ let posts = [
     content:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse sit amet condimentum sem. Donec blandit lobortis augue, et porta orci vehicula vel. Proin sodales commodo diam, eu hendrerit arcu vestibulum malesuada. Nulla porta odio sed velit iaculis rhoncus. Quisque id metus non felis consequat porttitor id et elit. Nam scelerisque mollis velit eget eleifend. Proin sit amet vulputate nibh.",
     images: [],
-    timestamp: 1616682161167,
+    timestamp: "March 29, 2021 at 1:47:01 PM UTC+3",
   },
 ];
 
@@ -90,6 +90,11 @@ let currentUser = {
   profilePic: "",
   firstName: "John",
   lastName: "Doe",
+  registrationDate: "March 29, 2021 at 1:47:01 PM UTC+3",
+  birthDate: "March 29, 2000 at 1:47:01 PM UTC+3",
+  birthPlace: "Sofia",
+  residence: "Sofia",
+  gender: "male",
 };
 
 export { posts, currentUser };

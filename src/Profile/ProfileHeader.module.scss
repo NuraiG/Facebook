@@ -1,5 +1,6 @@
 .profileWrapper {
   text-align: center;
+  position: relative;
   .cover {
     width: 100%;
     object-fit: cover;
@@ -21,9 +22,14 @@
     }
   }
   .btn {
-    position: absolute;
-    margin-left: 760px;
-    margin-top: -80px;
+    position: relative;
+    // margin-left: 760px;
+    margin-top: -90px;
+    width: 100%;
+    > button {
+      position: absolute;
+      right: 0;
+    }
     @media only screen and(max-width: 900px) {
       display: none;
     }

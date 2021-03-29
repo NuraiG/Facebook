@@ -54,8 +54,8 @@ export default function Post({ postObj }) {
 
   // get the time for the post, formatted based on how long ago it was made
   let timeToDisplay = calculateAndFormatTime(
-    new Date().getTime(),
-    postObj.timestamp
+    new Date(),
+    new Date(postObj.timestamp)
   );
   // need this for the date tooltip
   let fullDatePrettified = new Date(postObj.timestamp).toUTCString();

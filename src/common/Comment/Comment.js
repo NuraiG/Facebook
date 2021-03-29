@@ -11,7 +11,7 @@ import { MAX_COMMENT_LENGTH } from "../../constants";
 
 export default function Comment({ commentObj }) {
   // get the time for the post, formatted based on how long ago it was made
-  let timeToDisplay = getShortDate(new Date().getTime(), commentObj.timestamp);
+  let timeToDisplay = getShortDate(new Date(), new Date(commentObj.timestamp));
   // need this for the date tooltip
   let fullDatePrettified = new Date(commentObj.timestamp).toUTCString();
 

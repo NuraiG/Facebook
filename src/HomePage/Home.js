@@ -11,7 +11,7 @@ import styles from "./Home.module.scss";
 export default function Home() {
   return (
     <div>
-      <Header />
+      <Header activeTab="home"/>
       <Grid container>
         <Grid item xs={3}>
           <SideNavigation />

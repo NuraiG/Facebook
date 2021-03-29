@@ -5,6 +5,7 @@ import styles from './Login.module.scss';
 import {ThemeProvider} from '@material-ui/styles';
 import facebook from './facebook-loginPage.svg';
 import { customButtonBlueGreen } from "../customThemes";
+import { login } from '../service';
 
 export default function Login() {
 
@@ -12,14 +13,22 @@ export default function Login() {
     const [password, setPassword] = React.useState('');
 
     const setHandlerInputEmail = (e) => {
-        e.preventDefault();
-        console.log(e.target.value);
         setEmail(e.target.value);
     }
     const setHandlerInputPassword = (e) => {
-        e.preventDefault();
-        console.log(e.target.value);
         setPassword(e.target.value);
+    }
+
+    const onSubmit = () => {
+        login(email, password)
+        .then((userCredential) => {
+            // Signed in
+            let user = userCredential.user;
+            console.log(user.uid);
+          })
+          .catch((error) => {
+            console.log(error);
+          });
     }
     return (
         <div className={
@@ -58,10 +67,10 @@ export default function Login() {
                         }/>
                 </div>
                 <ThemeProvider theme={customButtonBlueGreen}>
-                    <Button color="primary" variant="contained" size="large">Log In</Button>
+                    <Button color="primary" variant="contained" size="large" onClick={onSubmit}>Log In</Button>
                 </ThemeProvider>
                 <Link to='/forgottenPassword'>Forgot Password?</Link>
-                <Divider flexItem/> {/* todo: onClick=> login with email and password */}
+                <Divider flexItem/>
                 <ThemeProvider theme={customButtonBlueGreen}>
                     <Link to='/signUp'
                         style={
