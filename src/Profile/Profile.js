@@ -15,8 +15,8 @@ export default function Profile() {
     <div>
       <Header activeTab="none" />
       <Grid container>
-        <Grid item xs={2}></Grid>
-        <Grid item xs={8}>
+        <Grid item xs={1}></Grid>
+        <Grid item xs={10}>
           <ProfileHeader />
           <Grid container>
             <Grid item xs={5}>
@@ -27,7 +27,7 @@ export default function Profile() {
             </Grid>
           </Grid>
         </Grid>
-        <Grid item xs={2}></Grid>
+        <Grid item xs={1}></Grid>
       </Grid>
     </div>
   );
