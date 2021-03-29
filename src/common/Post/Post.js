@@ -55,12 +55,14 @@ export default function Post({ postObj }) {
   );
 
   // get the time for the post, formatted based on how long ago it was made
-  let timeToDisplay = calculateAndFormatTime(
-    new Date(),
-    new Date(postObj.timestamp?.toDate())
-  );
+  // let timeToDisplay = calculateAndFormatTime(
+  //   new Date(),
+  //   new Date(postObj.timestamp?.toDate())
+  // );
   // need this for the date tooltip
-  let fullDatePrettified = new Date(postObj.timestamp?.toDate()).toUTCString();
+  // let fullDatePrettified = new Date(postObj.timestamp?.toDate()).toUTCString();
+  let timeToDisplay = 0;
+  let fullDatePrettified = 0;
 
   useEffect(() => {
     if (postObj.createdById !== postObj.postTarget) {

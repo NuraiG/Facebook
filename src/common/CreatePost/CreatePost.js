@@ -24,6 +24,7 @@ import CreatePostDialog from "./CreatePostDialog";
 
 import { useDropzone } from "react-dropzone";
 import { createPost } from "../../service";
+import { storage } from "../../firebase";
 
 // let possiblePlaceholders = [
 //   `What's on your mind, ${currentUser.firstName}?`,
@@ -44,11 +45,39 @@ export default function CreatePost({ currentUser, target }) {
   let [attachedFiles, setAttachedFiles] = useState([]);
   const onDrop = useCallback(
     (newFiles) => {
+      newFiles.forEach((file) => {
+        const uploadTask = storage
+          .ref()
+          .child("images/" + currentUser.id + Date.now())
+          .put(file);
+
+        uploadTask.on(
+          "state_changed",
+          (snapshot) => {
+            var progress =
+              (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+            console.log("Upload is " + progress + "% done");
+          },
+          (error) => {
+            console.log(error);
+          },
+          () => {
+            uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
+              console.log("File available at", downloadURL);
+              setAttachedFiles([...attachedFiles, downloadURL]);
+              console.log(attachedFiles);
+
+              //   Create posts
+            });
+          }
+        );
+      });
+
       // TODO: upload new image and push its url into the attachedFiles array
-      setAttachedFiles([...attachedFiles, ...newFiles]);
+      // setAttachedFiles([...attachedFiles, ...newFiles]);
       setIsDialogOpen(true);
     },
-    [attachedFiles]
+    [attachedFiles, currentUser.id]
   );
   const { getRootProps, getInputProps } = useDropzone({
     onDrop,
@@ -190,7 +219,8 @@ export default function CreatePost({ currentUser, target }) {
         onInput={setPostValue}
         onSubmit={onSubmit}
         onTag={onTag}
-        onDrag={setAttachedFiles}
+        // onDrag={setAttachedFiles}
+        onDrop={onDrop}
         files={attachedFiles}
         setShowFeelingsModal={setShowFeelingsModal}
         showFeelingsModal={showFeelingsModal}

@@ -60,7 +60,7 @@ export function getAllPostsForUser(userId, start = 0) {
   return database
     .collection("posts")
     .where("postTargetId", "==", userId)
-    .orderBy("timestamp", "desc")
+    .orderBy("timestamp")
     .startAfter(start)
     .limit(2)
     .get();

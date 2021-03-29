@@ -37,20 +37,21 @@ export default function CreatePostDialog({
   onInput,
   onSubmit,
   onTag,
-  onDrag,
+  // onDrag,
+  onDrop,
   files,
   setShowFeelingsModal,
   showFeelingsModal,
   postFeeling,
   setPostFeeling,
 }) {
-  const onDrop = useCallback(
-    (acceptedFiles) => {
-      onDrag([...files, ...acceptedFiles]);
-      console.log(files);
-    },
-    [onDrag, files]
-  );
+  // const onDrop = useCallback(
+  //   (acceptedFiles) => {
+  //     onDrag([...files, ...acceptedFiles]);
+  //     console.log(files);
+  //   },
+  //   [onDrag, files]
+  // );
   const {
     getRootProps: getRootPropsNoClick,
     getInputProps: getInputPropsNoClick,

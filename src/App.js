@@ -23,7 +23,7 @@ function App() {
     birthDate: "March 29, 2000 at 1:47:01 PM UTC+3",
     birthPlace: "Sofia",
     residence: "Sofia",
-    gender: "Male",
+    gender: "Female",
   };
 
   return (

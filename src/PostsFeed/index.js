@@ -38,7 +38,8 @@ export default function PostsFeed({ getPostsFunction, userId }) {
       <InfiniteScroll
         dataLength={posts.length}
         next={fetchMoreData}
-        hasMore={numberOfAllPosts <= posts.length}
+        hasMore={numberOfAllPosts > posts.length}
+        // hasMore={true}
         loader={<h4>Loading...</h4>}
       >
         {posts.map((current) => (
