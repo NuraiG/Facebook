@@ -54,7 +54,7 @@ export function getUserById(userId) {
     .collection("users")
     .doc(userId)
     .get()
-    .then((res) => res.data);
+    .then((res) => res.data());
   // .then((res) => console.log(res.data()));
 }
 export function editProfileImage(userId, newImage) {
