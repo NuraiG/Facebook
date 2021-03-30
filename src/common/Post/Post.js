@@ -223,7 +223,7 @@ export default function Post({ postObj }) {
           })}
         </div>
         <div className={styles.add_comment_container}>
-          <EmptyComment postId={postObj.id} currentUser={currentUser}/>
+          <EmptyComment postId={postObj.id} currentUser={currentUser} />
         </div>
       </Card>
     </ThemeProvider>
