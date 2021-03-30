@@ -1,5 +1,6 @@
-import React, { useState, useEffect, useCallback } from "react";
-import firebase, { database, storage } from "../firebase";
+import React, { useState,  useCallback } from "react";
+import  { storage } from "../firebase";
+import {updateUserBio, editProfileImage, editCoverImage} from "../service";
 
 //material ui
 import {
@@ -44,29 +45,20 @@ export default function ProfileHeader({
   const [coverImage,setCoverImage]=useState('');
   const [bio,setBio] = useState('');
 
-  let currId="i8gEgFRafjdBrr9iizH62tb45L62";
+  
+
+  let currId="Fy83HbX6cxX2VPPA7QG7bu3QTwr1";
   //for testing;
   firstName = "John ";
   lastName = "Doe";
-  // profile_image =
-  //   "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRLVQKJyzWpzBfJQ4kH7H506LSloi9a7ThuuA&usqp=CAU";
-  // cover_image =
-  //   "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSWMgXEhCQnvUB92US-XnJUWMnLtoy-zqqW2g&usqp=CAU";
   id = 3;
   // description = "Nature lover";
+
+
+  // add or edit cover image
   const onDropCover = useCallback((acceptedFile) => { 
     setCoverImage(acceptedFile[0]);
-  }, []);
-
-  const { getRootProps: getRootPropsCover, getInputProps: getInputPropsCover } = useDropzone({
-    onDrop: onDropCover,
-    accept: "image/*",
-  });
-
-  //todo: add/change cover image
-  const changeCoverImage=()=>
-  {
-  const uploadTask = storage
+    const uploadTask = storage
     .ref()
     .child("images/" + Date.now())
     .put(coverImage);
@@ -74,46 +66,28 @@ export default function ProfileHeader({
   uploadTask.on(
     "state_changed",
     (snapshot) => {
-      var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-      console.log("Upload is " + progress + "% done");
+      console.log("Upload is done");
     },
     (error) => {},
     () => {
       uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
-
-        database
-          .collection("users")
-          .doc(currId)
-          .set({
-            cover_image: downloadURL,
-            images: firebase.firestore.FieldValue.arrayUnion(downloadURL)
-          })
-          .then(() => {
-            console.log("Document successfully written!");
-            console.log("Cover image",cover_image);
-          })
-          .catch((error) => {
-            console.error( error);
-          });
-
+        editCoverImage(currId,downloadURL);
       });
     }
   );
-};
-  console.log( 'Cover:',coverImage)
-  console.log('Profile',profileImage);
-  const onDrop = useCallback((acceptedFile) => { 
-    setProfileImage(acceptedFile[0]);
-  }, []);
 
-  const { getRootProps, getInputProps } = useDropzone({
-    onDrop,
+  }, [coverImage,currId]);
+
+  const { getRootProps: getRootPropsCover, getInputProps: getInputPropsCover } = useDropzone({
+    onDrop: onDropCover,
     accept: "image/*",
   });
 
-  const changeProfileImage = () => {
 
-  const uploadTask = storage
+// add or edit profile image;
+  const onDrop = useCallback((acceptedFile) => { 
+    setProfileImage(acceptedFile[0]);
+    const uploadTask = storage
     .ref()
     .child("images/" + Date.now())
     .put(profileImage);
@@ -121,35 +95,29 @@ export default function ProfileHeader({
   uploadTask.on(
     "state_changed",
     (snapshot) => {
-      var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-      console.log("Upload is " + progress + "% done");
+      console.log("Upload is done");
     },
     (error) => {},
     () => {
       uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
-
-        database
-          .collection("users")
-          .doc(currId)
-          .update({
-            profile_image: downloadURL,
-            images: firebase.firestore.FieldValue.arrayUnion(downloadURL)
-          })
-          .then(() => {
-            console.log("Document successfully written!");
-            console.log("Profile image",profile_image);
-          })
-          .catch((error) => {
-            console.error( error);
-          });
-
+        editProfileImage(currId,downloadURL);
       });
     }
   );
-};
+  }, [profileImage,currId]);
 
-  //todo: edit bio/add bio
-   const changeBio=()=>{}
+  
+  const { getRootProps, getInputProps } = useDropzone({
+    onDrop,
+    accept: "image/*",
+  }); 
+
+  
+
+  //edit bio/add bio
+   const changeBio=()=>{
+    updateUserBio(currId,bio);
+   }
 
   // created custom avatar
   const StyledAvatar = withStyles({
@@ -186,7 +154,7 @@ export default function ProfileHeader({
               color="default"
               className={classes.button}
               size="large"
-              startIcon={<PhotoCameraIcon onClick={changeCoverImage} />}
+              startIcon={<PhotoCameraIcon />}
             >
               {" "}
               Add Cover Photo
@@ -199,7 +167,6 @@ export default function ProfileHeader({
             <React.Fragment>
             <input {...getInputProps()}></input>
             <Badge
-            {...getRootProps({ className: "dropzone" })}
               overlap="circle"
               anchorOrigin={{
                 vertical: "bottom",
@@ -207,7 +174,7 @@ export default function ProfileHeader({
               }}
               badgeContent={
                 <PhotoCameraIcon
-                  onClick={changeProfileImage}
+                {...getRootProps({ className: "dropzone" })}
                   className={styles.icon}
                 />
               }
@@ -243,12 +210,16 @@ export default function ProfileHeader({
                 <Card>
                   <CardActionArea>
                     <CardContent>
-                      <Input placeholder="Describe how your are" multiline></Input>
+                      <Input placeholder="Describe how your are" multiline value={bio} onInput={(ev)=>{setBio(ev.target.value)}}></Input>
                     </CardContent>
                   </CardActionArea>
                   <CardActions>
                     <Button onClick={() => setTextArea(false)}>Cancel</Button>
-                    <Button onClick={() => changeBio()}>
+                    <Button onClick={() =>{
+                     changeBio()
+                     setTextArea(false)
+                    }
+                    }>
                       Save
                     </Button>
                   </CardActions>
