@@ -8,20 +8,37 @@ import { Tooltip } from "@material-ui/core";
 
 import { truncateString } from "../../utils";
 import { MAX_COMMENT_LENGTH } from "../../constants";
+import { likeCommentRequest } from "../../service";
+
+let currentUser = {
+  id: "U99cAvfTmfhuHurhus6D5X2ejfo1",
+  profile_image: "",
+  firstName: "Елица",
+  lastName: "Иванова",
+  registrationDate: "March 29, 2021 at 1:47:01 PM UTC+3",
+  birthDate: "March 29, 2000 at 1:47:01 PM UTC+3",
+  birthPlace: "Sofia",
+  residence: "Sofia",
+  gender: "Female",
+  //...
+};
 
 export default function Comment({ commentObj }) {
   // get the time for the post, formatted based on how long ago it was made
-  let timeToDisplay = getShortDate(new Date(), new Date(commentObj.timestamp));
+  let timeToDisplay = getShortDate(new Date(), new Date(commentObj.timestamp?.toDate()));
   // need this for the date tooltip
-  let fullDatePrettified = new Date(commentObj.timestamp).toUTCString();
+  let fullDatePrettified = new Date(commentObj.timestamp?.toDate()).toUTCString();
 
-  const [isLiked, setIsLiked] = useState(0);
+  let checkIfUserHasLiked = () => {
+    return commentObj.likes.some((id) => id === currentUser.id);
+  };
+  const [isLiked, setIsLiked] = useState(checkIfUserHasLiked());
   // to like or unlike the comment
   const toggle = useCallback(() => setIsLiked(!isLiked), [isLiked, setIsLiked]);
 
   const addLikes = () => {
+    likeCommentRequest(commentObj.id, currentUser.id, !isLiked);
     toggle();
-    // modify the likes array;
   };
 
   let [truncatedContent, setTruncatedContent] = useState(
@@ -36,13 +53,13 @@ export default function Comment({ commentObj }) {
   return (
     <div className={styles.commentWrapper}>
       <div className={styles.imageWrapper}>
-      <Link to={`/profile/${commentObj.authorName}`}>
-          <Avatar alt={commentObj.authorName} src={commentObj.authorPhoto} />
+      <Link to={`/profile/${commentObj.createdByFullName}`}>
+          <Avatar alt={commentObj.createdByFullName} src={commentObj.createdByPic} />
         </Link>
       </div>
       <div className={styles.comment}>
         <div className={styles.commentBody}>
-          <p> {commentObj.authorName}</p>
+          <p>{commentObj.createdByFullName}</p>
           <div>
             {truncatedContent}
             {!wholeContentIsShown && isStringTruncated && (

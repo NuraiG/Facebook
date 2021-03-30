@@ -5,21 +5,35 @@ import PhotoCameraOutlinedIcon from "@material-ui/icons/PhotoCameraOutlined";
 import InsertEmoticonSharpIcon from "@material-ui/icons/InsertEmoticonSharp";
 
 //material ui
-import {Avatar} from "@material-ui/core";
+import { Avatar } from "@material-ui/core";
 
 import styles from "./EmptyComment.module.scss";
 
 import { useDropzone } from "react-dropzone";
+import { storage } from "../../firebase";
+import { createComment } from "../../service";
 
 export default function EmptyComment({
   postId,
   authorName,
   authorId,
   authorImage,
+  currentUser,
 }) {
   const [comment, setComment] = useState("");
   const addComment = () => {
-    if (comment.length) {
+    if (comment.trim().length) {
+      createComment(postId, {
+        createdById: currentUser.id,
+        createdByFullName: currentUser.firstName + " " + currentUser.lastName,
+        createdByPic: currentUser.profile_image,
+        content: comment,
+        attachedImages: attachedFiles,
+      });
+      if (attachedFiles.length > 0) {
+        // TODO: add images to profile
+        setAttachedFiles([]);
+      }
       setComment("");
     }
   };
@@ -27,28 +41,50 @@ export default function EmptyComment({
     let add = comment + " 😃";
     setComment(add);
   };
-  
+
   // todo add image to comment
 
   let [attachedFiles, setAttachedFiles] = useState([]);
   const onDrop = useCallback(
     (newFiles) => {
-      setAttachedFiles([...attachedFiles, ...newFiles]);
+      newFiles.forEach((file) => {
+        const uploadTask = storage
+          .ref()
+          .child("images/" + currentUser.id + Date.now())
+          .put(file);
+
+        uploadTask.on(
+          "state_changed",
+          (snapshot) => {
+            var progress =
+              (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+            console.log("Upload is " + progress + "% done");
+          },
+          (error) => {
+            console.log(error);
+          },
+          () => {
+            uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
+              console.log("File available at", downloadURL);
+              setAttachedFiles([...attachedFiles, downloadURL]);
+            });
+          }
+        );
+      });
     },
-    [attachedFiles]
+    [attachedFiles, currentUser.id]
   );
   const { getRootProps, getInputProps } = useDropzone({
     onDrop,
     accept: "image/*",
   });
 
-  
   return (
     <div className={styles.emptyComment}>
       <div className={styles.commentAuthor}>
         <Avatar // alt={authorName}
           alt="avatar"
-          src={authorImage}
+          src={currentUser.profile_image}
         />
       </div>
       <form>

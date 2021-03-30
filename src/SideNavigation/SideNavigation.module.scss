@@ -4,6 +4,9 @@ aside.container {
   padding-top: 20px;
   padding-left: 10px;
   padding-right: 35px;
+  position: fixed;
+  max-width: 25%;
+  box-sizing: border-box;
   .link {
     text-decoration: none;
     color: inherit;

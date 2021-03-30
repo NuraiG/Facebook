@@ -5,10 +5,10 @@ import SideNavigation from "../SideNavigation"
 import CreatePost from "../common/CreatePost/CreatePost";
 import Post from "../common/Post/Post";
 
-import { posts, currentUser } from "../staticData";
+import { posts } from "../staticData";
 import styles from "./Home.module.scss";
 
-export default function Home() {
+export default function Home({user}) {
   return (
     <div>
       <Header activeTab="home"/>
@@ -17,7 +17,7 @@ export default function Home() {
           <SideNavigation />
         </Grid>
         <Grid item xs={6} className={styles.center_container}>
-          <CreatePost placeholder={`What's on your mind, ${currentUser.firstName}?`}/>
+          <CreatePost currentUser={user} target={user}/>
           <Post postObj={posts[0]} />
           <Post postObj={posts[1]} />
         </Grid>

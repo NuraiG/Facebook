@@ -2,9 +2,9 @@
 let posts = [
   {
     postId: 1,
-    author: "id",
-    authorName: "John Doe",
-    authorPhoto: "",
+    createdById: "id",
+    createdByFullName: "John Doe",
+    createdByPic: "",
     postTarget: "id2", // where the post was made
     postTargetDesc: "wall", // wall/page/group
     likes: ["id", "id2"],
@@ -26,9 +26,9 @@ let posts = [
   },
   {
     postId: 2,
-    author: "id",
-    authorName: "John Doe",
-    authorPhoto: "",
+    createdById: "id",
+    createdByFullName: "John Doe",
+    createdByPic: "",
     postTarget: "id", // where the post was made
     postTargetDesc: "wall", // wall/page/group
     likes: ["id", "id2"],
@@ -87,7 +87,7 @@ let posts = [
 
 let currentUser = {
   id: 1,
-  profilePic: "",
+  profile_image: "",
   firstName: "John",
   lastName: "Doe",
   registrationDate: "March 29, 2021 at 1:47:01 PM UTC+3",

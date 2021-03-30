@@ -17,21 +17,21 @@ import {
   redOrangeTheme,
 } from "../../customThemes";
 
-import { currentUser } from "../../staticData";
-
 import PhotoOutlinedIcon from "@material-ui/icons/PhotoOutlined";
 import LocalOfferOutlinedIcon from "@material-ui/icons/LocalOfferOutlined";
 import MoodOutlinedIcon from "@material-ui/icons/MoodOutlined";
 import CreatePostDialog from "./CreatePostDialog";
 
 import { useDropzone } from "react-dropzone";
+import { createPost } from "../../service";
+import { storage } from "../../firebase";
 
 // let possiblePlaceholders = [
 //   `What's on your mind, ${currentUser.firstName}?`,
 //   `Write something to ${user.firstName}...`,
 // ];
 
-export default function CreatePost({ placeholder }) {
+export default function CreatePost({ currentUser, target }) {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
 
   const handleDialogOpen = () => {
@@ -42,13 +42,43 @@ export default function CreatePost({ placeholder }) {
     setIsDialogOpen(false);
   };
 
-  let [attachedFiles, setAttachedFiles] = useState([]);
+  const [attachedFiles, setAttachedFiles] = useState([]);
+  const removeFromAttachedFiles = (file) => {
+    let copy = [...attachedFiles]
+    let index = copy.indexOf(file);
+    copy.splice(index, 1);
+    setAttachedFiles(copy);
+  }
+
   const onDrop = useCallback(
     (newFiles) => {
-      setAttachedFiles([...attachedFiles, ...newFiles]);
+      newFiles.forEach((file) => {
+        const uploadTask = storage
+          .ref()
+          .child("images/" + currentUser.id + Date.now())
+          .put(file);
+
+        uploadTask.on(
+          "state_changed",
+          (snapshot) => {
+            var progress =
+              (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+            console.log("Upload is " + progress + "% done");
+          },
+          (error) => {
+            console.log(error);
+          },
+          () => {
+            uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
+              console.log("File available at", downloadURL);
+              setAttachedFiles([...attachedFiles, downloadURL]);
+            });
+          }
+        );
+      });
       setIsDialogOpen(true);
     },
-    [attachedFiles]
+    [attachedFiles, currentUser.id]
   );
   const { getRootProps, getInputProps } = useDropzone({
     onDrop,
@@ -61,19 +91,38 @@ export default function CreatePost({ placeholder }) {
   const openFeelingsModal = () => {
     setShowFeelingsModal(true);
     setIsDialogOpen(true);
-  }
+  };
 
   const onSubmit = (ev) => {
     ev.preventDefault();
-    // TODO: send request to create post with postValue.trim()
+    // send request to create post with postValue.trim()
+    createPost({
+      createdById: currentUser.id,
+      createdByFullName: currentUser.firstName + " " + currentUser.lastName,
+      createdByPic: currentUser.profile_image,
+      postTargetId: target.id,
+      postTargetDesc: "wall",
+      attachedImages: attachedFiles,
+      content: postValue.trim(),
+      feeling: postFeeling.trim(),
+    })
+      .then(() => {
+        console.log("Document successfully written!");
+      })
+      .catch((error) => {
+        console.error("Error writing document: ", error);
+      });
+    if (attachedFiles.length > 0) {
+      // TODO: add images to profile
+      setAttachedFiles([]);
+    }
     setPostValue("");
-    setAttachedFiles([]);
     setPostFeeling("");
   };
 
   const onTag = () => {
     setPostValue(postValue + " @");
-    // on ' @' start suggesting friends and filter when typing
+    // TODO: on ' @' start suggesting friends and filter when typing
   };
 
   const useStyles = makeStyles(() => ({
@@ -96,11 +145,16 @@ export default function CreatePost({ placeholder }) {
   }));
   const classes = useStyles();
 
+  let placeholder =
+    currentUser.id === target.id
+      ? `What's on your mind, ${currentUser.firstName}?`
+      : `Write something to ${target.firstName}...`;
+
   return (
     <ThemeProvider theme={grayTheme}>
       <Card color="secondary" className={styles.card}>
         <div className={styles.form_wrapper}>
-          <Avatar src={currentUser.profilePic} />
+          <Avatar src={currentUser.profile_image} />
           <form onSubmit={onSubmit}>
             <input
               type="text"
@@ -169,8 +223,9 @@ export default function CreatePost({ placeholder }) {
         onInput={setPostValue}
         onSubmit={onSubmit}
         onTag={onTag}
-        onDrag={setAttachedFiles}
+        onDrop={onDrop}
         files={attachedFiles}
+        removeImg={removeFromAttachedFiles}
         setShowFeelingsModal={setShowFeelingsModal}
         showFeelingsModal={showFeelingsModal}
         postFeeling={postFeeling}
