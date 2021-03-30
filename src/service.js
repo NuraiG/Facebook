@@ -128,13 +128,17 @@ export function createPost(postData) {
       ...postData,
       numberOfComments: 0,
       likes: [],
+      isDeleted: false,
       timestamp: firebase.firestore.FieldValue.serverTimestamp(),
       lastModified: firebase.firestore.FieldValue.serverTimestamp(),
     });
 }
 
 export function getAllPostsForUser(userId) {
-  return database.collection("posts").where("postTargetId", "==", userId);
+  return database
+    .collection("posts")
+    .where("isDeleted", "!=", true)
+    .where("postTargetId", "==", userId);
 }
 
 // data can't be sorted by date descending when using pagination
@@ -156,7 +160,7 @@ export function getAllPostsForNewsfeed(userId) {
   // get all friends ids
   // Promise.All()
   // friendIds.map()
-  // database.collection("posts").where("postTarget", "==", friendId)
+  // database.collection("posts").where("isDeleted", "!=", true).where("postTarget", "==", friendId)
 }
 
 export function updatePost(postId, dataToUpdate) {
@@ -167,6 +171,14 @@ export function updatePost(postId, dataToUpdate) {
       ...dataToUpdate,
       lastModified: firebase.firestore.FieldValue.serverTimestamp(),
     });
+}
+
+// post soft delete
+export function deletePost(postId) {
+  return database.collection("posts").doc(postId).update({
+    isDeleted: true,
+    lastModified: firebase.firestore.FieldValue.serverTimestamp(),
+  });
 }
 
 export function likePostRequest(postId, currentUserId, toLike) {
