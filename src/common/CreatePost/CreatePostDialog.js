@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React from "react";
 import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
@@ -39,6 +39,7 @@ export default function CreatePostDialog({
   onTag,
   onDrop,
   files,
+  removeImg,
   setShowFeelingsModal,
   showFeelingsModal,
   postFeeling,
@@ -136,6 +137,21 @@ export default function CreatePostDialog({
                   onInput(ev.target.value);
                 }}
               />
+              {files.length > 0 &&
+                files.map((file) => (
+                  <div key={file} className={styles.attached_images_container}>
+                    <img alt="" src={file} className={styles.attached_images} />
+                    <ThemeProvider theme={grayButtonTheme}>
+                      <IconButton
+                        color="primary"
+                        onClick={() => removeImg(file)}
+                        className={styles.remove_img}
+                      >
+                        <CloseIcon />
+                      </IconButton>
+                    </ThemeProvider>
+                  </div>
+                ))}
               <div {...getRootPropsNoClick()} className={styles.drag_file}>
                 <input {...getInputPropsNoClick()} />
               </div>

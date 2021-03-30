@@ -58,4 +58,14 @@ function getTimestampFromDate(date) {
   return new Date(date[0], date[1] - 1, date[2]);
 }
 
-export { timeDifference, calculateAndFormatTime, getShortDate, getTimestampFromDate };
+function compareObjByDBTimestamp(a, b) {
+  if (a.timestamp?.toDate() > b.timestamp?.toDate()) {
+    return -1;
+  }
+  if (a.timestamp?.toDate() < b.timestamp?.toDate()) {
+    return 1;
+  }
+  return 0;
+}
+
+export { timeDifference, calculateAndFormatTime, getShortDate, getTimestampFromDate, compareObjByDBTimestamp };

@@ -5,7 +5,7 @@ import SideNavigation from "../SideNavigation"
 import CreatePost from "../common/CreatePost/CreatePost";
 import Post from "../common/Post/Post";
 
-import { posts, currentUser } from "../staticData";
+import { posts } from "../staticData";
 import styles from "./Home.module.scss";
 
 export default function Home({user}) {

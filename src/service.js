@@ -35,6 +35,33 @@ export function addUserToCollection(
     });
 }
 
+// should not be exported as it should only be used in combination with the freind requests
+function addToUserFriends(currentUserId, friendId) {
+  return database
+    .collection("users")
+    .doc(currentUserId)
+    .update({
+      friends: firebase.firestore.FieldValue.arrayUnion(friendId),
+    });
+}
+
+export function removeFromFriends(currentUserId, friendId) {
+  return Promise.all(
+    database
+      .collection("users")
+      .doc(currentUserId)
+      .update({
+        friends: firebase.firestore.FieldValue.arrayRemove(friendId),
+      }),
+    database
+      .collection("users")
+      .doc(friendId)
+      .update({
+        friends: firebase.firestore.FieldValue.arrayRemove(currentUserId),
+      })
+  );
+}
+
 export function createPost(postData) {
   return database
     .collection("posts")
@@ -48,23 +75,19 @@ export function createPost(postData) {
     });
 }
 
-export function getNumberOfPostsForUser(userId) {
-  return database
-    .collection("posts")
-    .where("postTargetId", "==", userId)
-    .get()
-    .then((querySnapshot) => querySnapshot.size);
+export function getAllPostsForUser(userId) {
+  return database.collection("posts").where("postTargetId", "==", userId);
 }
 
-export function getAllPostsForUser(userId, start = 0) {
-  return database
-    .collection("posts")
-    .where("postTargetId", "==", userId)
-    .orderBy("timestamp")
-    .startAfter(start)
-    .limit(2)
-    .get();
-}
+// data can't be sorted by date descending when using pagination
+// export function getAllPostsForUserTest(userId, start = null) {
+//   return database
+//     .collection("posts")
+//     .where("postTargetId", "==", userId)
+//     .orderBy("timestamp", "desc")
+//     .startAfter(start)
+//     .limit(3)
+// }
 
 export function getAllPostsForNewsfeed(userId) {
   return database
@@ -132,13 +155,49 @@ export function likeCommentRequest(commentId, currentUserId, toLike) {
 }
 
 export function getCommentsForPost(postId) {
-  return (
-    database
-      .collection("comments")
-      .where("postId", "==", postId + "")
-      .orderBy("timestamp", "desc")
-      // .startAfter(1)
-      // .limit(5)
-      .get()
-  );
+  return database
+    .collection("comments")
+    .where("postId", "==", postId + "")
+    .orderBy("timestamp");
+  // .startAfter(1)
+  // .limit(5)
+}
+
+export function sendFriendRequest(senderId, receiverId) {
+  return database.collection("friendRequests").doc().set({
+    from: senderId,
+    to: receiverId,
+    status: "pending",
+    timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+  });
+}
+
+export function getMyFriendRequests(currentUserId) {
+  return database
+    .collection("friendRequests")
+    .where("to", "==", currentUserId)
+    .orderBy("timestamp", "desc");
+}
+
+export function acceptFriendRequest(requestId, senderId, receiverId) {
+  return database
+    .collection("friendRequests")
+    .doc(requestId)
+    .update({
+      status: "accepted",
+      resolvedOn: firebase.firestore.FieldValue.serverTimestamp(),
+    })
+    .then(() =>
+      Promise.all(
+        addToUserFriends(senderId, receiverId),
+        addToUserFriends(receiverId, senderId)
+      )
+    );
+}
+
+export function rejectFriendRequest(requestId) {
+  return database.collection("friendRequests").doc(requestId).update({
+    status: "rejected",
+    resolvedOn: firebase.firestore.FieldValue.serverTimestamp(),
+  });
 }

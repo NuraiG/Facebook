@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Comment from "../Comment/Comment";
 import EmptyComment from "../Comment/EmptyComment";
-import { calculateAndFormatTime } from "../../timeUtils";
+// import { calculateAndFormatTime } from "../../timeUtils";
 
 // styles
 import styles from "./Post.module.scss";
@@ -87,14 +87,14 @@ export default function Post({ postObj }) {
   let expandComments = () => {
     setCommentsAreExpanded(!commentsAreExpanded);
     // TODO: show loader
-    getCommentsForPost(postObj.id).then((data) => {
+    getCommentsForPost(postObj.id).onSnapshot((data) => {
       let dbComments = [];
 
       data.forEach((doc) => {
         dbComments.push({ id: doc.id, ...doc.data() });
       });
-
-      setComments(...comments, dbComments);
+      // hide loader
+      setComments([...dbComments]);
     });
   };
 
@@ -218,13 +218,12 @@ export default function Post({ postObj }) {
             !commentsAreExpanded ? styles.hidden : null
           }`}
         >
-          {commentsAreExpanded &&
-            comments.map((comment) => {
-              return <Comment key={comment.id} commentObj={comment} />;
-            })}
+          {comments.map((comment) => {
+            return <Comment key={comment.id} commentObj={comment} />;
+          })}
         </div>
         <div className={styles.add_comment_container}>
-          <EmptyComment postId={postObj.id} currentUser={currentUser} />
+          <EmptyComment postId={postObj.id} currentUser={currentUser}/>
         </div>
       </Card>
     </ThemeProvider>

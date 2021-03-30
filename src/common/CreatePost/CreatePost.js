@@ -42,7 +42,14 @@ export default function CreatePost({ currentUser, target }) {
     setIsDialogOpen(false);
   };
 
-  let [attachedFiles, setAttachedFiles] = useState([]);
+  const [attachedFiles, setAttachedFiles] = useState([]);
+  const removeFromAttachedFiles = (file) => {
+    let copy = [...attachedFiles]
+    let index = copy.indexOf(file);
+    copy.splice(index, 1);
+    setAttachedFiles(copy);
+  }
+
   const onDrop = useCallback(
     (newFiles) => {
       newFiles.forEach((file) => {
@@ -218,6 +225,7 @@ export default function CreatePost({ currentUser, target }) {
         onTag={onTag}
         onDrop={onDrop}
         files={attachedFiles}
+        removeImg={removeFromAttachedFiles}
         setShowFeelingsModal={setShowFeelingsModal}
         showFeelingsModal={showFeelingsModal}
         postFeeling={postFeeling}
