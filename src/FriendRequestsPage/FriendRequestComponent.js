@@ -5,16 +5,25 @@ import styles from "./FriendRequestComponent.module.scss";
 
 import { Avatar, Button, Paper, ThemeProvider } from "@material-ui/core";
 
-export default function FriendRequestComponent({ user, friendRequestObj }) {
+export default function FriendRequestComponent({
+  user,
+  friendRequestObj,
+  onClick,
+}) {
   // let formattedTimestamp = getShortDate(friendRequestObj.timestamp);
   let formattedTimestamp = "1y";
 
   return (
     <ThemeProvider theme={grayTheme}>
-      <Paper color="secondary" className={styles.wrapper}>
+      <Paper
+        color="secondary"
+        className={styles.wrapper}
+        onClick={onClick}
+      >
         <Avatar src={user.profile_image} className={styles.avatar} />
         <div className={styles.request_info_container}>
           <div className={styles.request_info}>
+            {/* <h4>{`${friendRequest.senderFullName}`}</h4> */}
             <h4>{`${user.firstName} ${user.lastName}`}</h4>
             <span>{formattedTimestamp}</span>
           </div>
