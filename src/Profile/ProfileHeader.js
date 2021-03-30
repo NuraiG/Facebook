@@ -1,4 +1,6 @@
-import React, { useState } from "react";
+import React, { useState,  useCallback } from "react";
+import  { storage } from "../firebase";
+import {updateUserBio, editProfileImage, editCoverImage} from "../service";
 
 //material ui
 import {
@@ -19,7 +21,7 @@ import styles from "./ProfileHeader.module.scss";
 import { withStyles } from "@material-ui/core/styles";
 import { makeStyles } from "@material-ui/core/styles";
 
-// import { useDropzone } from "react-dropzone";
+import { useDropzone } from "react-dropzone";
 
 //testing: current user;
 const currentUser = {
@@ -39,24 +41,83 @@ export default function ProfileHeader({
   description,
 }) {
   const [isTextAreaOpen, setTextArea] = useState(false);
+  const [profileImage, setProfileImage]= useState('');
+  const [coverImage,setCoverImage]=useState('');
+  const [bio,setBio] = useState('');
+
+  
+
+  let currId="Fy83HbX6cxX2VPPA7QG7bu3QTwr1";
   //for testing;
   firstName = "John ";
   lastName = "Doe";
-  // profile_image =
-  //   "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRLVQKJyzWpzBfJQ4kH7H506LSloi9a7ThuuA&usqp=CAU";
-  // cover_image =
-  //   "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSWMgXEhCQnvUB92US-XnJUWMnLtoy-zqqW2g&usqp=CAU";
   id = 3;
   // description = "Nature lover";
 
-  //todo: add/change cover image
-  const changeCoverImage=()=>{}
 
-  //todo: add/change profile image
-  const changeProfileimage=()=>{}
+  // add or edit cover image
+  const onDropCover = useCallback((acceptedFile) => { 
+    setCoverImage(acceptedFile[0]);
+    const uploadTask = storage
+    .ref()
+    .child("images/" + Date.now())
+    .put(coverImage);
 
-  //todo: edit bio/add bio
-   const changeBio=()=>{}
+  uploadTask.on(
+    "state_changed",
+    (snapshot) => {
+      console.log("Upload is done");
+    },
+    (error) => {},
+    () => {
+      uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
+        editCoverImage(currId,downloadURL);
+      });
+    }
+  );
+
+  }, [coverImage,currId]);
+
+  const { getRootProps: getRootPropsCover, getInputProps: getInputPropsCover } = useDropzone({
+    onDrop: onDropCover,
+    accept: "image/*",
+  });
+
+
+// add or edit profile image;
+  const onDrop = useCallback((acceptedFile) => { 
+    setProfileImage(acceptedFile[0]);
+    const uploadTask = storage
+    .ref()
+    .child("images/" + Date.now())
+    .put(profileImage);
+
+  uploadTask.on(
+    "state_changed",
+    (snapshot) => {
+      console.log("Upload is done");
+    },
+    (error) => {},
+    () => {
+      uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
+        editProfileImage(currId,downloadURL);
+      });
+    }
+  );
+  }, [profileImage,currId]);
+
+  
+  const { getRootProps, getInputProps } = useDropzone({
+    onDrop,
+    accept: "image/*",
+  }); 
+
+  
+
+  //edit bio/add bio
+   const changeBio=()=>{
+    updateUserBio(currId,bio);
+   }
 
   // created custom avatar
   const StyledAvatar = withStyles({
@@ -86,13 +147,14 @@ export default function ProfileHeader({
 
         {currentUser.id === id && (
           <div className={styles.btn}>
+            <input {...getInputPropsCover()}></input>
             <Button
+            {...getRootPropsCover({ className: "dropzone" })}
               variant="contained"
               color="default"
               className={classes.button}
               size="large"
               startIcon={<PhotoCameraIcon />}
-              onClick={() => {changeCoverImage()}}
             >
               {" "}
               Add Cover Photo
@@ -102,6 +164,8 @@ export default function ProfileHeader({
 
         <div className={styles.profilImage}>
           {currentUser.id === id ? (
+            <React.Fragment>
+            <input {...getInputProps()}></input>
             <Badge
               overlap="circle"
               anchorOrigin={{
@@ -110,15 +174,14 @@ export default function ProfileHeader({
               }}
               badgeContent={
                 <PhotoCameraIcon
-                  onClick={() => {
-                    changeProfileimage()
-                  }}
+                {...getRootProps({ className: "dropzone" })}
                   className={styles.icon}
                 />
               }
             >
               <StyledAvatar src={profile_image}></StyledAvatar>
             </Badge>
+            </React.Fragment>
           ) : (
             <StyledAvatar
               src={profile_image}
@@ -147,12 +210,16 @@ export default function ProfileHeader({
                 <Card>
                   <CardActionArea>
                     <CardContent>
-                      <Input placeholder="Describe how your are" multiline></Input>
+                      <Input placeholder="Describe how your are" multiline value={bio} onInput={(ev)=>{setBio(ev.target.value)}}></Input>
                     </CardContent>
                   </CardActionArea>
                   <CardActions>
                     <Button onClick={() => setTextArea(false)}>Cancel</Button>
-                    <Button onClick={() => changeBio()}>
+                    <Button onClick={() =>{
+                     changeBio()
+                     setTextArea(false)
+                    }
+                    }>
                       Save
                     </Button>
                   </CardActions>
