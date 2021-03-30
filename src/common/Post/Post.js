@@ -79,7 +79,6 @@ export default function Post({ postObj }) {
   }, [postObj.createdById, postObj.postTarget]); // not sure about these dependencies
 
   let likePost = () => {
-    // TODO: send request to add the user to the liked list
     likePostRequest(postObj.id, currentUser.id, !postIsLiked);
     setPostIsLiked(!postIsLiked);
   };
@@ -124,6 +123,7 @@ export default function Post({ postObj }) {
               <Link to={`/profile/${postObj.createdById}`}>
                 {postObj.createdByFullName}
               </Link>
+              {postObj.feeling.length ? `\u00A0is feeling ${postObj.feeling}` : null}
               {postTargetName && (
                 <>
                   <PlayArrowRoundedIcon fontSize="small" />
