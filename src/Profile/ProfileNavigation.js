@@ -86,6 +86,7 @@ const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 2,
     marginTop: 30,
+    border: 'none',
   },
   menuButton: {
     marginRight: theme.spacing(2),
@@ -103,9 +104,6 @@ export default function ProfileNavigation(currentUser, target) {
     setValue(newValue);
   };
 
-  //  const areFriends = (currentUser.id, target.id)=>{
-  //      return currentUser.frindsList.includes(target.id);
-  //  }
 
   return (
     <ThemeProvider theme={grayTheme}>
@@ -132,10 +130,7 @@ export default function ProfileNavigation(currentUser, target) {
               >
                 Add friend
               </Button>
-              {/* : */}
-              {/* //  <h2>I{target.firstName} {target.lastName}</h2>
-              { null}
-            // } */}
+              {/* : null*/}
             </ThemeProvider>
           </Toolbar>
         </AppBar>

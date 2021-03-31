@@ -272,12 +272,3 @@ export function rejectFriendRequest(requestId) {
   });
 }
 
-export function getAllFriendsForUser(currentUserID){
-  return database
-  .collection("users")
-  .doc(currentUserID)
-  .get()
-  .then((res) => res.data())
-  .then((res)=> res.friendsList)
-  //get an array from friends ids;
-}

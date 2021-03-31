@@ -21,7 +21,7 @@ export default function Profile({currentUser}) {
         <Grid item xs={1}></Grid>
         <Grid item xs={10}>
           <ProfileHeader />
-          <ProfileNavigation/>
+          <ProfileNavigation />
           {/* <Grid container>
             <Grid item xs={5}>
               <Intro userProfileData={currentUser}/>
