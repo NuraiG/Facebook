@@ -7,12 +7,11 @@ import facebook from './facebook-loginPage.svg';
 import { customButtonBlueGreen } from "../customThemes";
 import { login } from '../service';
 
-import {useSelector} from 'react-redux';
-
 export default function Login() {
 
     const [email, setEmail] = React.useState('');
     const [password, setPassword] = React.useState('');
+
 
     const setHandlerInputEmail = (e) => {
         setEmail(e.target.value);
@@ -20,15 +19,11 @@ export default function Login() {
     const setHandlerInputPassword = (e) => {
         setPassword(e.target.value);
     }
-
-    // const currentUser =
-
     const onSubmit = () => {
         login(email, password)
         .then((userCredential) => {
             // Signed in
             let user = userCredential.user;
-            console.log("User credential login",userCredential);
             console.log(user.uid);
           })
           .catch((error) => {

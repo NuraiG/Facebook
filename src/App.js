@@ -14,7 +14,42 @@ import { globalTheme } from "./customThemes";
 import { Paper, ThemeProvider } from "@material-ui/core";
 import FriendRequestPage from "./FriendRequestsPage";
 
+//redux
+import { useDispatch, useSelector } from "react-redux";
+
+// react
+import { useEffect } from "react";
+
+//firebase
+import firebase from "./firebase";
+
+// current user actions
+import {setCurrentUser} from "./Profile/CurrentUser.actions";
+
+import { getUserById } from "./service";
+
+
 function App() {
+  
+  const dispatch = useDispatch();
+
+  const currentUser = useSelector((state) => state.currentUser.currentUser);
+  
+  useEffect(() => {
+    firebase.auth().onAuthStateChanged(user => {
+      if (user) {
+          getUserById(user.uid).then((res)=>{dispatch(setCurrentUser(res))})
+      } else {
+        dispatch(setCurrentUser(null));
+      }
+    })
+  }, [dispatch])
+
+  
+  console.log("CurrentUser here id:",currentUser.uid);
+  console.log("CurrentUser here:", currentUser.firstName);
+  console.log("CurrentUser here:",currentUser);
+
   let user = {
     id: "U99cAvfTmfhuHurhus6D5X2ejfo1",
     profile_image: "",
