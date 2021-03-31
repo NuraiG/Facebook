@@ -1,23 +1,24 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 import styles from "./SideNavigation.module.scss";
 import { Avatar, Button } from "@material-ui/core";
 import LocalHospitalIcon from "@material-ui/icons/LocalHospital";
 import PeopleAltIcon from "@material-ui/icons/PeopleAlt";
 
-import { currentUser } from "../staticData";
-
 export default function SideNavigation() {
+  const currentUser = useSelector((state) => state.currentUser.currentUser);
+
   return (
     <aside className={styles.container}>
       <Button
         className={styles.btn}
         fullWidth
-        startIcon={<Avatar />}
+        startIcon={<Avatar src={currentUser.profile_image}/>}
         component={Link}
         to={`profile/${currentUser.id}`}
       >
-        John Doe
+        {currentUser.firstName + ' ' + currentUser.lastName}
       </Button>
       <a
         target="_blank"

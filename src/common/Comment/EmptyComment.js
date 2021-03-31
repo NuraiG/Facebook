@@ -1,4 +1,5 @@
 import React, { useState, useCallback } from "react";
+import { useSelector } from "react-redux";
 
 // material icons
 import PhotoCameraOutlinedIcon from "@material-ui/icons/PhotoCameraOutlined";
@@ -13,13 +14,8 @@ import { useDropzone } from "react-dropzone";
 import { storage } from "../../firebase";
 import { createComment } from "../../service";
 
-export default function EmptyComment({
-  postId,
-  authorName,
-  authorId,
-  authorImage,
-  currentUser,
-}) {
+export default function EmptyComment({ postId }) {
+  const currentUser = useSelector((state) => state.currentUser.currentUser);
   const [comment, setComment] = useState("");
   const addComment = () => {
     if (comment.trim().length) {

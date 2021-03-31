@@ -1,4 +1,7 @@
+import { useEffect } from "react";
 import { BrowserRouter, Redirect, Route, Switch } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import firebase from "./firebase";
 import Home from "./HomePage/Home";
 import Login from "./LoginPage/Login";
 import Profile from "./Profile/Profile";
@@ -13,8 +16,11 @@ import { globalTheme } from "./customThemes";
 // Material-UI
 import { Paper, ThemeProvider } from "@material-ui/core";
 import FriendRequestPage from "./FriendRequestsPage";
+import { setCurrentUser } from "./Profile/CurrentUser.actions";
+import { getUserById } from "./service";
 
 function App() {
+  const dispatch = useDispatch();
   let user = {
     id: "U99cAvfTmfhuHurhus6D5X2ejfo1",
     profile_image: "",
@@ -26,6 +32,21 @@ function App() {
     residence: "Sofia",
     gender: "Female",
   };
+
+  useEffect(() => {
+    firebase.auth().onAuthStateChanged(function (user) {
+      if (user) {
+        // User is signed in.
+        console.log("Signed in user: ", user);
+        getUserById(user.uid).then((data) => {
+          dispatch(setCurrentUser({...data, id: user.uid}));
+        });
+      } else {
+        // No user is signed in.
+        console.log("No user");
+      }
+    });
+  }, [dispatch]);
 
   return (
     <BrowserRouter>
@@ -45,7 +66,7 @@ function App() {
               </Route>
 
               <Route path="/profile/:id">
-                <Profile currentUser={user}/>
+                <Profile currentUser={user} />
               </Route>
 
               <Route exact path="/friends">
@@ -54,7 +75,7 @@ function App() {
               </Route>
 
               <Route exact path="/">
-                {user ? <Home user={user} /> : <Redirect to="/login" />}
+                {user ? <Home /> : <Redirect to="/login" />}
               </Route>
 
               <Route path="*">

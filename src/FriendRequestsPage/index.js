@@ -1,8 +1,15 @@
-import { Grid } from "@material-ui/core";
 import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import Profile from "../Profile/Profile";
-import { acceptFriendRequest, getMyFriendRequests, rejectFriendRequest } from "../service";
+import {
+  acceptFriendRequest,
+  getMyFriendRequests,
+  getUserById,
+  rejectFriendRequest,
+} from "../service";
 import FriendRequestComponent from "./FriendRequestComponent";
+
+import { Grid } from "@material-ui/core";
 
 let user = {
   id: "U99cAvfTmfhuHurhus6D5X2ejfo1",
@@ -29,22 +36,27 @@ let currentUser = {
 };
 
 export default function FriendRequestPage() {
+  const currentUser = useSelector((state) => state.currentUser.currentUser);
   const [friendRequests, setFriendRequests] = useState([]);
   const [selectedProfile, setSelectedProfile] = useState("");
   useEffect(() => {
     // get current user friend requests
-    // getMyFriendRequests(currentUserId)
-    // .onSnapshot(data) => {
-    //   let dbFriendRequests = [];
-    //   data.forEach((doc) => {
-    //      getUserById()....
-    //
-    //          dbFriendRequests.push({ id: doc.id, ...doc.data(),
-    //              fullName: user.firstName + ' ' + user.lastName,
-    //              profile_image: user.profile_image});
-    //   });
-    //   setFriendRequests([...dbFriendRequests]);
-  }, []);
+    getMyFriendRequests(currentUser.id).onSnapshot((fr) => {
+      fr = fr.data();
+      let dbFriendRequests = [];
+      fr.forEach((doc) => {
+        getUserById(fr.from).then((user) => {
+          dbFriendRequests.push({
+            id: doc.id,         // friend request id
+            ...doc,             // friend request other data
+            fullName: user.firstName + " " + user.lastName,     // sender full name
+            profile_image: user.profile_image,      // sender profile pic
+          });
+        });
+      });
+      setFriendRequests([...dbFriendRequests]);
+    });
+  }, [currentUser.id]);
 
   const onAccept = (id, senderId, receiverId) => {
     acceptFriendRequest(id, senderId, receiverId)
@@ -89,9 +101,7 @@ export default function FriendRequestPage() {
         ))} */}
       </Grid>
       <Grid item xs="auto">
-        {selectedProfile ? (
-          <Profile userId={selectedProfile} currentUser={currentUser} />
-        ) : null}
+        {selectedProfile ? <Profile userId={selectedProfile} /> : null}
       </Grid>
     </Grid>
   );

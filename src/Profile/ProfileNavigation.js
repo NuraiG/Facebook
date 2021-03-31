@@ -25,6 +25,7 @@ import CreatePost from "../common/CreatePost/CreatePost";
 
 import { Grid } from "@material-ui/core";
 import PostsFeed from "./ProfilePostsFeed";
+import { sendFriendRequest } from "../service";
 
 const currentUser = {
   id: "U99cAvfTmfhuHurhus6D5X2ejfo1",
@@ -104,6 +105,16 @@ export default function ProfileNavigation(currentUser, target) {
     setValue(newValue);
   };
 
+  const onSendFriendRequest = () => {
+    sendFriendRequest(currentUser.id, target.id)
+      .then(console.log("Successfully sent a friend request"))
+      .catch((error) =>
+        console.log(
+          "An error occurred while sending the friend request ",
+          error
+        )
+      );
+  }
 
   return (
     <ThemeProvider theme={grayTheme}>
@@ -122,11 +133,12 @@ export default function ProfileNavigation(currentUser, target) {
               </Tabs>
             </Typography>
             <ThemeProvider theme={customButtonBlueGreen}>
-              {/* { !areFriends ?  */}
+              {/* { !areFriends ?  */} {/* and a friend request has not been sent */}
               <Button
                 color="primary"
                 className={classes.menuButton}
                 startIcon={<PersonAddIcon />}
+                onClick={onSendFriendRequest}
               >
                 Add friend
               </Button>

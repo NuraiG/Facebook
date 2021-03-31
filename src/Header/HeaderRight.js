@@ -19,7 +19,6 @@ export default function HeaderRight() {
         <AvatarComponent
           className={`${styles.header__info}`}
           showFullName={false}
-          linkTo={`/profile/${`userId`}`}
         />
 
         <Tooltip title="Create" placement="bottom">
