@@ -8,6 +8,8 @@ import CreatePost from "../common/CreatePost/CreatePost";
 import { Grid } from "@material-ui/core";
 import PostsFeed from "./ProfilePostsFeed";
 
+import ProfileNavigation from "./ProfileNavigation";
+
 export default function Profile({currentUser}) {
   const { id } = useParams();
   // TODO: get profile by id and send it as target to the CreatePost component
@@ -19,18 +21,19 @@ export default function Profile({currentUser}) {
         <Grid item xs={1}></Grid>
         <Grid item xs={10}>
           <ProfileHeader />
-          <Grid container>
+          <ProfileNavigation/>
+          {/* <Grid container>
             <Grid item xs={5}>
               <Intro userProfileData={currentUser}/>
             </Grid>
             <Grid item xs={7}>
               <CreatePost currentUser={currentUser} target={({id: id, firstName: "John"})}/>
               <PostsFeed userId={"1"}/>
-            </Grid>
+            </Grid> */}
           </Grid>
         </Grid>
         <Grid item xs={1}></Grid>
-      </Grid>
+      {/* </Grid> */}
     </div>
   );
 }
