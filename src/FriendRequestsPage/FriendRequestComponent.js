@@ -9,17 +9,15 @@ export default function FriendRequestComponent({
   user,
   friendRequestObj,
   onClick,
+  onAccept,
+  onReject,
 }) {
   // let formattedTimestamp = getShortDate(friendRequestObj.timestamp);
   let formattedTimestamp = "1y";
 
   return (
     <ThemeProvider theme={grayTheme}>
-      <Paper
-        color="secondary"
-        className={styles.wrapper}
-        onClick={onClick}
-      >
+      <Paper color="secondary" className={styles.wrapper} onClick={onClick}>
         <Avatar src={user.profile_image} className={styles.avatar} />
         <div className={styles.request_info_container}>
           <div className={styles.request_info}>
@@ -33,6 +31,13 @@ export default function FriendRequestComponent({
                 color="primary"
                 variant="contained"
                 className={styles.btn}
+                onClick={() =>
+                  onAccept(
+                    friendRequestObj.id,
+                    friendRequestObj.from,
+                    friendRequestObj.to
+                  )
+                }
               >
                 Confirm
               </Button>
@@ -42,6 +47,9 @@ export default function FriendRequestComponent({
                 color="primary"
                 variant="contained"
                 className={styles.btn}
+                onClick={() =>
+                  onReject(friendRequestObj.id, friendRequestObj.to)
+                }
               >
                 Remove
               </Button>

@@ -1,7 +1,8 @@
 import { Grid } from "@material-ui/core";
 import React, { useEffect, useState } from "react";
 import Profile from "../Profile/Profile";
-// import { getMyFriendRequests } from "../service";
+import { acceptFriendRequest, rejectFriendRequest } from "../service";
+import { getMyFriendRequests } from "../service";
 import FriendRequestComponent from "./FriendRequestComponent";
 
 let user = {
@@ -46,13 +47,46 @@ export default function FriendRequestPage() {
     //   setFriendRequests([...dbFriendRequests]);
   }, []);
 
+  const onAccept = (id, senderId, receiverId) => {
+    acceptFriendRequest(id, senderId, receiverId)
+      .then(() => {
+        if (selectedProfile === receiverId) setSelectedProfile("");
+        console.log("You are frineds now.");
+      })
+      .catch((error) =>
+        console.log("We're sorry, a problem occurred: ", error)
+      );
+  };
+
+  const onReject = (id, receiverId) => {
+    rejectFriendRequest(id)
+      .then(() => {
+        if (selectedProfile === receiverId) setSelectedProfile("");
+        console.log("The friend request has been rejected.");
+      })
+      .catch((error) =>
+        console.log("We're sorry, a problem occurred: ", error)
+      );
+  };
+
   return (
     <Grid container>
       <Grid item xs="auto">
-        <FriendRequestComponent user={user} onClick={() => setSelectedProfile()} />
+        <FriendRequestComponent
+          user={user}
+          onClick={() => setSelectedProfile()}
+          onAccept={onAccept}
+          onReject={onReject}
+        />
 
         {/* {friendRequests.map((fr) => (
-          <FriendRequestComponent key={fr.id} friendRequestObj={fr} onClick={() => setSelectedProfile(fr.id)}/>
+          <FriendRequestComponent
+            key={fr.id}
+            friendRequestObj={fr}
+            onClick={() => setSelectedProfile(fr.id)}
+            onAccept={onAccept}
+            onReject={onReject}
+          />
         ))} */}
       </Grid>
       <Grid item xs="auto">

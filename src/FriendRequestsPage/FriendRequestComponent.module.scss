@@ -1,10 +1,16 @@
+$hover_overlay: #f2f2f2;
+
 .wrapper {
   display: flex;
   width: 345px;
   height: 100px;
   padding: 12px 16px;
   box-sizing: border-box;
+  cursor: pointer;
 
+  &:hover {
+    background-color: $hover_overlay;
+  }
   div.avatar {
     width: 60px;
     height: 60px;
