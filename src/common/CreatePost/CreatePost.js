@@ -55,7 +55,7 @@ export default function CreatePost({ currentUser, target }) {
       newFiles.forEach((file) => {
         const uploadTask = storage
           .ref()
-          .child("images/" + currentUser.id + Date.now())
+          .child("images/" + currentUser.id + "_" + Date.now())
           .put(file);
 
         uploadTask.on(
