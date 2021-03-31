@@ -1,8 +1,7 @@
 import { Grid } from "@material-ui/core";
 import React, { useEffect, useState } from "react";
 import Profile from "../Profile/Profile";
-import { acceptFriendRequest, rejectFriendRequest } from "../service";
-import { getMyFriendRequests } from "../service";
+import { acceptFriendRequest, getMyFriendRequests, rejectFriendRequest } from "../service";
 import FriendRequestComponent from "./FriendRequestComponent";
 
 let user = {
