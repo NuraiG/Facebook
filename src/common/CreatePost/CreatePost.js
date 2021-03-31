@@ -1,4 +1,5 @@
 import React, { useCallback, useState } from "react";
+import { useSelector } from "react-redux";
 import {
   Avatar,
   Button,
@@ -31,7 +32,8 @@ import { storage } from "../../firebase";
 //   `Write something to ${user.firstName}...`,
 // ];
 
-export default function CreatePost({ currentUser, target }) {
+export default function CreatePost({ target }) {
+  const currentUser = useSelector(state => state.currentUser.currentUser);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
 
   const handleDialogOpen = () => {
