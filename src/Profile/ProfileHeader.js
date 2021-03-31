@@ -39,6 +39,7 @@ export default function ProfileHeader({
   id,
   lastName,
   description,
+  
 }) {
   const [isTextAreaOpen, setTextArea] = useState(false);
   const [profileImage, setProfileImage]= useState('');

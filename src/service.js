@@ -272,3 +272,4 @@ export function rejectFriendRequest(requestId) {
     resolvedOn: firebase.firestore.FieldValue.serverTimestamp(),
   });
 }
+
