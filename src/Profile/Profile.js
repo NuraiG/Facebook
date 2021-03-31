@@ -22,18 +22,18 @@ export default function Profile({currentUser}) {
         <Grid item xs={10}>
           <ProfileHeader />
           <ProfileNavigation/>
-          {/* <Grid container>
+          <Grid container>
             <Grid item xs={5}>
               <Intro userProfileData={currentUser}/>
             </Grid>
             <Grid item xs={7}>
               <CreatePost currentUser={currentUser} target={({id: id, firstName: "John"})}/>
               <PostsFeed userId={"1"}/>
-            </Grid> */}
+            </Grid>
           </Grid>
         </Grid>
         <Grid item xs={1}></Grid>
-      {/* </Grid> */}
+      </Grid>
     </div>
   );
 }

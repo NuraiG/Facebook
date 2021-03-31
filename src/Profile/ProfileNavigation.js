@@ -18,7 +18,7 @@ import PersonAddIcon from '@material-ui/icons/PersonAdd';
 
 
 import { grayTheme , customButtonBlueGreen } from "../customThemes";
-// import styles from "./ProfileNavigation.module.scss";
+import styles from "./Profile.module.scss";
 
 import Intro from "./Intro";
 import CreatePost from "../common/CreatePost/CreatePost";
@@ -61,7 +61,7 @@ function TabPanel(props) {
         {...other}
       >
         {value === index && (
-          <Box p={3} border={0}>
+          <Box p={3} border={0} component="span">
             <Typography>{children}</Typography>
           </Box>
         )}
@@ -103,8 +103,7 @@ export default function ProfileNavigation(currentUser, target) {
   const handleChange = (event, newValue) => {
     setValue(newValue); }
 
-
-//  const areFriend = (currentUser.id, target.id)=>{
+//  const areFriends = (currentUser.id, target.id)=>{
 //      return currentUser.frindsList.includes(target.id);
 //  }
 
@@ -121,17 +120,17 @@ export default function ProfileNavigation(currentUser, target) {
         </Tabs>
           </Typography>
           <ThemeProvider theme={customButtonBlueGreen}>
-              {/* { areFriends ?  */}
+              {/* { !areFriends ?  */}
           <Button color="primary" className={classes.menuButton} startIcon={<PersonAddIcon/>}>Add friend</Button>
-        {/* //   :
-        //   <h2>I{target.firstName} {target.lastName}</h2>
-        //     } */}
+            {/* : */}
+        {/* //  <h2>I{target.firstName} {target.lastName}</h2>
+            // } */}
           </ThemeProvider>
         </Toolbar>
       </AppBar>
       <TabPanel value={value} index={0}>
         {/* Posts */}
-        <Grid container>
+        {/* <Grid container>
             <Grid item xs={5}>
               <Intro userProfileData={currentUser}/>
             </Grid>
@@ -139,7 +138,7 @@ export default function ProfileNavigation(currentUser, target) {
               <CreatePost currentUser={currentUser} target={({id: 4, firstName: "John"})}/>
               <PostsFeed userId={"1"}/>
             </Grid>
-         </Grid>
+         </Grid> */}
       </TabPanel>
       <TabPanel value={value} index={1}>
         Photos
