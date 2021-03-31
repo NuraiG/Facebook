@@ -9,13 +9,13 @@ import { Grid } from "@material-ui/core";
 import PostsFeed from "./ProfilePostsFeed";
 import ProfileNavigation from "./ProfileNavigation";
 
-export default function Profile({ currentUser, userId }) {
+export default function Profile({ currentUser, userId, hideHeader }) {
   const { id } = useParams();
   // TODO: get profile by id and send it as target to the CreatePost component
 
   return (
     <div>
-      <Header activeTab="none" />
+      {hideHeader === true ? null : <Header activeTab="none" />}
       <Grid container>
         <Grid item xs={1}></Grid>
         <Grid item xs={10}>
