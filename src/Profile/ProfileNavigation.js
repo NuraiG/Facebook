@@ -62,7 +62,7 @@ function TabPanel(props) {
     >
       {value === index && (
         <Box p={3} border={0} component="span">
-          <Typography>{children}</Typography>
+          <Typography component="div">{children}</Typography>
         </Box>
       )}
     </div>
@@ -134,6 +134,7 @@ export default function ProfileNavigation(currentUser, target) {
               </Button>
               {/* : */}
               {/* //  <h2>I{target.firstName} {target.lastName}</h2>
+              { null}
             // } */}
             </ThemeProvider>
           </Toolbar>
