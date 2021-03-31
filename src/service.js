@@ -104,7 +104,7 @@ function addToUserFriends(currentUserId, friendId) {
 }
 
 export function removeFromFriends(currentUserId, friendId) {
-  return Promise.all(
+  return Promise.all([
     database
       .collection("users")
       .doc(currentUserId)
@@ -116,8 +116,8 @@ export function removeFromFriends(currentUserId, friendId) {
       .doc(friendId)
       .update({
         friends: firebase.firestore.FieldValue.arrayRemove(currentUserId),
-      })
-  );
+      }),
+  ]);
 }
 
 export function createPost(postData) {
@@ -158,7 +158,7 @@ export function getAllPostsForNewsfeed(userId) {
     .get()
     .then((res) => console.log(res));
   // get all friends ids
-  // Promise.All()
+  // Promise.All([])
   // friendIds.map()
   // database.collection("posts").where("isDeleted", "!=", true).where("postTarget", "==", friendId)
 }
@@ -246,6 +246,7 @@ export function getMyFriendRequests(currentUserId) {
   return database
     .collection("friendRequests")
     .where("to", "==", currentUserId)
+    .where("status", "==", "pending")
     .orderBy("timestamp", "desc");
 }
 
@@ -258,10 +259,10 @@ export function acceptFriendRequest(requestId, senderId, receiverId) {
       resolvedOn: firebase.firestore.FieldValue.serverTimestamp(),
     })
     .then(() =>
-      Promise.all(
+      Promise.all([
         addToUserFriends(senderId, receiverId),
-        addToUserFriends(receiverId, senderId)
-      )
+        addToUserFriends(receiverId, senderId),
+      ])
     );
 }
 

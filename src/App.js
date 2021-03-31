@@ -12,6 +12,7 @@ import { globalTheme } from "./customThemes";
 
 // Material-UI
 import { Paper, ThemeProvider } from "@material-ui/core";
+import FriendRequestPage from "./FriendRequestsPage";
 
 function App() {
   let user = {
@@ -49,7 +50,7 @@ function App() {
 
               <Route exact path="/friends">
                 <Header activeTab="friends" />
-                <h2>Friend requests page</h2>
+                <FriendRequestPage />
               </Route>
 
               <Route exact path="/">

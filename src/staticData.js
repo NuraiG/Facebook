@@ -5,6 +5,7 @@ let posts = [
     createdById: "id",
     createdByFullName: "John Doe",
     createdByPic: "",
+    feeling: "",
     postTarget: "id2", // where the post was made
     postTargetDesc: "wall", // wall/page/group
     likes: ["id", "id2"],
@@ -29,6 +30,7 @@ let posts = [
     createdById: "id",
     createdByFullName: "John Doe",
     createdByPic: "",
+    feeling: "happy",
     postTarget: "id", // where the post was made
     postTargetDesc: "wall", // wall/page/group
     likes: ["id", "id2"],

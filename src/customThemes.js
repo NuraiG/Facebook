@@ -42,6 +42,7 @@ const grayButtonTheme = createMuiTheme({
     primary: {
       main: "#050505", // buttons
       // dark: "#d8dadf",
+      // contrastText: "#050505"
     },
     secondary: {
       main: "#606770", // icons
@@ -56,6 +57,15 @@ const grayButtonTheme = createMuiTheme({
         },
       },
     },
+    MuiButton: {
+      containedPrimary: {
+        backgroundColor: "#e4e6eb",
+        color: "#050505",
+        "&:hover": {
+          backgroundColor: "#d8dadf",
+        },
+      },
+    }
   },
 });
 
