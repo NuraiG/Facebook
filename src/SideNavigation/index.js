@@ -1,16 +1,14 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 import styles from "./SideNavigation.module.scss";
 import { Avatar, Button } from "@material-ui/core";
 import LocalHospitalIcon from "@material-ui/icons/LocalHospital";
 import PeopleAltIcon from "@material-ui/icons/PeopleAlt";
 
-// import { currentUser } from "../staticData";
-import { useSelector } from "react-redux";
-
 export default function SideNavigation() {
-
   const currentUser = useSelector((state) => state.currentUser.currentUser);
+
   return (
     <aside className={styles.container}>
       <Button

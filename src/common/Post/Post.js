@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import Comment from "../Comment/Comment";
 import EmptyComment from "../Comment/EmptyComment";
-// import { calculateAndFormatTime } from "../../timeUtils";
+import { calculateAndFormatTime, getServerTime } from "../../timeUtils";
 
 // styles
 import styles from "./Post.module.scss";
@@ -28,22 +29,15 @@ import ThumbUpAltOutlinedIcon from "@material-ui/icons/ThumbUpAltOutlined";
 import ChatBubbleOutlineRoundedIcon from "@material-ui/icons/ChatBubbleOutlineRounded";
 import { truncateString } from "../../utils";
 import { MAX_POST_LENGTH } from "../../constants";
-import { getCommentsForPost, likePostRequest } from "../../service";
+import {
+  getCommentsForPost,
+  getUserById,
+  likePostRequest,
+} from "../../service";
 
-let currentUser = {
-  id: "U99cAvfTmfhuHurhus6D5X2ejfo1",
-  profile_image: "",
-  firstName: "Елица",
-  lastName: "Иванова",
-  registrationDate: "March 29, 2021 at 1:47:01 PM UTC+3",
-  birthDate: "March 29, 2000 at 1:47:01 PM UTC+3",
-  birthPlace: "Sofia",
-  residence: "Sofia",
-  gender: "Female",
-  //...
-};
 
 export default function Post({ postObj }) {
+  const currentUser = useSelector((state) => state.currentUser.currentUser);
   let checkIfUserHasLiked = () => {
     return postObj.likes.some((id) => id === currentUser.id);
   };
@@ -62,21 +56,20 @@ export default function Post({ postObj }) {
   );
 
   // get the time for the post, formatted based on how long ago it was made
-  // let timeToDisplay = calculateAndFormatTime(
-  //   new Date(),
-  //   new Date(postObj.timestamp?.toDate())
-  // );
+  let timeToDisplay = calculateAndFormatTime(
+    getServerTime()?.toDate(),
+    new Date(postObj.timestamp?.toDate())
+  );
   // need this for the date tooltip
-  // let fullDatePrettified = new Date(postObj.timestamp?.toDate()).toUTCString();
-  let timeToDisplay = 0;
-  let fullDatePrettified = 0;
+  let fullDatePrettified = new Date(postObj.timestamp?.toDate()).toUTCString();
 
   useEffect(() => {
-    if (postObj.createdById !== postObj.postTarget) {
-      // TODO: make request to take the target name from db
-      setPostTargetName("Other username");
+    if (postObj.createdById !== postObj.postTargetId) {
+      getUserById(postObj.postTargetId).then((user) =>
+        setPostTargetName(user.firstName + " " + user.lastName)
+      );
     }
-  }, [postObj.createdById, postObj.postTarget]); // not sure about these dependencies
+  }, [postObj.createdById, postObj.postTargetId]); // not sure about these dependencies
 
   let likePost = () => {
     likePostRequest(postObj.id, currentUser.id, !postIsLiked);
@@ -123,11 +116,13 @@ export default function Post({ postObj }) {
               <Link to={`/profile/${postObj.createdById}`}>
                 {postObj.createdByFullName}
               </Link>
-              {postObj.feeling.length ? `\u00A0is feeling ${postObj.feeling}` : null}
+              {postObj.feeling.length
+                ? `\u00A0is feeling ${postObj.feeling}`
+                : null}
               {postTargetName && (
                 <>
                   <PlayArrowRoundedIcon fontSize="small" />
-                  <Link to={`/profile/${postObj.postTarget}`}>
+                  <Link to={`/profile/${postObj.postTargetId}`}>
                     {postTargetName}
                   </Link>
                 </>

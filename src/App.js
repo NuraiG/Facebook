@@ -26,36 +26,25 @@ import firebase from "./firebase";
 // current user actions
 import {setCurrentUser} from "./Profile/CurrentUser.actions";
 
+// DB requests
 import { getUserById } from "./service";
 
 
 function App() {
-  
   const dispatch = useDispatch();
-
   const currentUser = useSelector((state) => state.currentUser.currentUser);
   
   useEffect(() => {
     firebase.auth().onAuthStateChanged(user => {
       if (user) {
-          getUserById(user.uid).then((res)=>{dispatch(setCurrentUser({...res, id: user.uid}))})
+        console.log("Signed in user: ", user);
+        getUserById(user.uid).then((res)=>{dispatch(setCurrentUser({...res, id: user.uid}))})
       } else {
+        console.log("No user");
         dispatch(setCurrentUser(null));
       }
     })
   }, [dispatch]);
-
-  // let user = {
-  //   id: "U99cAvfTmfhuHurhus6D5X2ejfo1",
-  //   profile_image: "",
-  //   firstName: "Елица",
-  //   lastName: "Иванова",
-  //   registrationDate: "March 29, 2021 at 1:47:01 PM UTC+3",
-  //   birthDate: "March 29, 2000 at 1:47:01 PM UTC+3",
-  //   birthPlace: "Sofia",
-  //   residence: "Sofia",
-  //   gender: "Female",
-  // };
 
   return (
     <BrowserRouter>
@@ -75,7 +64,7 @@ function App() {
               </Route>
 
               <Route path="/profile/:id">
-                <Profile currentUser={currentUser}/>
+                <Profile />
               </Route>
 
               <Route exact path="/friends">

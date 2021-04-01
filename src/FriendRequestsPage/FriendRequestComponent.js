@@ -1,19 +1,31 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { blueGreenTheme, grayButtonTheme, grayTheme } from "../customThemes";
 import styles from "./FriendRequestComponent.module.scss";
-// import { getShortDate } from '../timeUtils';
 
 import { Avatar, Button, Paper, ThemeProvider } from "@material-ui/core";
+import { getUserById } from "../service";
+import { getServerTime, getShortDate } from "../timeUtils";
 
 export default function FriendRequestComponent({
-  user,
   friendRequestObj,
   onClick,
   onAccept,
   onReject,
 }) {
-  // let formattedTimestamp = getShortDate(friendRequestObj.timestamp);
-  let formattedTimestamp = "1y";
+  let formattedTimestamp = getShortDate(
+    getServerTime()?.toDate(),
+    new Date(friendRequestObj.timestamp?.toDate())
+  );
+  let [user, setUser] = useState({});
+
+  useEffect(() => {
+    getUserById(friendRequestObj.from).then((dbUser) => {
+      setUser({
+        fullName: dbUser.firstName + " " + dbUser.lastName, // sender full name
+        profile_image: dbUser.profile_image, // sender profile pic
+      });
+    });
+  }, [friendRequestObj.from]);
 
   return (
     <ThemeProvider theme={grayTheme}>
@@ -21,8 +33,7 @@ export default function FriendRequestComponent({
         <Avatar src={user.profile_image} className={styles.avatar} />
         <div className={styles.request_info_container}>
           <div className={styles.request_info}>
-            {/* <h4>{`${friendRequest.senderFullName}`}</h4> */}
-            <h4>{`${user.firstName} ${user.lastName}`}</h4>
+            <h4>{`${user.fullName}`}</h4>
             <span>{formattedTimestamp}</span>
           </div>
           <div className={styles.request_info}>
@@ -48,7 +59,7 @@ export default function FriendRequestComponent({
                 variant="contained"
                 className={styles.btn}
                 onClick={() =>
-                  onReject(friendRequestObj.id, friendRequestObj.to)
+                  onReject(friendRequestObj.id, friendRequestObj.from)
                 }
               >
                 Remove

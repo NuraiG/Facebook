@@ -1,3 +1,5 @@
+import firebase from "firebase";
+
 function timeDifference(timestamp1, timestamp2) {
   let difference = timestamp1.getTime() - timestamp2.getTime();
 
@@ -68,4 +70,15 @@ function compareObjByDBTimestamp(a, b) {
   return 0;
 }
 
-export { timeDifference, calculateAndFormatTime, getShortDate, getTimestampFromDate, compareObjByDBTimestamp };
+function getServerTime() {
+  return firebase.firestore.Timestamp.now();
+}
+
+export {
+  timeDifference,
+  calculateAndFormatTime,
+  getShortDate,
+  getTimestampFromDate,
+  compareObjByDBTimestamp,
+  getServerTime
+};

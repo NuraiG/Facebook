@@ -3,7 +3,7 @@ import styles from "./Comment.module.scss";
 import { Link } from "react-router-dom";
 import ThumbUpAltIcon from "@material-ui/icons/ThumbUpAlt";
 import { useState, useCallback } from "react";
-import { getShortDate } from "../../timeUtils";
+import { getServerTime, getShortDate } from "../../timeUtils";
 import { Tooltip } from "@material-ui/core";
 
 import { truncateString } from "../../utils";
@@ -25,9 +25,14 @@ let currentUser = {
 
 export default function Comment({ commentObj }) {
   // get the time for the post, formatted based on how long ago it was made
-  let timeToDisplay = getShortDate(new Date(), new Date(commentObj.timestamp?.toDate()));
+  let timeToDisplay = getShortDate(
+    getServerTime()?.toDate(),
+    new Date(commentObj.timestamp?.toDate())
+  );
   // need this for the date tooltip
-  let fullDatePrettified = new Date(commentObj.timestamp?.toDate()).toUTCString();
+  let fullDatePrettified = new Date(
+    commentObj.timestamp?.toDate()
+  ).toUTCString();
 
   let checkIfUserHasLiked = () => {
     return commentObj.likes.some((id) => id === currentUser.id);
@@ -53,8 +58,11 @@ export default function Comment({ commentObj }) {
   return (
     <div className={styles.commentWrapper}>
       <div className={styles.imageWrapper}>
-      <Link to={`/profile/${commentObj.createdByFullName}`}>
-          <Avatar alt={commentObj.createdByFullName} src={commentObj.createdByPic} />
+        <Link to={`/profile/${commentObj.createdByFullName}`}>
+          <Avatar
+            alt={commentObj.createdByFullName}
+            src={commentObj.createdByPic}
+          />
         </Link>
       </div>
       <div className={styles.comment}>

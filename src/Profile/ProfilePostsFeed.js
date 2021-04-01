@@ -25,15 +25,17 @@ export default function PostsFeed({ userId, limit = 2 }) {
   };
 
   useEffect(() => {
-    getAllPostsForUser(userId).onSnapshot((data) => {
-      let currentPosts = [];
-      data.forEach((post) =>
-        currentPosts.push({ id: post.id, ...post.data() })
-      );
-      setAllPosts(currentPosts.sort(compareObjByDBTimestamp));
-      setPosts(currentPosts.slice(0, 2));
-      setLastLoadedStr(JSON.stringify(currentPosts[1]));
-    });
+    if (userId) {
+      getAllPostsForUser(userId).onSnapshot((data) => {
+        let currentPosts = [];
+        data.forEach((post) =>
+          currentPosts.push({ id: post.id, ...post.data() })
+        );
+        setAllPosts(currentPosts.sort(compareObjByDBTimestamp));
+        setPosts(currentPosts.slice(0, 2));
+        setLastLoadedStr(JSON.stringify(currentPosts[1]));
+      });
+    }
   }, [userId]);
 
   return (
