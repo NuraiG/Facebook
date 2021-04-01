@@ -43,12 +43,7 @@ function App() {
         dispatch(setCurrentUser(null));
       }
     })
-  }, [dispatch])
-
-  
-  console.log("CurrentUser here id:",currentUser.id);
-  console.log("CurrentUser here:", currentUser.firstName);
-  console.log("CurrentUser here:",currentUser);
+  }, [dispatch]);
 
   // let user = {
   //   id: "U99cAvfTmfhuHurhus6D5X2ejfo1",
@@ -61,7 +56,6 @@ function App() {
   //   residence: "Sofia",
   //   gender: "Female",
   // };
-  
 
   return (
     <BrowserRouter>

@@ -24,21 +24,20 @@ import { makeStyles } from "@material-ui/core/styles";
 import { useDropzone } from "react-dropzone";
 
 import { useDispatch, useSelector } from "react-redux";
+import {updateUserProfilePic , updateUserCoverPic,updateUserProfile } from "./CurrentUser.actions";
 
 
 export default function ProfileHeader({user}) {
 
   const [isTextAreaOpen, setTextArea] = useState(false);
-  const [profileImage, setProfileImage]= useState('');
-  const [coverImage,setCoverImage]=useState('');
-  const [bio,setBio] = useState('');
+  const [bio, setBio] = useState('');
 
   const currentUser = useSelector((state) => state.currentUser.currentUser);
 
+  const dispatch = useDispatch();
 
   // add or edit cover image
   const onDropCover = useCallback((acceptedFile) => { 
-    setCoverImage(acceptedFile);
     const uploadTask = storage
     .ref()
     .child("images/"+ currentUser.id + "_"+ Date.now())
@@ -53,11 +52,12 @@ export default function ProfileHeader({user}) {
     () => {
       uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
         editCoverImage(currentUser.id,downloadURL);
+        dispatch(updateUserCoverPic(downloadURL));
       });
     }
   );
 
-  }, [currentUser.id]);
+  }, [currentUser.id,dispatch]);
 
   const { getRootProps: getRootPropsCover, getInputProps: getInputPropsCover } = useDropzone({
     onDrop: onDropCover,
@@ -67,11 +67,9 @@ export default function ProfileHeader({user}) {
 
 // add or edit profile image;
   const onDrop = useCallback((acceptedFile) => { 
-    // setProfileImage(acceptedFile);
     const uploadTask = storage
     .ref()
     .child("images/" + currentUser.id + "_"+ Date.now())
-    // .put(profileImage);
     .put(acceptedFile[0]);
 
   uploadTask.on(
@@ -86,10 +84,11 @@ export default function ProfileHeader({user}) {
     () => {
       uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
         editProfileImage(currentUser.id,downloadURL);
+        dispatch(updateUserProfilePic(downloadURL));
       });
     }
   );
-  }, [currentUser.id]);
+  }, [currentUser.id,dispatch]);
 
   
   const { getRootProps, getInputProps } = useDropzone({
@@ -102,6 +101,7 @@ export default function ProfileHeader({user}) {
   //edit bio/add bio
    const changeBio=()=>{
     updateUserBio(currentUser.id,bio);
+    dispatch(updateUserProfile({...currentUser, bio:bio}));
    }
 
   // created custom avatar
@@ -141,8 +141,7 @@ export default function ProfileHeader({user}) {
               size="large"
               startIcon={<PhotoCameraIcon />}
             >
-              {" "}
-              Add Cover Photo
+              {currentUser.cover_image ? 'Edit Cover Photo' : 'Cover Photo' }
             </Button>
           </div>
         )}

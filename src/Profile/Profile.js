@@ -10,8 +10,8 @@ import PostsFeed from "./ProfilePostsFeed";
 import ProfileNavigation from "./ProfileNavigation";
 import { getUserById } from "../service";
 import { useSelector } from "react-redux";
-// import { SettingsInputAntennaTwoTone } from "@material-ui/icons";
-// let userId= 'U99cAvfTmfhuHurhus6D5X2ejfo1';
+
+
 export default function Profile() {
 
   const currentUser = useSelector((state) => state.currentUser.currentUser);
@@ -42,20 +42,16 @@ export default function Profile() {
       });
     }
     }, [currentUser,id]);
-    console.log('User',user);
-    console.log('User',user.firstName);
-    console.log('User',user.lastName);
-
-  // TODO: get profile by id and send it as target to the CreatePost component
-     
+    
+  // TODO: get profile by id and send it as target to the CreatePost component 
   return (
     <div>
       <Header activeTab="none" />
       <Grid container>
         <Grid item xs={1}></Grid>
         <Grid item xs={10}>
-          <ProfileHeader user={user} />
-          <ProfileNavigation />
+          <ProfileHeader user={user}/>
+          <ProfileNavigation user={user} />
           {/* <Grid container>
             <Grid item xs={5}>
               <Intro userProfileData={user} />
