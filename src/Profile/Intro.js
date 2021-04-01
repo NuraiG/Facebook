@@ -29,11 +29,11 @@ export default function Intro({ userProfileData }) {
           )}
           <Box className={styles.profile_info}>
             <CakeIcon />
-            Born on {new Date(userProfileData.birthDate).toDateString()}
+            Born on {userProfileData.birthDate?.toDate().toDateString()}
           </Box>
           <Box className={styles.profile_info}>
             <WatchLaterIcon />
-            Joined on {new Date(userProfileData.registrationDate).toDateString()}
+            Joined on {userProfileData.registrationDate?.toDate().toDateString()}
           </Box>
         </Card>
       </ThemeProvider>

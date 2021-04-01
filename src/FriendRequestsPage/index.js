@@ -4,7 +4,6 @@ import Profile from "../Profile/Profile";
 import {
   acceptFriendRequest,
   getMyFriendRequests,
-  getUserById,
   rejectFriendRequest,
 } from "../service";
 import FriendRequestComponent from "./FriendRequestComponent";
@@ -12,17 +11,6 @@ import styles from "./FriendRequestPage.module.scss";
 
 import { Grid } from "@material-ui/core";
 
-let user = {
-  id: "U99cAvfTmfhuHurhus6D5X2ejfo1",
-  profile_image: "",
-  firstName: "Елица",
-  lastName: "Иванова",
-  registrationDate: "March 29, 2021 at 1:47:01 PM UTC+3",
-  birthDate: "March 29, 2000 at 1:47:01 PM UTC+3",
-  birthPlace: "Sofia",
-  residence: "Sofia",
-  gender: "Female",
-};
 
 export default function FriendRequestPage() {
   const currentUser = useSelector((state) => state.currentUser.currentUser);

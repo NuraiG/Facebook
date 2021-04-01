@@ -28,7 +28,11 @@ import ThumbUpAltOutlinedIcon from "@material-ui/icons/ThumbUpAltOutlined";
 import ChatBubbleOutlineRoundedIcon from "@material-ui/icons/ChatBubbleOutlineRounded";
 import { truncateString } from "../../utils";
 import { MAX_POST_LENGTH } from "../../constants";
-import { getCommentsForPost, likePostRequest } from "../../service";
+import {
+  getCommentsForPost,
+  getUserById,
+  likePostRequest,
+} from "../../service";
 
 let currentUser = {
   id: "U99cAvfTmfhuHurhus6D5X2ejfo1",
@@ -63,7 +67,7 @@ export default function Post({ postObj }) {
 
   // get the time for the post, formatted based on how long ago it was made
   // let timeToDisplay = calculateAndFormatTime(
-  //   new Date(),
+  //   getServerTime()?.toDate(),
   //   new Date(postObj.timestamp?.toDate())
   // );
   // need this for the date tooltip
@@ -72,11 +76,14 @@ export default function Post({ postObj }) {
   let fullDatePrettified = 0;
 
   useEffect(() => {
-    if (postObj.createdById !== postObj.postTarget) {
-      // TODO: make request to take the target name from db
+    if (postObj.createdById !== postObj.postTargetId) {
+      // TODO: uncomment this when we stop using static data
+      // getUserById(postObj.postTargetId).then((user) =>
+      //   setPostTargetName(user.firstName + " " + user.lastName)
+      // );
       setPostTargetName("Other username");
     }
-  }, [postObj.createdById, postObj.postTarget]); // not sure about these dependencies
+  }, [postObj.createdById, postObj.postTargetId]); // not sure about these dependencies
 
   let likePost = () => {
     likePostRequest(postObj.id, currentUser.id, !postIsLiked);
@@ -123,11 +130,13 @@ export default function Post({ postObj }) {
               <Link to={`/profile/${postObj.createdById}`}>
                 {postObj.createdByFullName}
               </Link>
-              {postObj.feeling.length ? `\u00A0is feeling ${postObj.feeling}` : null}
+              {postObj.feeling.length
+                ? `\u00A0is feeling ${postObj.feeling}`
+                : null}
               {postTargetName && (
                 <>
                   <PlayArrowRoundedIcon fontSize="small" />
-                  <Link to={`/profile/${postObj.postTarget}`}>
+                  <Link to={`/profile/${postObj.postTargetId}`}>
                     {postTargetName}
                   </Link>
                 </>

@@ -1,21 +1,19 @@
 import React, { useEffect, useState } from "react";
 import { blueGreenTheme, grayButtonTheme, grayTheme } from "../customThemes";
 import styles from "./FriendRequestComponent.module.scss";
-// import { getShortDate } from '../timeUtils';
 
 import { Avatar, Button, Paper, ThemeProvider } from "@material-ui/core";
 import { getUserById } from "../service";
-import { getShortDate } from "../timeUtils";
+import { getServerTime, getShortDate } from "../timeUtils";
 
 export default function FriendRequestComponent({
-  // user,
   friendRequestObj,
   onClick,
   onAccept,
   onReject,
 }) {
   let formattedTimestamp = getShortDate(
-    new Date(),
+    getServerTime()?.toDate(),
     new Date(friendRequestObj.timestamp?.toDate())
   );
   let [user, setUser] = useState({});

@@ -134,6 +134,13 @@ export function createPost(postData) {
     });
 }
 
+export function getAllPosts() {
+  return database
+    .collection("posts")
+    .where("isDeleted", "!=", true)
+    .orderBy("isDeleted")
+}
+
 export function getAllPostsForUser(userId) {
   return database
     .collection("posts")
