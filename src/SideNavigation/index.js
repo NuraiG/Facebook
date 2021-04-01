@@ -14,11 +14,11 @@ export default function SideNavigation() {
       <Button
         className={styles.btn}
         fullWidth
-        startIcon={<Avatar src={currentUser.profile_image}/>}
+        startIcon={<Avatar src={currentUser.profile_image} />}
         component={Link}
         to={`profile/${currentUser.id}`}
       >
-        {currentUser.firstName + ' ' + currentUser.lastName}
+        {currentUser.firstName} { currentUser.lastName}
       </Button>
       <a
         target="_blank"

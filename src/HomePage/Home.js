@@ -5,7 +5,6 @@ import SideNavigation from "../SideNavigation";
 import CreatePost from "../common/CreatePost/CreatePost";
 import Post from "../common/Post/Post";
 
-import { posts } from "../staticData";
 import styles from "./Home.module.scss";
 import { Grid } from "@material-ui/core";
 import { getAllPosts } from "../service";
@@ -15,22 +14,22 @@ export default function Home({ limit = 2 }) {
   const currentUser = useSelector((state) => state.currentUser.currentUser);
   const [visiblePosts, setVisiblePosts] = useState([]);
   const [allPosts, setAllPosts] = useState([]);
-  const [lastLoadedId, setLastLoadedId] = useState("");
+  const [lastLoaded, setLastLoaded] = useState("");
 
   let fetchMoreData = () => {
-    console.log(lastLoadedId.id);
+    console.log(lastLoaded.id);
     let postsToReturn = [];
-    if (lastLoadedId.id === "") {
+    if (lastLoaded.id === "") {
       postsToReturn = allPosts.slice(0, limit);
     } else {
       let startIndex =
-        allPosts.findIndex((post) => post.id === lastLoadedId.id) + 1;
+        allPosts.findIndex((post) => post.id === lastLoaded.id) + 1;
       console.log(startIndex);
 
       postsToReturn = allPosts.slice(startIndex, startIndex + limit);
     }
     setVisiblePosts([...visiblePosts, ...postsToReturn]);
-    setLastLoadedId(postsToReturn[postsToReturn.length - 1].id);
+    setLastLoaded(postsToReturn[postsToReturn.length - 1].id);
   };
 
   useEffect(() => {
@@ -56,8 +55,8 @@ export default function Home({ limit = 2 }) {
         setAllPosts(shuffledPosts);
 
         setVisiblePosts(shuffledPosts.slice(0, 2));
-        setLastLoadedId(shuffledPosts[1]);
-        console.log(shuffledPosts[1].id);
+        setLastLoaded(shuffledPosts[1]);
+        // console.log(shuffledPosts[1].id);
       });
 
       // if (unshuffledPosts.length) {
@@ -80,8 +79,6 @@ export default function Home({ limit = 2 }) {
         </Grid>
         <Grid item xs={6} className={styles.center_container}>
           <CreatePost target={currentUser} />
-          <Post postObj={posts[0]} />
-          <Post postObj={posts[1]} />
           <InfiniteScroll
             dataLength={visiblePosts.length}
             next={fetchMoreData}

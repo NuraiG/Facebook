@@ -1,7 +1,4 @@
-import { useEffect } from "react";
 import { BrowserRouter, Redirect, Route, Switch } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import firebase from "./firebase";
 import Home from "./HomePage/Home";
 import Login from "./LoginPage/Login";
 import Profile from "./Profile/Profile";
@@ -16,36 +13,37 @@ import { globalTheme } from "./customThemes";
 // Material-UI
 import { Paper, ThemeProvider } from "@material-ui/core";
 import FriendRequestPage from "./FriendRequestsPage";
-import { setCurrentUser } from "./Profile/CurrentUser.actions";
+
+//redux
+import { useDispatch, useSelector } from "react-redux";
+
+// react
+import { useEffect } from "react";
+
+//firebase
+import firebase from "./firebase";
+
+// current user actions
+import {setCurrentUser} from "./Profile/CurrentUser.actions";
+
+// DB requests
 import { getUserById } from "./service";
+
 
 function App() {
   const dispatch = useDispatch();
-  let user = {
-    id: "U99cAvfTmfhuHurhus6D5X2ejfo1",
-    profile_image: "",
-    firstName: "Елица",
-    lastName: "Иванова",
-    registrationDate: "March 29, 2021 at 1:47:01 PM UTC+3",
-    birthDate: "March 29, 2000 at 1:47:01 PM UTC+3",
-    birthPlace: "Sofia",
-    residence: "Sofia",
-    gender: "Female",
-  };
-
+  const currentUser = useSelector((state) => state.currentUser.currentUser);
+  
   useEffect(() => {
-    firebase.auth().onAuthStateChanged(function (user) {
+    firebase.auth().onAuthStateChanged(user => {
       if (user) {
-        // User is signed in.
         console.log("Signed in user: ", user);
-        getUserById(user.uid).then((data) => {
-          dispatch(setCurrentUser({...data, id: user.uid}));
-        });
+        getUserById(user.uid).then((res)=>{dispatch(setCurrentUser({...res, id: user.uid}))})
       } else {
-        // No user is signed in.
         console.log("No user");
+        dispatch(setCurrentUser(null));
       }
-    });
+    })
   }, [dispatch]);
 
   return (
@@ -66,7 +64,7 @@ function App() {
               </Route>
 
               <Route path="/profile/:id">
-                <Profile currentUser={user} />
+                <Profile />
               </Route>
 
               <Route exact path="/friends">
@@ -75,7 +73,7 @@ function App() {
               </Route>
 
               <Route exact path="/">
-                {user ? <Home /> : <Redirect to="/login" />}
+                {currentUser ? <Home user={currentUser} /> : <Redirect to="/login" />}
               </Route>
 
               <Route path="*">

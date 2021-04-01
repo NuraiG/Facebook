@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 import { makeStyles } from "@material-ui/core/styles";
 
@@ -15,10 +15,11 @@ import {
   AppBar,
 } from "@material-ui/core";
 
+import { useSelector } from "react-redux";
+
 import PersonAddIcon from "@material-ui/icons/PersonAdd";
 
 import { grayTheme, customButtonBlueGreen } from "../customThemes";
-import styles from "./Profile.module.scss";
 
 import Intro from "./Intro";
 import CreatePost from "../common/CreatePost/CreatePost";
@@ -26,29 +27,6 @@ import CreatePost from "../common/CreatePost/CreatePost";
 import { Grid } from "@material-ui/core";
 import PostsFeed from "./ProfilePostsFeed";
 import { sendFriendRequest } from "../service";
-
-const currentUser = {
-  id: "U99cAvfTmfhuHurhus6D5X2ejfo1",
-  profile_image: "",
-  firstName: "Елица",
-  lastName: "Иванова",
-  registrationDate: "March 29, 2021 at 1:47:01 PM UTC+3",
-  birthDate: "March 29, 2000 at 1:47:01 PM UTC+3",
-  birthPlace: "Sofia",
-  residence: "Sofia",
-  gender: "Female",
-};
-const target = {
-  id: "Fy83HbX6cxX2VPPA7QG7bu3QTwr1",
-  profile_image: "",
-  firstName: "Max",
-  lastName: "Maxov",
-  registrationDate: "March 30, 2021 at 1:47:01 PM UTC+3",
-  birthDate: "March 23, 2003 at 1:47:01 PM UTC+3",
-  birthPlace: "Sofia",
-  residence: "Sofia",
-  gender: "Male",
-};
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -87,7 +65,7 @@ const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 2,
     marginTop: 30,
-    border: 'none',
+    border: "none",
   },
   menuButton: {
     marginRight: theme.spacing(2),
@@ -97,16 +75,17 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function ProfileNavigation(currentUser, target) {
+export default function ProfileNavigation({ user }) {
+  const currentUser = useSelector((state) => state.currentUser.currentUser);
   const classes = useStyles();
-  const [value, setValue] = React.useState(0);
+  const [value, setValue] = useState(0);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
 
   const onSendFriendRequest = () => {
-    sendFriendRequest(currentUser.id, target.id)
+    sendFriendRequest(currentUser.id, user.id)
       .then(console.log("Successfully sent a friend request"))
       .catch((error) =>
         console.log(
@@ -114,7 +93,7 @@ export default function ProfileNavigation(currentUser, target) {
           error
         )
       );
-  }
+  };
 
   return (
     <ThemeProvider theme={grayTheme}>
@@ -133,32 +112,37 @@ export default function ProfileNavigation(currentUser, target) {
               </Tabs>
             </Typography>
             <ThemeProvider theme={customButtonBlueGreen}>
-              {/* { !areFriends ?  */} {/* and a friend request has not been sent */}
-              <Button
-                color="primary"
-                className={classes.menuButton}
-                startIcon={<PersonAddIcon />}
-                onClick={onSendFriendRequest}
-              >
-                Add friend
-              </Button>
-              {/* : null*/}
+              {/* are friends */} {/* and a friend request has not been sent */}
+              {user.id !== currentUser.id ? (
+                <Button
+                  color="primary"
+                  className={classes.menuButton}
+                  startIcon={<PersonAddIcon />}
+                  onClick={onSendFriendRequest}
+                >
+                  Add friend
+                </Button>
+              ) : (
+                ""
+              )}
             </ThemeProvider>
           </Toolbar>
         </AppBar>
         <TabPanel value={value} index={0}>
           {/* Posts */}
           <React.Fragment>
-          <Grid container>
-            <Grid item xs={5}>
-              <Intro userProfileData={currentUser}/>
+            <Grid container>
+              <Grid item xs={5}>
+                <Intro userProfileData={user} />
+              </Grid>
+              <Grid item xs={7}>
+                <CreatePost
+                  target={user}
+                />
+                <PostsFeed userId={user.id} />
+              </Grid>
             </Grid>
-            <Grid item xs={7}>
-              <CreatePost currentUser={currentUser} target={({id: 4, firstName: "John"})}/>
-              <PostsFeed userId={"1"}/>
-            </Grid>
-         </Grid>
-         </React.Fragment>
+          </React.Fragment>
         </TabPanel>
         <TabPanel value={value} index={1}>
           Photos

@@ -12,13 +12,13 @@ export default function Login() {
     const [email, setEmail] = React.useState('');
     const [password, setPassword] = React.useState('');
 
+
     const setHandlerInputEmail = (e) => {
         setEmail(e.target.value);
     }
     const setHandlerInputPassword = (e) => {
         setPassword(e.target.value);
     }
-
     const onSubmit = () => {
         login(email, password)
         .then((userCredential) => {
