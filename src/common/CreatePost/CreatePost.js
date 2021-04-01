@@ -101,7 +101,7 @@ export default function CreatePost({ target }) {
     createPost({
       createdById: currentUser.id,
       createdByFullName: currentUser.firstName + " " + currentUser.lastName,
-      createdByPic: currentUser.profile_image,
+      createdByPic: currentUser.profile_image || "",
       postTargetId: target.id,
       postTargetDesc: "wall",
       attachedImages: attachedFiles,

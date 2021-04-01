@@ -22,7 +22,7 @@ export default function EmptyComment({ postId }) {
       createComment(postId, {
         createdById: currentUser.id,
         createdByFullName: currentUser.firstName + " " + currentUser.lastName,
-        createdByPic: currentUser.profile_image,
+        createdByPic: currentUser.profile_image || "",
         content: comment,
         attachedImages: attachedFiles,
       });
