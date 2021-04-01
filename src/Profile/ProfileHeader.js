@@ -23,46 +23,26 @@ import { makeStyles } from "@material-ui/core/styles";
 
 import { useDropzone } from "react-dropzone";
 
-//testing: current user;
-const currentUser = {
-  firstName: "John",
-  lastName: "Doe",
-  profile_image: "",
-  cover_image: "",
-  id: 3,
-  // id:32,
-};
-export default function ProfileHeader({
-  firstName,
-  profile_image,
-  cover_image,
-  id,
-  lastName,
-  description,
-  
-}) {
+import { useDispatch, useSelector } from "react-redux";
+
+
+export default function ProfileHeader({user}) {
+
   const [isTextAreaOpen, setTextArea] = useState(false);
   const [profileImage, setProfileImage]= useState('');
   const [coverImage,setCoverImage]=useState('');
   const [bio,setBio] = useState('');
 
-  
-
-  let currId="Fy83HbX6cxX2VPPA7QG7bu3QTwr1";
-  //for testing;
-  firstName = "John ";
-  lastName = "Doe";
-  id = 3;
-  // description = "Nature lover";
+  const currentUser = useSelector((state) => state.currentUser.currentUser);
 
 
   // add or edit cover image
   const onDropCover = useCallback((acceptedFile) => { 
-    setCoverImage(acceptedFile[0]);
+    setCoverImage(acceptedFile);
     const uploadTask = storage
     .ref()
-    .child("images/" + Date.now())
-    .put(coverImage);
+    .child("images/"+ currentUser.id + "_"+ Date.now())
+    .put(acceptedFile[0]);
 
   uploadTask.on(
     "state_changed",
@@ -72,12 +52,12 @@ export default function ProfileHeader({
     (error) => {},
     () => {
       uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
-        editCoverImage(currId,downloadURL);
+        editCoverImage(currentUser.id,downloadURL);
       });
     }
   );
 
-  }, [coverImage,currId]);
+  }, [currentUser.id]);
 
   const { getRootProps: getRootPropsCover, getInputProps: getInputPropsCover } = useDropzone({
     onDrop: onDropCover,
@@ -87,25 +67,29 @@ export default function ProfileHeader({
 
 // add or edit profile image;
   const onDrop = useCallback((acceptedFile) => { 
-    setProfileImage(acceptedFile[0]);
+    // setProfileImage(acceptedFile);
     const uploadTask = storage
     .ref()
-    .child("images/" + Date.now())
-    .put(profileImage);
+    .child("images/" + currentUser.id + "_"+ Date.now())
+    // .put(profileImage);
+    .put(acceptedFile[0]);
 
   uploadTask.on(
     "state_changed",
     (snapshot) => {
-      console.log("Upload is done");
+      let progress= (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+      console.log("Upload is " + progress + "% done");
     },
-    (error) => {},
+    (error) => {
+      console.log(error);
+    },
     () => {
       uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
-        editProfileImage(currId,downloadURL);
+        editProfileImage(currentUser.id,downloadURL);
       });
     }
   );
-  }, [profileImage,currId]);
+  }, [currentUser.id]);
 
   
   const { getRootProps, getInputProps } = useDropzone({
@@ -117,7 +101,7 @@ export default function ProfileHeader({
 
   //edit bio/add bio
    const changeBio=()=>{
-    updateUserBio(currId,bio);
+    updateUserBio(currentUser.id,bio);
    }
 
   // created custom avatar
@@ -143,10 +127,10 @@ export default function ProfileHeader({
     <>
       <div className={styles.profileWrapper}>
         <div className={styles.cover}>
-          {cover_image && <img src={cover_image} alt="cover"></img>}
+          {user.cover_image && <img src={user.cover_image} alt="cover"></img>}
         </div>
 
-        {currentUser.id === id && (
+        {currentUser.id === user.id && (
           <div className={styles.btn}>
             <input {...getInputPropsCover()}></input>
             <Button
@@ -164,7 +148,7 @@ export default function ProfileHeader({
         )}
 
         <div className={styles.profilImage}>
-          {currentUser.id === id ? (
+          {currentUser.id === user.id ? (
             <React.Fragment>
             <input {...getInputProps()}></input>
             <Badge
@@ -180,30 +164,30 @@ export default function ProfileHeader({
                 />
               }
             >
-              <StyledAvatar src={profile_image}></StyledAvatar>
+              <StyledAvatar src={currentUser.profile_image}></StyledAvatar>
             </Badge>
             </React.Fragment>
           ) : (
             <StyledAvatar
-              src={profile_image}
+              src={user.profile_image}
               className={styles.profilFriendImage}
             ></StyledAvatar>
           )}
         </div>
         <h1>
-          {firstName} {lastName}
+          {user.firstName}   {user.lastName}
         </h1>
         {/* view current user profile and add/edit bio */}
-        {currentUser.id === id ? (
+        {currentUser.id === user.id ? (
           <div className={styles.bio}>
-          <p>{description}</p>
+          <p>{currentUser.bio}</p>
             {!isTextAreaOpen ? (
               <span
                 onClick={() => {
                   setTextArea(true);
                 }}
               >
-                {description ? 'Edit Bio' : 'Add Bio' }
+                {currentUser.bio ? 'Edit Bio' : 'Add Bio' }
               </span>
             ) : null}
             {isTextAreaOpen ? (
@@ -229,7 +213,7 @@ export default function ProfileHeader({
             ) : null}
           </div>
         ) : (
-          <p>{description}</p>
+          <p>{user.bio}</p>
         )}
       </div>
     </>

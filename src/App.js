@@ -38,7 +38,7 @@ function App() {
   useEffect(() => {
     firebase.auth().onAuthStateChanged(user => {
       if (user) {
-          getUserById(user.uid).then((res)=>{dispatch(setCurrentUser(res))})
+          getUserById(user.uid).then((res)=>{dispatch(setCurrentUser({...res, id: user.uid}))})
       } else {
         dispatch(setCurrentUser(null));
       }
@@ -46,21 +46,22 @@ function App() {
   }, [dispatch])
 
   
-  console.log("CurrentUser here id:",currentUser.uid);
+  console.log("CurrentUser here id:",currentUser.id);
   console.log("CurrentUser here:", currentUser.firstName);
   console.log("CurrentUser here:",currentUser);
 
-  let user = {
-    id: "U99cAvfTmfhuHurhus6D5X2ejfo1",
-    profile_image: "",
-    firstName: "Елица",
-    lastName: "Иванова",
-    registrationDate: "March 29, 2021 at 1:47:01 PM UTC+3",
-    birthDate: "March 29, 2000 at 1:47:01 PM UTC+3",
-    birthPlace: "Sofia",
-    residence: "Sofia",
-    gender: "Female",
-  };
+  // let user = {
+  //   id: "U99cAvfTmfhuHurhus6D5X2ejfo1",
+  //   profile_image: "",
+  //   firstName: "Елица",
+  //   lastName: "Иванова",
+  //   registrationDate: "March 29, 2021 at 1:47:01 PM UTC+3",
+  //   birthDate: "March 29, 2000 at 1:47:01 PM UTC+3",
+  //   birthPlace: "Sofia",
+  //   residence: "Sofia",
+  //   gender: "Female",
+  // };
+  
 
   return (
     <BrowserRouter>
@@ -80,7 +81,7 @@ function App() {
               </Route>
 
               <Route path="/profile/:id">
-                <Profile currentUser={user}/>
+                <Profile currentUser={currentUser}/>
               </Route>
 
               <Route exact path="/friends">
@@ -89,7 +90,7 @@ function App() {
               </Route>
 
               <Route exact path="/">
-                {user ? <Home user={user} /> : <Redirect to="/login" />}
+                {currentUser ? <Home user={currentUser} /> : <Redirect to="/login" />}
               </Route>
 
               <Route path="*">
