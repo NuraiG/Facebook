@@ -58,11 +58,11 @@ export default function Registration() {
     console.log(getTimestampFromDate(bDate));
 
     register(email, password)
-      .then((userCredential) => {
-        // Signed in
-        let user = userCredential.user;
-        console.log(user.uid);
-        let uid = user.uid;
+    .then((userCredential) => {
+      // Signed in
+      let user = userCredential.user;
+      console.log(user.uid);
+      let uid = user.uid;
 
         addUserToCollection(
           uid,

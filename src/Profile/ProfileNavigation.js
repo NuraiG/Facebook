@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 
 import { makeStyles } from "@material-ui/core/styles";
 
@@ -15,10 +15,11 @@ import {
   AppBar,
 } from "@material-ui/core";
 
+import { useSelector } from "react-redux";
+
 import PersonAddIcon from "@material-ui/icons/PersonAdd";
 
 import { grayTheme, customButtonBlueGreen } from "../customThemes";
-import styles from "./Profile.module.scss";
 
 import Intro from "./Intro";
 import CreatePost from "../common/CreatePost/CreatePost";
@@ -26,28 +27,6 @@ import CreatePost from "../common/CreatePost/CreatePost";
 import { Grid } from "@material-ui/core";
 import PostsFeed from "./ProfilePostsFeed";
 
-const currentUser = {
-  id: "U99cAvfTmfhuHurhus6D5X2ejfo1",
-  profile_image: "",
-  firstName: "Елица",
-  lastName: "Иванова",
-  registrationDate: "March 29, 2021 at 1:47:01 PM UTC+3",
-  birthDate: "March 29, 2000 at 1:47:01 PM UTC+3",
-  birthPlace: "Sofia",
-  residence: "Sofia",
-  gender: "Female",
-};
-const target = {
-  id: "Fy83HbX6cxX2VPPA7QG7bu3QTwr1",
-  profile_image: "",
-  firstName: "Max",
-  lastName: "Maxov",
-  registrationDate: "March 30, 2021 at 1:47:01 PM UTC+3",
-  birthDate: "March 23, 2003 at 1:47:01 PM UTC+3",
-  birthPlace: "Sofia",
-  residence: "Sofia",
-  gender: "Male",
-};
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -96,13 +75,16 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function ProfileNavigation(currentUser, target) {
+export default function ProfileNavigation({user}) {
+
+  const currentUser = useSelector((state) => state.currentUser.currentUser);
   const classes = useStyles();
-  const [value, setValue] = React.useState(0);
+  const [value, setValue] = useState(0);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
+
 
 
   return (
@@ -122,7 +104,8 @@ export default function ProfileNavigation(currentUser, target) {
               </Tabs>
             </Typography>
             <ThemeProvider theme={customButtonBlueGreen}>
-              {/* { !areFriends ?  */}
+               {/* are friends */}
+              { user.id !== currentUser.id ? 
               <Button
                 color="primary"
                 className={classes.menuButton}
@@ -130,7 +113,7 @@ export default function ProfileNavigation(currentUser, target) {
               >
                 Add friend
               </Button>
-              {/* : null*/}
+              : ''}
             </ThemeProvider>
           </Toolbar>
         </AppBar>
@@ -139,10 +122,10 @@ export default function ProfileNavigation(currentUser, target) {
           <React.Fragment>
           <Grid container>
             <Grid item xs={5}>
-              <Intro userProfileData={currentUser}/>
+              <Intro userProfileData={user}/>
             </Grid>
             <Grid item xs={7}>
-              <CreatePost currentUser={currentUser} target={({id: 4, firstName: "John"})}/>
+              <CreatePost currentUser={user} target={({id: 4, firstName: "John"})}/>
               <PostsFeed userId={"1"}/>
             </Grid>
          </Grid>

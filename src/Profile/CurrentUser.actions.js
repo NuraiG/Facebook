@@ -28,3 +28,4 @@ export const updateUserProfile = (updatetedData) => ({
   type: UPDATE_USER_PROFILE,
   payload: updatetedData,
 });
+

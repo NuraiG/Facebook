@@ -8,7 +8,12 @@ import Post from "../common/Post/Post";
 import { posts } from "../staticData";
 import styles from "./Home.module.scss";
 
+import { useSelector } from "react-redux";
+
 export default function Home({user}) {
+
+  const currentUser = useSelector(state => state.currentUser.currentUser);
+
   return (
     <div>
       <Header activeTab="home"/>

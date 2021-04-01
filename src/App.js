@@ -14,18 +14,48 @@ import { globalTheme } from "./customThemes";
 import { Paper, ThemeProvider } from "@material-ui/core";
 import FriendRequestPage from "./FriendRequestsPage";
 
+//redux
+import { useDispatch, useSelector } from "react-redux";
+
+// react
+import { useEffect } from "react";
+
+//firebase
+import firebase from "./firebase";
+
+// current user actions
+import {setCurrentUser} from "./Profile/CurrentUser.actions";
+
+import { getUserById } from "./service";
+
+
 function App() {
-  let user = {
-    id: "U99cAvfTmfhuHurhus6D5X2ejfo1",
-    profile_image: "",
-    firstName: "Елица",
-    lastName: "Иванова",
-    registrationDate: "March 29, 2021 at 1:47:01 PM UTC+3",
-    birthDate: "March 29, 2000 at 1:47:01 PM UTC+3",
-    birthPlace: "Sofia",
-    residence: "Sofia",
-    gender: "Female",
-  };
+  
+  const dispatch = useDispatch();
+
+  const currentUser = useSelector((state) => state.currentUser.currentUser);
+  
+  useEffect(() => {
+    firebase.auth().onAuthStateChanged(user => {
+      if (user) {
+          getUserById(user.uid).then((res)=>{dispatch(setCurrentUser({...res, id: user.uid}))})
+      } else {
+        dispatch(setCurrentUser(null));
+      }
+    })
+  }, [dispatch]);
+
+  // let user = {
+  //   id: "U99cAvfTmfhuHurhus6D5X2ejfo1",
+  //   profile_image: "",
+  //   firstName: "Елица",
+  //   lastName: "Иванова",
+  //   registrationDate: "March 29, 2021 at 1:47:01 PM UTC+3",
+  //   birthDate: "March 29, 2000 at 1:47:01 PM UTC+3",
+  //   birthPlace: "Sofia",
+  //   residence: "Sofia",
+  //   gender: "Female",
+  // };
 
   return (
     <BrowserRouter>
@@ -45,7 +75,7 @@ function App() {
               </Route>
 
               <Route path="/profile/:id">
-                <Profile currentUser={user}/>
+                <Profile currentUser={currentUser}/>
               </Route>
 
               <Route exact path="/friends">
@@ -54,7 +84,7 @@ function App() {
               </Route>
 
               <Route exact path="/">
-                {user ? <Home user={user} /> : <Redirect to="/login" />}
+                {currentUser ? <Home user={currentUser} /> : <Redirect to="/login" />}
               </Route>
 
               <Route path="*">
