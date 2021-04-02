@@ -45,6 +45,7 @@ export default function CreatePostDialog({
   showFeelingsModal,
   postFeeling,
   setPostFeeling,
+  isPostBeingEdited,
 }) {
   const currentUser = useSelector((state) => state.currentUser.currentUser);
 
@@ -80,7 +81,11 @@ export default function CreatePostDialog({
         className={styles.dialog}
       >
         <DialogTitle id="form-dialog-title" className={styles.dialog_title}>
-          {showFeelingsModal ? "How are you feeling?" : "Create Post"}
+          {showFeelingsModal
+            ? "How are you feeling?"
+            : isPostBeingEdited
+            ? "Edit Post"
+            : "Create Post"}
           <ThemeProvider theme={grayButtonTheme}>
             <IconButton
               color="primary"
@@ -198,7 +203,7 @@ export default function CreatePostDialog({
                     : true
                 }
               >
-                Post
+                {isPostBeingEdited ? "Save" : "Post"}
               </Button>
             </DialogActions>
           </ThemeProvider>
