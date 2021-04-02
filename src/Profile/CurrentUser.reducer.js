@@ -8,6 +8,7 @@ import {
 
 const INITIAL_STATE = {
   currentUser: {},
+  isLoading: true,
 };
 
 const reducer = (state = INITIAL_STATE, action) => {
@@ -15,16 +16,19 @@ const reducer = (state = INITIAL_STATE, action) => {
     case SET_CURRENT_USER:
       return {
         currentUser: { ...action.payload },
+        isLoading: false,
       };
 
     case UPDATE_USER_PROFILE_PICTURE:
       return {
         currentUser: { ...state.currentUser, profile_image: action.payload },
+        isLoading: false,
       };
 
     case UPDATE_USER_COVER_PICTURE:
       return {
         currentUser: { ...state.currentUser, cover_image: action.payload },
+        isLoading: false,
       };
 
     case ADD_TO_FRINDS_LIST:
@@ -33,6 +37,7 @@ const reducer = (state = INITIAL_STATE, action) => {
           ...state.currentUser,
           friends: [...state.currentUser.friends, action.payload],
         },
+        isLoading: false,
       };
 
     case UPDATE_USER_PROFILE:
@@ -41,6 +46,7 @@ const reducer = (state = INITIAL_STATE, action) => {
           ...state.currentUser,
           ...action.payload,
         },
+        isLoading: false,
       };
 
     default:
