@@ -15,15 +15,16 @@ import { addUserToCollection, register } from "../service";
 import { getTimestampFromDate } from "../timeUtils";
 
 export default function Registration() {
+
+  let currentDate = new Date().toJSON().slice(0,10).replace(/-/g,'-'); 
+  
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
   const [firstName, setFirstName] = React.useState("");
   const [lastName, setLastName] = React.useState("");
-  const [bDate, setbDate] = React.useState("2003-03-21");
+  const [bDate, setbDate] = React.useState(currentDate);
   const [gender, setGender] = React.useState("Other");
-  // todo: validate email && validePassword name..
-  // onClick Sign Up
-
+ 
   const setHandlerGender = (e) => {
     setGender(e.target.value);
   };

@@ -16,7 +16,7 @@ export default function AvatarComponent({ className, showFullName, onClick }) {
           className={`${className} ${styles.avatar_wrapper}`}
           onClick={onClick}
         >
-          <Avatar />
+          <Avatar src={currentUser.profile_image} />
           <h4 className={styles.avatar_text}>
             {showFullName
               ? currentUser.firstName + " " + currentUser.lastName
