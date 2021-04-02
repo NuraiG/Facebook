@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {TextField, Divider, Button} from '@material-ui/core';
 import {Link} from 'react-router-dom';
 import styles from './Login.module.scss';
@@ -9,8 +9,9 @@ import { login } from '../service';
 
 export default function Login() {
 
-    const [email, setEmail] = React.useState('');
-    const [password, setPassword] = React.useState('');
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [error,setError] = useState(false);
 
 
     const setHandlerInputEmail = (e) => {
@@ -23,11 +24,13 @@ export default function Login() {
         login(email, password)
         .then((userCredential) => {
             // Signed in
+            setError(true);
             let user = userCredential.user;
             console.log(user.uid);
           })
           .catch((error) => {
-            console.log(error);
+              setError(true);
+            console.log(error.message);
           });
     }
     return (
@@ -65,6 +68,7 @@ export default function Login() {
                         onChange={
                             (e) => setHandlerInputPassword(e)
                         }/>
+                        {error ? <span>Invalid email or password</span> :" "}
                 </div>
                 <ThemeProvider theme={customButtonBlueGreen}>
                     <Button color="primary" variant="contained" size="large" onClick={onSubmit}>Log In</Button>

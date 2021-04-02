@@ -26,6 +26,8 @@ export default function Registration() {
   const [bDate, setbDate] = useState(currentDate);
   const [gender, setGender] = useState("Other");
 
+  const [error, setError] = useState("");
+
  
   const setHandlerGender = (e) => {
     setGender(e.target.value);
@@ -66,7 +68,7 @@ export default function Registration() {
       let user = userCredential.user;
       console.log(user.uid);
       let uid = user.uid;
-
+      setError("");
         addUserToCollection(
           uid,
           email,
@@ -78,6 +80,7 @@ export default function Registration() {
       })
       .catch((error) => {
         console.log(error);
+        setError(error.message);
       });
   };
 
@@ -209,6 +212,7 @@ export default function Registration() {
             </Button>
           </ThemeProvider>
         </div>
+        {error ?<span> {error}</span> : ""}
       </div>
     </>
   );
