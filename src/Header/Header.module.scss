@@ -23,9 +23,9 @@
         img {
           height: 40px;
         }
-        > div {
-          display: none;
-        }
+        // > div {
+        //   display: none;
+        // }
         .header__input {
           display: flex;
           align-items: center;
@@ -193,6 +193,19 @@
     .header__wrapper {
       padding: 0px;
     }
+  }
+}
+
+.dropdown {
+  width: 310px;
+  box-sizing: border-box;
+  padding: 8px;
+  
+  a.filtered_user {
+    width: 100%;
+    box-sizing: border-box;
+    text-transform: none;
+    font-weight: 700;
   }
 }
 
