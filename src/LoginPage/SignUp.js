@@ -14,6 +14,7 @@ import { ThemeProvider } from "@material-ui/styles";
 import { addUserToCollection, register } from "../service";
 import { getTimestampFromDate } from "../timeUtils";
 import {validateEmail, validatePassword,validateNames,validateDate } from "../validate";
+import { useHistory } from "react-router-dom";
 
 export default function Registration() {
 
@@ -27,6 +28,8 @@ export default function Registration() {
   const [gender, setGender] = useState("Other");
 
   const [error, setError] = useState("");
+
+  const history = useHistory();
 
  
   const setHandlerGender = (e) => {
@@ -65,10 +68,12 @@ export default function Registration() {
     register(email, password)
     .then((userCredential) => {
       // Signed in
+      setError("");
       let user = userCredential.user;
       console.log(user.uid);
       let uid = user.uid;
-      setError("");
+      history.replace("/", { from: "login" })
+     
         addUserToCollection(
           uid,
           email,

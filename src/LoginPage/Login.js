@@ -6,12 +6,15 @@ import {ThemeProvider} from '@material-ui/styles';
 import facebook from './facebook-loginPage.svg';
 import { customButtonBlueGreen } from "../customThemes";
 import { login } from '../service';
+import { useHistory } from "react-router-dom";
 
 export default function Login() {
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error,setError] = useState(false);
+
+    const history = useHistory();
 
 
     const setHandlerInputEmail = (e) => {
@@ -24,9 +27,10 @@ export default function Login() {
         login(email, password)
         .then((userCredential) => {
             // Signed in
-            setError(true);
+            setError(false);
             let user = userCredential.user;
             console.log(user.uid);
+            history.replace("/", { from: "login" })
           })
           .catch((error) => {
               setError(true);
