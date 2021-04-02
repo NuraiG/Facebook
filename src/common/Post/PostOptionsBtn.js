@@ -12,9 +12,11 @@ import CreatePostDialog from "../CreatePost/CreatePostDialog";
 
 const useStyles = makeStyles(() => ({
   paper: {
-    border: "1px solid",
     padding: grayTheme.spacing(1),
     backgroundColor: grayTheme.palette.secondary.main,
+    borderRadius: "8px",
+    boxShadow:
+      "rgba(0, 0, 0, 0.2) 0px 12px 28px 0px, rgba(0, 0, 0, 0.1) 0px 2px 4px 0px, rgba(255, 255, 255, 0.5) 0px 0px 0px 1px inset",
   },
 }));
 
@@ -36,11 +38,11 @@ export default function PostOptionsBtn({ postObj }) {
   };
 
   const removeFromAttachedFiles = (file) => {
-    let copy = [...attachedFiles]
+    let copy = [...attachedFiles];
     let index = copy.indexOf(file);
     copy.splice(index, 1);
     setAttachedFiles(copy);
-  }
+  };
 
   const onDrop = useCallback(
     (newFiles) => {
@@ -116,10 +118,18 @@ export default function PostOptionsBtn({ postObj }) {
       >
         <MoreHorizIcon />
       </IconButton>
-      <Popper id={id} open={open} anchorEl={anchorEl}>
-        <div className={classes.paper}>
-          <Button fullWidth onClick={onDelete}>Delete post</Button>
-          <Button fullWidth onClick={handleDialogOpen}>Edit post</Button>
+      <Popper
+        id={id}
+        open={open}
+        anchorEl={anchorEl}
+      >
+        <div className={`${classes.paper} ${styles.post_actions_popper}`}>
+          <Button fullWidth onClick={onDelete} className={styles.post_actions_btn}>
+            Delete post
+          </Button>
+          <Button fullWidth onClick={handleDialogOpen} className={styles.post_actions_btn}>
+            Edit post
+          </Button>
         </div>
       </Popper>
       <CreatePostDialog
