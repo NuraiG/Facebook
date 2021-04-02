@@ -58,6 +58,30 @@ export function updateUserBio(currId, userBio) {
       console.error(error);
     });
 }
+export function updateUserBirthPlace(currId, userBirthPlace) {
+  database
+    .collection("users")
+    .doc(currId)
+    .update({ birthPlace: userBirthPlace})
+    .then(() => {
+      console.log("Document successfully written!");
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+}
+export function updateUserResidence(currId, residence) {
+  database
+    .collection("users")
+    .doc(currId)
+    .update({ residence: residence})
+    .then(() => {
+      console.log("Document successfully written!");
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+}
 
 export function editProfileImage(userId, newImage) {
   return database
