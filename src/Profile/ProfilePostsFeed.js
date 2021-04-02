@@ -1,27 +1,26 @@
 import React, { useEffect, useState } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import Post from "../common/Post/Post";
+import { NUMBER_OF_POSTS_PER_SCROLL } from "../constants";
 import { getAllPostsForUser } from "../service";
 import { compareObjByDBTimestamp } from "../timeUtils";
 
-export default function PostsFeed({ userId, limit = 2 }) {
-  const [posts, setPosts] = useState([]);
+export default function PostsFeed({ userId }) {
+  const [visiblePosts, setVisiblePosts] = useState([]);
   const [allPosts, setAllPosts] = useState([]);
-  const [lastLoadedStr, setLastLoadedStr] = useState("");
+  const [lastLoaded, setLastLoaded] = useState("");
 
   let fetchMoreData = () => {
     let postsToReturn = [];
-    for (let i = 0; i < allPosts.length - 1; i++) {
-      if (lastLoadedStr === "") {
-        postsToReturn = allPosts.slice(0, limit);
-        break;
-      } else if (JSON.stringify(allPosts[i]) === lastLoadedStr) {
-        postsToReturn = allPosts.slice(i + 1, i + 1 + limit);
-        break;
-      }
+    if (lastLoaded.id === "") {
+      postsToReturn = allPosts.slice(0, NUMBER_OF_POSTS_PER_SCROLL);
+    } else {
+      let startIndex =
+        allPosts.findIndex((post) => post.id === lastLoaded.id) + 1;
+      postsToReturn = allPosts.slice(startIndex, startIndex + NUMBER_OF_POSTS_PER_SCROLL);
     }
-    setPosts([...posts, ...postsToReturn]);
-    setLastLoadedStr(JSON.stringify(postsToReturn[postsToReturn.length - 1]));
+    setVisiblePosts([...visiblePosts, ...postsToReturn]);
+    setLastLoaded(postsToReturn[postsToReturn.length - 1]);
   };
 
   useEffect(() => {
@@ -32,8 +31,8 @@ export default function PostsFeed({ userId, limit = 2 }) {
           currentPosts.push({ id: post.id, ...post.data() })
         );
         setAllPosts(currentPosts.sort(compareObjByDBTimestamp));
-        setPosts(currentPosts.slice(0, 2));
-        setLastLoadedStr(JSON.stringify(currentPosts[1]));
+        setVisiblePosts(currentPosts.slice(0, NUMBER_OF_POSTS_PER_SCROLL));
+        setLastLoaded(currentPosts[1]);
       });
     }
   }, [userId]);
@@ -41,12 +40,12 @@ export default function PostsFeed({ userId, limit = 2 }) {
   return (
     <>
       <InfiniteScroll
-        dataLength={posts.length}
+        dataLength={visiblePosts.length}
         next={fetchMoreData}
-        hasMore={allPosts.length > posts.length}
+        hasMore={allPosts.length > visiblePosts.length}
         loader={<h4>Loading...</h4>}
       >
-        {posts.map((current) => (
+        {visiblePosts.map((current) => (
           <Post key={current.id} postObj={current} />
         ))}
       </InfiniteScroll>

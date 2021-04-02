@@ -27,10 +27,6 @@ import { useDropzone } from "react-dropzone";
 import { createPost } from "../../service";
 import { storage } from "../../firebase";
 
-// let possiblePlaceholders = [
-//   `What's on your mind, ${currentUser.firstName}?`,
-//   `Write something to ${user.firstName}...`,
-// ];
 
 export default function CreatePost({ target }) {
   const currentUser = useSelector(state => state.currentUser.currentUser);

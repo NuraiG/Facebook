@@ -9,34 +9,31 @@ import styles from "./Home.module.scss";
 import { Grid } from "@material-ui/core";
 import { getAllPosts } from "../service";
 import InfiniteScroll from "react-infinite-scroll-component";
+import { NUMBER_OF_POSTS_PER_SCROLL } from "../constants";
 
-export default function Home({ limit = 2 }) {
+export default function Home() {
   const currentUser = useSelector((state) => state.currentUser.currentUser);
   const [visiblePosts, setVisiblePosts] = useState([]);
   const [allPosts, setAllPosts] = useState([]);
   const [lastLoaded, setLastLoaded] = useState("");
 
   let fetchMoreData = () => {
-    console.log(lastLoaded.id);
     let postsToReturn = [];
     if (lastLoaded.id === "") {
-      postsToReturn = allPosts.slice(0, limit);
+      postsToReturn = allPosts.slice(0, NUMBER_OF_POSTS_PER_SCROLL);
     } else {
       let startIndex =
         allPosts.findIndex((post) => post.id === lastLoaded.id) + 1;
-      console.log(startIndex);
-
-      postsToReturn = allPosts.slice(startIndex, startIndex + limit);
+      postsToReturn = allPosts.slice(startIndex, startIndex + NUMBER_OF_POSTS_PER_SCROLL);
     }
     setVisiblePosts([...visiblePosts, ...postsToReturn]);
-    setLastLoaded(postsToReturn[postsToReturn.length - 1].id);
+    setLastLoaded(postsToReturn[postsToReturn.length - 1]);
   };
 
   useEffect(() => {
     if (currentUser.friends) {
       getAllPosts().onSnapshot((data) => {
         let currentPosts = [];
-        // let unfilteredPosts = [];
         data.forEach((post) => {
           // if the post is published on one of the currentUser's friends walls
           if (
@@ -46,17 +43,14 @@ export default function Home({ limit = 2 }) {
           ) {
             currentPosts.push({ id: post.id, ...post.data() });
           }
-          // unfilteredPosts.push({ id: post.id, ...post.data() });
         });
         // TODO: figure out how to shuffle posts so that they only get shuffled once
         // let shuffledPosts = shuffleArray(currentPosts);
         let shuffledPosts = [...currentPosts];
-        console.log(shuffledPosts);
         setAllPosts(shuffledPosts);
 
-        setVisiblePosts(shuffledPosts.slice(0, 2));
+        setVisiblePosts(shuffledPosts.slice(0, NUMBER_OF_POSTS_PER_SCROLL));
         setLastLoaded(shuffledPosts[1]);
-        // console.log(shuffledPosts[1].id);
       });
 
       // if (unshuffledPosts.length) {
