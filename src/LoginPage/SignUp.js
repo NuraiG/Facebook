@@ -1,4 +1,4 @@
-import React from "react";
+import React , {useState} from "react";
 import { TextField } from "@material-ui/core";
 import {
   FormControl,
@@ -13,17 +13,19 @@ import { customButtonBlueGreen } from "../customThemes";
 import { ThemeProvider } from "@material-ui/styles";
 import { addUserToCollection, register } from "../service";
 import { getTimestampFromDate } from "../timeUtils";
+import {validateEmail, validatePassword,validateNames,validateDate } from "../validate";
 
 export default function Registration() {
 
   let currentDate = new Date().toJSON().slice(0,10).replace(/-/g,'-'); 
-  
-  const [email, setEmail] = React.useState("");
-  const [password, setPassword] = React.useState("");
-  const [firstName, setFirstName] = React.useState("");
-  const [lastName, setLastName] = React.useState("");
-  const [bDate, setbDate] = React.useState(currentDate);
-  const [gender, setGender] = React.useState("Other");
+
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [bDate, setbDate] = useState(currentDate);
+  const [gender, setGender] = useState("Other");
+
  
   const setHandlerGender = (e) => {
     setGender(e.target.value);
@@ -57,7 +59,7 @@ export default function Registration() {
   let onSubmit = () => {
     console.log(bDate);
     console.log(getTimestampFromDate(bDate));
-
+    
     register(email, password)
     .then((userCredential) => {
       // Signed in
@@ -86,6 +88,7 @@ export default function Registration() {
           <h2>Sign Up</h2>
           <p>It’s quick and easy.</p>
           <div className={styles.names}>
+          <div>
             <TextField
               id="firstName"
               value={firstName}
@@ -95,6 +98,9 @@ export default function Registration() {
               style={{ alignSelf: "flex-start" }}
               onChange={(e) => onChangeHandler(e)}
             />
+            { !validateNames(firstName) ? <span>The first name must start with capital letter</span> : ""}
+           </div>
+           <div>
             <TextField
               placeholder="Last name"
               id="lastName"
@@ -104,8 +110,11 @@ export default function Registration() {
               style={{ alignSelf: "flex-end" }}
               onChange={(e) => onChangeHandler(e)}
             />
+            {!validateNames(lastName) ? <span>The last name must start with capital letter</span> : ""}
+            </div>
           </div>
           <div className={styles.additional}>
+           
             <TextField
               id="email"
               value={email}
@@ -114,6 +123,7 @@ export default function Registration() {
               required
               onChange={(e) => onChangeHandler(e)}
             />
+            {!validateEmail(email) ? <span>Invalid email</span> : ""}
             <TextField
               id="password"
               value={password}
@@ -123,6 +133,7 @@ export default function Registration() {
               type="password"
               onChange={(e) => onChangeHandler(e)}
             />
+            {!validatePassword(password) ? <span>Password must contain more than 6 characters</span> : "" }
             <TextField
               label="Birthday"
               id="date"
@@ -131,6 +142,7 @@ export default function Registration() {
               InputLabelProps={{ shrink: true }}
               onChange={(e) => onChangeHandler(e)}
             />
+            {!validateDate(bDate) ? <span>You must be over 14 years old</span> : "" }
             <FormControl component="fieldset">
               <FormLabel component="legend" style={{ textAlign: "start" }}>
                 Gender
@@ -185,6 +197,13 @@ export default function Registration() {
               variant="contained"
               size="large"
               onClick={onSubmit}
+              disabled={
+                validateEmail(email) && 
+                validateNames(firstName) && 
+                validateNames(lastName) && 
+                validateDate(bDate) && 
+                validatePassword(password) ? false : true
+              }
             >
               Sign Up
             </Button>

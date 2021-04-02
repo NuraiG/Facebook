@@ -37,6 +37,10 @@
             align-items: center;
             > div {
                 padding: 5px;
+                > span{
+                    font-size: 10px;
+                    color: rgb(204, 42, 42);
+                }
             }
         }
         > .additional {
@@ -44,6 +48,10 @@
             flex-direction: column;
             > div {
                 padding: 5px;
+            }
+            >span{
+                font-size: 10px;
+                color: rgb(204, 42, 42);
             }
 
         }
