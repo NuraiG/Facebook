@@ -3,7 +3,7 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import Post from "../common/Post/Post";
 import { NUMBER_OF_POSTS_PER_SCROLL } from "../constants";
 import { getAllPostsForUser } from "../service";
-import { compareObjByDBTimestamp } from "../timeUtils";
+import { compareObjByDBTimestamp } from "../utils/timeUtils";
 
 export default function PostsFeed({ userId }) {
   const [visiblePosts, setVisiblePosts] = useState([]);

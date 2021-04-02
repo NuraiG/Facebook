@@ -27,4 +27,12 @@ function shuffleArray(array) {
   return arrayClone;
 }
 
-export { truncateString, shuffleArray };
+function debounce(callback, time) {
+  let timerId;
+  return function debounced(...params) {
+    clearTimeout(timerId);
+    timerId = setTimeout(callback, time, ...params);
+  }
+}
+
+export { truncateString, shuffleArray, debounce };

@@ -4,7 +4,7 @@ import styles from "./FriendRequestComponent.module.scss";
 
 import { Avatar, Button, Paper, ThemeProvider } from "@material-ui/core";
 import { getUserById } from "../service";
-import { getServerTime, getShortDate } from "../timeUtils";
+import { getServerTime, getShortDate } from "../utils/timeUtils";
 
 export default function FriendRequestComponent({
   friendRequestObj,

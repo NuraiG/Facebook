@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import logo from "./logo.png";
 
@@ -20,6 +20,10 @@ export default function HeaderLeft() {
     setBtnSelected(!btnSelected);
     // TODO: open/close mobile menu
   };
+
+  useEffect(() => {
+
+  }, []);
 
   return (
     <div className={styles.header__left}>

@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import Comment from "../Comment/Comment";
 import EmptyComment from "../Comment/EmptyComment";
-import { calculateAndFormatTime, getServerTime } from "../../timeUtils";
+import { calculateAndFormatTime, getServerTime } from "../../utils/timeUtils";
 
 // styles
 import styles from "./Post.module.scss";
@@ -25,7 +25,7 @@ import PlayArrowRoundedIcon from "@material-ui/icons/PlayArrowRounded";
 import ThumbUpAltIcon from "@material-ui/icons/ThumbUpAlt";
 import ThumbUpAltOutlinedIcon from "@material-ui/icons/ThumbUpAltOutlined";
 import ChatBubbleOutlineRoundedIcon from "@material-ui/icons/ChatBubbleOutlineRounded";
-import { truncateString } from "../../utils";
+import { truncateString } from "../../utils/utils";
 import { MAX_POST_LENGTH } from "../../constants";
 import {
   getCommentsForPost,
