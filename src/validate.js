@@ -8,19 +8,20 @@ function validatePassword(password) {
 }
 
 function validateNames(name) {
-  return name.trim().length >= 1 && name[0] === name[0].toUpperCase();
+  return name.trim().length >= 2 && name[0] === name[0].toUpperCase();
 }
 
 function validateDate(date) {
   let currentDate = new Date().toJSON().slice(0, 10).replace(/-/g, "-");
   let yearDiff =
     new Date(currentDate).getFullYear() - new Date(date).getFullYear();
-  return yearDiff >= 14;
+  let monthDiff = new Date(currentDate).getMonth() - new Date(date).getMonth();
+
+  return yearDiff > 14 || (yearDiff === 14 && monthDiff >= 0);
 }
 
 export { 
-    validateEmail, 
-    validatePassword, 
-    validateNames, 
-    validateDate 
-};
+  validateEmail, 
+  validatePassword, 
+  validateNames, 
+  validateDate };

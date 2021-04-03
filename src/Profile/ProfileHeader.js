@@ -28,12 +28,12 @@ import {updateUserProfilePic , updateUserCoverPic,updateUserProfile } from "./Cu
 
 
 export default function ProfileHeader({user}) {
-
-  const [isTextAreaOpen, setTextArea] = useState(false);
-  const [bio, setBio] = useState('');
-
   const currentUser = useSelector((state) => state.currentUser.currentUser);
 
+  const [isTextAreaOpen, setTextArea] = useState(false);
+  const [bio, setBio] = useState(currentUser.bio);
+
+  
   const dispatch = useDispatch();
 
   // add or edit cover image

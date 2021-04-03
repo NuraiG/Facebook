@@ -25,8 +25,8 @@ export default function Intro({ userProfileData }) {
   const currentUser = useSelector(state => state.currentUser.currentUser);
 
   const [isDialogOpen, setIsDialogOpen] = useState(false);
-  const [birthPlaceInput, setBirthPlace] = useState("");
-  const [residenceInput, setResidence] = useState("");
+  const [birthPlaceInput, setBirthPlace] = useState(currentUser.birthPlace);
+  const [residenceInput, setResidence] = useState(currentUser.residence);
 
   const dispatch = useDispatch();
 
