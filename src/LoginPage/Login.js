@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {TextField, Divider, Button} from '@material-ui/core';
 import {Link} from 'react-router-dom';
 import styles from './Login.module.scss';
@@ -6,11 +6,15 @@ import {ThemeProvider} from '@material-ui/styles';
 import facebook from './facebook-loginPage.svg';
 import { customButtonBlueGreen } from "../customThemes";
 import { login } from '../service';
+import { useHistory } from "react-router-dom";
 
 export default function Login() {
 
-    const [email, setEmail] = React.useState('');
-    const [password, setPassword] = React.useState('');
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [error,setError] = useState(false);
+
+    const history = useHistory();
 
 
     const setHandlerInputEmail = (e) => {
@@ -23,11 +27,14 @@ export default function Login() {
         login(email, password)
         .then((userCredential) => {
             // Signed in
+            setError(false);
             let user = userCredential.user;
             console.log(user.uid);
+            history.replace("/", { from: "login" })
           })
           .catch((error) => {
-            console.log(error);
+              setError(true);
+            console.log(error.message);
           });
     }
     return (
@@ -65,6 +72,7 @@ export default function Login() {
                         onChange={
                             (e) => setHandlerInputPassword(e)
                         }/>
+                        {error ? <span>Invalid email or password</span> :" "}
                 </div>
                 <ThemeProvider theme={customButtonBlueGreen}>
                     <Button color="primary" variant="contained" size="large" onClick={onSubmit}>Log In</Button>

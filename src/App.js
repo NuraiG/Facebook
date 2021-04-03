@@ -5,6 +5,7 @@ import Profile from "./Profile/Profile";
 import SignUp from "./LoginPage/SignUp";
 import Error from "./ErrorPage/Error";
 import Header from "./Header/Header";
+import Loader from "./common/Loader/Loader"
 
 // styles
 import "./App.css";
@@ -12,6 +13,7 @@ import { globalTheme } from "./customThemes";
 
 // Material-UI
 import { Paper, ThemeProvider } from "@material-ui/core";
+
 import FriendRequestPage from "./FriendRequestsPage";
 
 //redux
@@ -33,6 +35,7 @@ import { getUserById } from "./service";
 function App() {
   const dispatch = useDispatch();
   const currentUser = useSelector((state) => state.currentUser.currentUser);
+  const isLoading = useSelector((state) => state.currentUser.isLoading);
   
   useEffect(() => {
     firebase.auth().onAuthStateChanged(user => {
@@ -51,6 +54,7 @@ function App() {
       <ThemeProvider theme={globalTheme}>
         <Paper className="body">
           <div className="App light">
+          { !isLoading ? 
             <Switch>
               <Route exact path="/login">
                 {/* when we stop testing, login and sign up page should not be openable when logged in */}
@@ -80,6 +84,7 @@ function App() {
                 <Error />
               </Route>
             </Switch>
+             : <Loader /> }
           </div>
         </Paper>
       </ThemeProvider>

@@ -1,0 +1,31 @@
+.dialog {
+    box-sizing: border-box;
+    .dialog_title {
+        .closebtn {
+            left: 380px;
+            padding: 5px;
+        } 
+    }
+    .dialog_content{
+        margin: 20px 10px;
+        > h2{
+          font-weight: 900;
+          margin: 5px;
+          font-size: 18px;
+        }
+        > p{
+            color: gray;
+            margin: 5px;
+        }
+        .profile_info{
+            display: flex;
+            justify-content: flex-start;
+            margin: 20px 0;
+            > input{
+                margin: 0 10px;
+                font-size: 16px;
+                border: none;
+            }
+        }
+    }
+}

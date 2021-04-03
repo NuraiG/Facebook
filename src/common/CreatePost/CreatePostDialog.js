@@ -127,7 +127,7 @@ export default function CreatePostDialog({
           ) : (
             <DialogContent className={styles.dialog_content}>
               <Box className={styles.post_author}>
-                <Avatar />
+                <Avatar src={currentUser.profile_image}/>
                 <h3>
                   {currentUser.firstName} {currentUser.lastName}
                   {postFeeling.length > 0 ? " is feeling " + postFeeling : ""}
