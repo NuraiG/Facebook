@@ -27,6 +27,7 @@ import firebase from "./firebase";
 
 // current user actions
 import {setCurrentUser} from "./Profile/CurrentUser.actions";
+import {fetchAllUsers} from "./AllUsers.actions";
 
 // DB requests
 import { getUserById } from "./service";
@@ -47,6 +48,10 @@ function App() {
         dispatch(setCurrentUser(null));
       }
     })
+  }, [dispatch]);
+
+  useEffect(() => {
+    dispatch(fetchAllUsers());
   }, [dispatch]);
 
   return (

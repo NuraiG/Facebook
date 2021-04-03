@@ -40,7 +40,7 @@
       }
 
       .timestamp {
-        font-size: 13px;
+        font-size: 12px;
         width: fit-content;
       }
     }
@@ -64,7 +64,7 @@
 
   .post_footer {
     .post_stats {
-      padding: 7px 0;
+      padding: 2px 0;
     }
 
     .stats_link {
@@ -131,4 +131,9 @@
     text-transform: none;
     font-weight: 700;
   }
+}
+
+h6.tooltip {
+  font-size: 11px;
+  margin: 5px 0px;
 }

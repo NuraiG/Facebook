@@ -18,7 +18,7 @@ import {
   Grid,
   ThemeProvider,
   Tooltip,
-  makeStyles
+  makeStyles,
 } from "@material-ui/core";
 // icons
 import PlayArrowRoundedIcon from "@material-ui/icons/PlayArrowRounded";
@@ -34,7 +34,7 @@ import {
 } from "../../service";
 import PostOptionsBtn from "./PostOptionsBtn";
 
-import FbImageLibrary from 'react-fb-image-grid';
+import FbImageLibrary from "react-fb-image-grid";
 
 export default function Post({ postObj }) {
   const currentUser = useSelector((state) => state.currentUser.currentUser);
@@ -128,12 +128,15 @@ export default function Post({ postObj }) {
                 </>
               )}
             </h4>
-            <Tooltip title={fullDatePrettified} placement="bottom">
+            <Tooltip
+              title={<h6 className={styles.tooltip}>{fullDatePrettified}</h6>}
+              placement="bottom"
+            >
               <span className={styles.timestamp}>{timeToDisplay}</span>
             </Tooltip>
           </Box>
           {currentUser.id === postObj.createdById ? (
-            <PostOptionsBtn postObj={postObj}/>
+            <PostOptionsBtn postObj={postObj} />
           ) : null}
         </Box>
         <Box className={styles.post_content}>
@@ -149,9 +152,17 @@ export default function Post({ postObj }) {
               See More
             </span>
           )}
-          { postObj.attachedImages ?  <FbImageLibrary images={postObj.attachedImages} countFrom={2}/> : ""}
+          {postObj.attachedImages ? (
+            <FbImageLibrary
+              images={postObj.attachedImages}
+              countFrom={2}
+              className={postObj.attachedImages.length ? "" : styles.img_container}
+            />
+          ) : (
+            ""
+          )}
         </Box>
-         
+
         <div className={styles.post_footer}>
           <Grid container className={styles.post_stats} justify="space-between">
             <Grid item>
@@ -166,8 +177,9 @@ export default function Post({ postObj }) {
             </Grid>
             <Grid item>
               <span onClick={expandComments} className={styles.stats_link}>
-                {postObj.numberOfComments > 0 &&
-                 <h5> {postObj.numberOfComments} Comments </h5>} 
+                {postObj.numberOfComments > 0 && (
+                  <h5> {postObj.numberOfComments} Comments </h5>
+                )}
               </span>
             </Grid>
           </Grid>
@@ -219,7 +231,11 @@ export default function Post({ postObj }) {
           })}
         </div>
         <div className={styles.add_comment_container}>
-          <EmptyComment postId={postObj.id} currentUser={currentUser} />
+          <EmptyComment
+            postId={postObj.id}
+            postAuthorId={postObj.createdById}
+            currentUser={currentUser}
+          />
         </div>
       </Card>
     </ThemeProvider>

@@ -60,7 +60,7 @@ export default function Comment({ commentObj }) {
   return (
     <div className={styles.commentWrapper}>
       <div className={styles.imageWrapper}>
-        <Link to={`/profile/${commentObj.createdByFullName}`}>
+        <Link to={`/profile/${commentObj.createdById}`}>
           <Avatar
             alt={commentObj.createdByFullName}
             src={commentObj.createdByPic}
