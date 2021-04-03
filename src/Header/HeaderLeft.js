@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useRef, useState } from "react";
+import React, { useMemo, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import logo from "./logo.png";
@@ -20,7 +20,6 @@ import {
 import SearchIcon from "@material-ui/icons/Search";
 import MenuRoundedIcon from "@material-ui/icons/MenuRounded";
 import HeaderNavOption from "./HeaderNavOption";
-import { getAllUsers } from "../service";
 
 const useStyles = makeStyles(() => ({
   paper: {
@@ -63,27 +62,14 @@ export default function HeaderLeft() {
   };
 
   let filterUsers = useMemo(() => {
-    return searchInput.length === 0
+    return searchInput.trim().length === 0
       ? []
       : allUsers.filter((user) =>
-          user.fullName.toLowerCase().includes(searchInput.toLowerCase())
+          (user.firstName + " " + user.lastName)
+            .toLowerCase()
+            .includes(searchInput.toLowerCase())
         );
   }, [allUsers, searchInput]);
-
-  // useEffect(() => {
-  //   getAllUsers().then((users) => {
-  //     let dbUsers = [];
-  //     users.forEach((doc) => {
-  //       let userData = doc.data();
-  //       dbUsers.push({
-  //         id: doc.id,
-  //         fullName: userData.firstName + " " + userData.lastName,
-  //         profilePic: userData.profile_image,
-  //       });
-  //     });
-  //     setAllUsers(dbUsers);
-  //   });
-  // }, []);
 
   const classes = useStyles();
   return (
@@ -113,21 +99,21 @@ export default function HeaderLeft() {
         <div className={filterUsers.length > 0 ? classes.paper : null}>
           <ClickAwayListener onClickAway={handleClose}>
             <div className={styles.dropdown}>
-              {filterUsers.map((user) => {
-                return (
-                  <Button
-                    fullWidth
-                    className={styles.filtered_user}
-                    key={user.id}
-                    onClick={handleClose}
-                    component={Link}
-                    to={"/profile/" + user.id}
-                    startIcon={<Avatar src={user.profilePic}/>}
-                  >
-                    <div className={styles.result_wrapper}>{user.fullName}</div>
-                  </Button>
-                );
-              })}
+              {filterUsers.map((user) => (
+                <Button
+                  fullWidth
+                  className={styles.filtered_user}
+                  key={user.id}
+                  onClick={handleClose}
+                  component={Link}
+                  to={"/profile/" + user.id}
+                  startIcon={<Avatar src={user.profile_image} />}
+                >
+                  <div className={styles.result_wrapper}>
+                    {user.firstName + " " + user.lastName}
+                  </div>
+                </Button>
+              ))}
             </div>
           </ClickAwayListener>
         </div>
