@@ -34,6 +34,8 @@ import {
 } from "../../service";
 import PostOptionsBtn from "./PostOptionsBtn";
 
+import FbImageLibrary from 'react-fb-image-grid';
+
 export default function Post({ postObj }) {
   const currentUser = useSelector((state) => state.currentUser.currentUser);
   let checkIfUserHasLikedPost = () => {
@@ -147,7 +149,9 @@ export default function Post({ postObj }) {
               See More
             </span>
           )}
+          { postObj.attachedImages ?  <FbImageLibrary images={postObj.attachedImages} countFrom={2}/> : ""}
         </Box>
+         
         <div className={styles.post_footer}>
           <Grid container className={styles.post_stats} justify="space-between">
             <Grid item>
@@ -156,14 +160,14 @@ export default function Post({ postObj }) {
                   <div className={styles.likes_icon}>
                     <ThumbUpAltIcon />
                   </div>
-                  {postObj.likes.length}
+                  <h5>{postObj.likes.length}</h5>
                 </span>
               )}
             </Grid>
             <Grid item>
               <span onClick={expandComments} className={styles.stats_link}>
                 {postObj.numberOfComments > 0 &&
-                  `${postObj.numberOfComments} Comments`}
+                 <h5> {postObj.numberOfComments} Comments </h5>} 
               </span>
             </Grid>
           </Grid>

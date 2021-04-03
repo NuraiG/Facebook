@@ -4,11 +4,13 @@ import { useSelector } from "react-redux";
 // material icons
 import PhotoCameraOutlinedIcon from "@material-ui/icons/PhotoCameraOutlined";
 import InsertEmoticonSharpIcon from "@material-ui/icons/InsertEmoticonSharp";
+import CloseIcon from "@material-ui/icons/Close";
 
 //material ui
-import { Avatar } from "@material-ui/core";
+import { Avatar, ThemeProvider,IconButton } from "@material-ui/core";
 
 import styles from "./EmptyComment.module.scss";
+import { grayButtonTheme } from "../../customThemes";
 
 import { useDropzone } from "react-dropzone";
 import { storage } from "../../firebase";
@@ -75,11 +77,12 @@ export default function EmptyComment({ postId }) {
     accept: "image/*",
   });
 
+
   return (
     <div className={styles.emptyComment}>
       <div className={styles.commentAuthor}>
-        <Avatar // alt={authorName}
-          alt="avatar"
+        <Avatar 
+          alt={currentUser.firstName}
           src={currentUser.profile_image}
         />
       </div>
@@ -93,15 +96,23 @@ export default function EmptyComment({ postId }) {
           onChange={(ev) => setComment(ev.target.value)}
           multiple
         />
+         {attachedFiles.length > 0 &&
+                attachedFiles.map((file) => (
+                  <div key={file} className={styles.attached_images_container}>
+                    <img alt="" src={file} className={styles.attached_images} />
+                  </div>
+                ))}
         <div className={styles.optional}>
           <InsertEmoticonSharpIcon
             style={{ fill: "gray" }}
             onClick={addSmileToComment}
+            fontSize="large"
           />
           <input {...getInputProps()}></input>
           <PhotoCameraOutlinedIcon
             {...getRootProps({ className: "dropzone" })}
             style={{ fill: "gray" }}
+            fontSize="large"
           />
         </div>
         <button
