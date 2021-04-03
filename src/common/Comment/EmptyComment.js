@@ -14,9 +14,16 @@ import { useDropzone } from "react-dropzone";
 import { storage } from "../../firebase";
 import { createComment } from "../../service";
 
+import Picker from 'emoji-picker-react';
+
 export default function EmptyComment({ postId, postAuthorId }) {
+
   const currentUser = useSelector((state) => state.currentUser.currentUser);
+
   const [comment, setComment] = useState("");
+  const [chosenEmoji, setChosenEmoji] = useState(null);
+  const [isEmojiPickerOpen,setEmojiPickerOpen]=useState(false);
+
   const addComment = () => {
     if (comment.trim().length) {
       createComment(postId, postAuthorId, {
@@ -33,9 +40,15 @@ export default function EmptyComment({ postId, postAuthorId }) {
       setComment("");
     }
   };
-  const addSmileToComment = () => {
-    let add = comment + " 😃";
+  const onEmojiClick = (event, emojiObject) => {
+    let add;
+    setChosenEmoji(emojiObject.emoji);
+    chosenEmoji ? add = comment + " " + chosenEmoji + " " : add = comment;
     setComment(add);
+  };
+
+  const addSmileToComment = () => {
+    setEmojiPickerOpen(true);
   };
 
   // todo add image to comment
@@ -93,6 +106,7 @@ export default function EmptyComment({ postId, postAuthorId }) {
           placeholder="Write a comment..."
           onChange={(ev) => setComment(ev.target.value)}
           multiple
+          onClick={()=>{setEmojiPickerOpen(false)}}
         />
          {attachedFiles.length > 0 &&
                 attachedFiles.map((file) => (
@@ -101,6 +115,7 @@ export default function EmptyComment({ postId, postAuthorId }) {
                   </div>
                 ))}
         <div className={styles.optional}>
+        
           <InsertEmoticonSharpIcon
             style={{ fill: "gray" }}
             onClick={addSmileToComment}
@@ -112,6 +127,7 @@ export default function EmptyComment({ postId, postAuthorId }) {
             style={{ fill: "gray" }}
             fontSize="large"
           />
+          {isEmojiPickerOpen ? <Picker onEmojiClick={onEmojiClick} /> : null }
         </div>
         <button
           type="submit"
