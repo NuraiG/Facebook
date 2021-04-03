@@ -116,7 +116,6 @@ export default function ProfileNavigation({ user }) {
         let dbImages = [];
 
         images.forEach((img) => {
-          console.log(img);
           dbImages.push(img);
         });
 

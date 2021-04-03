@@ -13,7 +13,7 @@ import { customButtonBlueGreen } from "../customThemes";
 import { ThemeProvider } from "@material-ui/styles";
 import { addUserToCollection, register } from "../service";
 import { getTimestampFromDate } from "../utils/timeUtils";
-import {validateEmail, validatePassword,validateNames,validateDate } from "../validate";
+import { validateEmail, validatePassword,validateNames,validateDate } from "../validate";
 import { useHistory } from "react-router-dom";
 
 export default function Registration() {
@@ -152,7 +152,7 @@ export default function Registration() {
               id="date"
               value={bDate}
               type="date"
-              InputLabelProps={{ shrink: true }}
+              inputlabelprops={{ shrink: true }}
               onChange={(e) => onChangeHandler(e)}
             />
             {!validateDate(bDate) ? <span>You must be over 14 years old</span> : "" }

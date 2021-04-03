@@ -71,8 +71,6 @@ export default function Login() {
                         variant="outlined"
                         required
                         type="password"
-                        // style={{ height: "150px "}}
-                        inputStyle={{ fontSize: '20PX' }}
                         onChange={
                             (e) => setHandlerInputPassword(e)
                         }/>
