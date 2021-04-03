@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {TextField, Divider, Button} from '@material-ui/core';
+import {Divider, Button,InputBase} from '@material-ui/core';
 import {Link} from 'react-router-dom';
 import styles from './Login.module.scss';
 import {ThemeProvider} from '@material-ui/styles';
@@ -55,16 +55,18 @@ export default function Login() {
                 <div className={
                     styles.input
                 }>
-                    <TextField id="email"
+                    <InputBase id="email"
                         value={email}
                         placeholder="Email"
+                        className={styles.inputBase}
                         variant="outlined"
                         required
                         onChange={
                             (e) => setHandlerInputEmail(e)
                         }/>
-                    <TextField id="password"
+                    <InputBase id="password"
                         value={password}
+                        className={styles.inputBase}
                         placeholder="Password"
                         variant="outlined"
                         required
@@ -75,7 +77,7 @@ export default function Login() {
                         {error ? <span>Invalid email or password</span> :" "}
                 </div>
                 <ThemeProvider theme={customButtonBlueGreen}>
-                    <Button color="primary" variant="contained" size="large" onClick={onSubmit}>Log In</Button>
+                    <Button color="primary" variant="contained" size="large" style={{ fontSize: '14px' }}  onClick={onSubmit}>Log In</Button>
                 </ThemeProvider>
                 <Link to='/forgottenPassword'>Forgot Password?</Link>
                 <Divider flexItem/>
@@ -84,7 +86,7 @@ export default function Login() {
                         style={
                             {textDecoration: 'none'}
                     }>
-                        <Button color="secondary" variant="contained" size="large">Create New Account</Button>
+                        <Button color="secondary" variant="contained" style={{ fontSize: '14px' }}  size="large">Create New Account</Button>
                     </Link>
                 </ThemeProvider>
             </form>

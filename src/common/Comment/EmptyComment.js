@@ -6,7 +6,7 @@ import PhotoCameraOutlinedIcon from "@material-ui/icons/PhotoCameraOutlined";
 import InsertEmoticonSharpIcon from "@material-ui/icons/InsertEmoticonSharp";
 
 //material ui
-import { Avatar } from "@material-ui/core";
+import { Avatar} from "@material-ui/core";
 
 import styles from "./EmptyComment.module.scss";
 
@@ -75,11 +75,12 @@ export default function EmptyComment({ postId, postAuthorId }) {
     accept: "image/*",
   });
 
+
   return (
     <div className={styles.emptyComment}>
       <div className={styles.commentAuthor}>
-        <Avatar // alt={authorName}
-          alt="avatar"
+        <Avatar 
+          alt={currentUser.firstName}
           src={currentUser.profile_image}
         />
       </div>
@@ -93,15 +94,23 @@ export default function EmptyComment({ postId, postAuthorId }) {
           onChange={(ev) => setComment(ev.target.value)}
           multiple
         />
+         {attachedFiles.length > 0 &&
+                attachedFiles.map((file) => (
+                  <div key={file} className={styles.attached_images_container}>
+                    <img alt="" src={file} className={styles.attached_images} />
+                  </div>
+                ))}
         <div className={styles.optional}>
           <InsertEmoticonSharpIcon
             style={{ fill: "gray" }}
             onClick={addSmileToComment}
+            fontSize="large"
           />
           <input {...getInputProps()}></input>
           <PhotoCameraOutlinedIcon
             {...getRootProps({ className: "dropzone" })}
             style={{ fill: "gray" }}
+            fontSize="large"
           />
         </div>
         <button

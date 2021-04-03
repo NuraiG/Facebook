@@ -11,7 +11,7 @@ import {
   CardActions,
   CardActionArea,
   CardContent,
-  Input,
+  InputBase,
 } from "@material-ui/core";
 
 //material icons
@@ -139,6 +139,7 @@ export default function ProfileHeader({user}) {
               color="default"
               className={classes.button}
               size="large"
+              style={{ fontSize: '14px' }} 
               startIcon={<PhotoCameraIcon />}
             >
               {currentUser.cover_image ? 'Edit Cover Photo' : 'Cover Photo' }
@@ -157,7 +158,8 @@ export default function ProfileHeader({user}) {
                 horizontal: "right",
               }}
               badgeContent={
-                <PhotoCameraIcon
+                <PhotoCameraIcon 
+                fontSize="large"
                 {...getRootProps({ className: "dropzone" })}
                   className={styles.icon}
                 />
@@ -173,9 +175,9 @@ export default function ProfileHeader({user}) {
             ></StyledAvatar>
           )}
         </div>
-        <h1>
+        <h3>
           {user.firstName}   {user.lastName}
-        </h1>
+        </h3>
         {/* view current user profile and add/edit bio */}
         {currentUser.id === user.id ? (
           <div className={styles.bio}>
@@ -194,7 +196,11 @@ export default function ProfileHeader({user}) {
                 <Card>
                   <CardActionArea>
                     <CardContent>
-                      <Input placeholder="Describe how your are" multiline value={bio} onInput={(ev)=>{setBio(ev.target.value)}}></Input>
+                      <InputBase placeholder="Describe how your are" 
+                      multiline 
+                      className={styles.dialog_input} 
+                      value={bio} 
+                      onInput={(ev)=>{setBio(ev.target.value)}}/>
                     </CardContent>
                   </CardActionArea>
                   <CardActions>

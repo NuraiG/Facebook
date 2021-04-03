@@ -43,8 +43,7 @@ export default function HeaderRight() {
           className={`${styles.header__info}`}
           showFullName={false}
         />
-
-        <Tooltip title="Create" placement="bottom">
+        <Tooltip title={<h6>Create</h6>} placement="bottom">
           <IconButton
             color="primary"
             className={`${styles.icon_btn}`}
@@ -56,7 +55,7 @@ export default function HeaderRight() {
             <AddIcon />
           </IconButton>
         </Tooltip>
-        <Tooltip title="Messenger" placement="bottom">
+        <Tooltip title={<h6>Messenger</h6>} placement="bottom">
           <IconButton
             color="primary"
             className={`${styles.icon_btn}`}
@@ -68,7 +67,7 @@ export default function HeaderRight() {
             <ChatRoundedIcon />
           </IconButton>
         </Tooltip>
-        <Tooltip title="Notifications" placement="bottom">
+        <Tooltip title={<h6>Notifications</h6>} placement="bottom">
           <IconButton
             color="primary"
             className={`${styles.icon_btn}`}
@@ -87,7 +86,7 @@ export default function HeaderRight() {
         >
           <NotificationsPopupContent />
         </PopperComponent>
-        <Tooltip title="Account" placement="bottom">
+        <Tooltip title={<h6>Account</h6>} placement="bottom">
           <IconButton
             color="primary"
             className={`${styles.arrow_btn}`}
@@ -104,7 +103,6 @@ export default function HeaderRight() {
           anchorEl={anchorRef.current}
           handleClose={handleClose}
         /> */}
-
       </ThemeProvider>
     </div>
   );

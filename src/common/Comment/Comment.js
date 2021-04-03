@@ -10,6 +10,8 @@ import { truncateString } from "../../utils/utils";
 import { MAX_COMMENT_LENGTH } from "../../constants";
 import { likeCommentRequest } from "../../service";
 
+import FbImageLibrary from 'react-fb-image-grid';
+
 let currentUser = {
   id: "U99cAvfTmfhuHurhus6D5X2ejfo1",
   profile_image: "",
@@ -81,6 +83,7 @@ export default function Comment({ commentObj }) {
                 See More
               </span>
             )}
+            { commentObj.attachedImages ?  <FbImageLibrary images={commentObj.attachedImages} countFrom={2}/> : ""}
           </div>
           {commentObj.likes.length ? (
             <div className={styles.likes}>
@@ -92,9 +95,9 @@ export default function Comment({ commentObj }) {
           ) : null}{" "}
         </div>
         {isLiked ? (
-          <button onClick={() => addLikes()}>Unlike</button>
+          <button onClick={() => addLikes()}><h6>Unlike</h6></button>
         ) : (
-          <button onClick={() => addLikes()}>Like</button>
+          <button onClick={() => addLikes()}><h6>Like</h6></button>
         )}{" "}
         <Tooltip title={fullDatePrettified} placement="bottom">
           <span className={styles.timestamp}>{timeToDisplay}</span>
