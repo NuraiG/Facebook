@@ -37,7 +37,7 @@ export default function IntroUpdateDialog({
         className={styles.dialog}
       >
         <DialogTitle id="form-dialog-title" className={styles.dialog_title}>
-           { true ? "Edit details" : "" }
+           Edit details
           <ThemeProvider theme={grayButtonTheme}>
             <IconButton color="primary" onClick={onClose} className={styles.closebtn}>
               <CloseIcon />

@@ -24,9 +24,14 @@ import { grayTheme, customButtonBlueGreen } from "../customThemes";
 import Intro from "./Intro";
 import CreatePost from "../common/CreatePost/CreatePost";
 
-import { Grid } from "@material-ui/core";
+import { Grid , Paper} from "@material-ui/core";
 import PostsFeed from "./ProfilePostsFeed";
 import { sendFriendRequest } from "../service";
+import { useEffect } from "react";
+
+import styles from "./Profile.module.scss";
+
+import { getUserById } from "../service";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -73,12 +78,21 @@ const useStyles = makeStyles((theme) => ({
   title: {
     flexGrow: 1,
   },
+  paper: {
+    padding: theme.spacing(2),
+    textAlign: 'center',
+    color: theme.palette.text.secondary,
+    margin:theme.spacing(2),
+  },
+
 }));
 
 export default function ProfileNavigation({ user }) {
   const currentUser = useSelector((state) => state.currentUser.currentUser);
   const classes = useStyles();
   const [value, setValue] = useState(0);
+
+  const [images, setImages]= useState([]);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -94,6 +108,22 @@ export default function ProfileNavigation({ user }) {
         )
       );
   };
+
+  useEffect(() => {
+    getUserById(currentUser.id)
+    .then((res)=> res.images)
+      .then((images) => {
+        let dbImages = [];
+
+        images.forEach((img) => {
+          console.log(img);
+          dbImages.push(img);
+        });
+
+        setImages(dbImages);
+      });
+  }, [currentUser.id,currentUser.images]);
+ 
 
   return (
     <ThemeProvider theme={grayTheme}>
@@ -146,7 +176,16 @@ export default function ProfileNavigation({ user }) {
           </React.Fragment>
         </TabPanel>
         <TabPanel value={value} index={1}>
-          Photos
+          {/* Photos */}
+          <React.Fragment>
+            <Grid container>
+             {images.map((image)=>(
+                <Grid item xs={6} sm={3} key={image}>
+                  <Paper className={classes.paper}> <img src={image} alt="my photos" className={styles.imagesContainer}/></Paper>
+                </Grid>
+             ))}
+            </Grid>
+          </React.Fragment>
         </TabPanel>
         <TabPanel value={value} index={2}>
           Friends
