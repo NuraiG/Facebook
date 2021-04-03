@@ -34,7 +34,6 @@ const useStyles = makeStyles(() => ({
 export default function HeaderLeft() {
   let [btnSelected, setBtnSelected] = useState(false);
   let [searchInput, setSearchInput] = useState("");
-  // let [allUsers, setAllUsers] = useState([]);
   const [open, setOpen] = useState(false);
   const anchorRef = useRef(null);
   const allUsers = useSelector((state) => state.allUsers.allUsers);

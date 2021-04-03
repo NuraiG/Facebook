@@ -1,6 +1,7 @@
 import { ClickAwayListener, makeStyles, Popper } from "@material-ui/core";
 import React from "react";
 import { grayTheme } from "../customThemes";
+import styles from "./PopperComponent.module.scss";
 
 const useStyles = makeStyles(() => ({
   paper: {
@@ -18,8 +19,6 @@ export default function PopperComponent({
   handleClose,
   children,
 }) {
-  console.log(anchorRef);
-
   const classes = useStyles();
   return (
     <Popper
@@ -29,7 +28,7 @@ export default function PopperComponent({
       disablePortal
       style={{ position: "absolute", top: "45px" }}
     >
-      <div className={classes.paper}>
+      <div className={`${classes.paper} ${styles.popper}`}>
         <ClickAwayListener onClickAway={handleClose}>
           <div>{children}</div>
         </ClickAwayListener>

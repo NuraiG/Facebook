@@ -1,10 +1,14 @@
-import { Avatar } from "@material-ui/core";
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 import { NOTIFICATION_TYPES } from "../constants";
 import { getAllPosts, getMyFriendRequests } from "../service";
 
-export default React.memo(function NotificationsPopupContent() {
+import styles from "./PopperComponent.module.scss";
+
+import { Avatar, Card } from "@material-ui/core";
+
+export default function NotificationsPopupContent() {
   const currentUser = useSelector((state) => state.currentUser.currentUser);
   const allUsers = useSelector((state) => state.allUsers.allUsers);
   const [allNotifications, setAllNotifications] = useState([]);
@@ -47,8 +51,6 @@ export default React.memo(function NotificationsPopupContent() {
       getAllPosts(currentUser.id).onSnapshot((snapshot) => {
         let allPostsOnMyWall = [];
         snapshot.docChanges().forEach((change) => {
-            console.log("postchange ", change.doc.data());
-            
           if (change.type === "added") {
             // check if it's on current user's wall and it's not written by them
             if (
@@ -63,8 +65,6 @@ export default React.memo(function NotificationsPopupContent() {
             }
           }
           if (change.type === "modified") {
-            // if it's a post of the current user and someone commented/liked
-            
             // check if post has been deleted
             if (change.doc.data().isDeleted === true) {
               setAllNotifications(
@@ -87,7 +87,9 @@ export default React.memo(function NotificationsPopupContent() {
         if (newNotifications.length) {
           newNotifications = newNotifications.map((el) => ({
             ...el,
-            fromUser: { ...allUsers.find((user) => user.id === el.createdById) },
+            fromUser: {
+              ...allUsers.find((user) => user.id === el.createdById),
+            },
           }));
           setAllNotifications([...allNotifications, ...newNotifications]);
         }
@@ -100,24 +102,44 @@ export default React.memo(function NotificationsPopupContent() {
       {allNotifications.map((notification) => {
         if (notification.type === NOTIFICATION_TYPES.FRIEND_REQUEST) {
           return (
-            <div key={notification.id}>
-              <Avatar src={notification.fromUser.profile_picture} />
-              {notification.fromUser.firstName} {notification.fromUser.lastName}{" "}
-              sent you a friend request
-            </div>
+            <Card key={notification.id} className={styles.card}>
+              <Link to={`/profile/${notification.fromUser.id}`}>
+                <Avatar
+                  src={notification.fromUser.profile_picture}
+                  className={styles.card_avatar}
+                />
+              </Link>
+              <span>
+                <Link to={`/profile/${notification.fromUser.id}`}>
+                  {notification.fromUser.firstName}{" "}
+                  {notification.fromUser.lastName}
+                </Link>{" "}
+                sent you a friend request
+              </span>
+            </Card>
           );
         }
         if (notification.type === NOTIFICATION_TYPES.NEW_POST_ON_WALL) {
           return (
-            <div key={notification.id}>
-              <Avatar src={notification.fromUser.profile_picture} />
-              {notification.fromUser.firstName} {notification.fromUser.lastName}{" "}
-              posted on your wall
-            </div>
+            <Card key={notification.id} className={styles.card}>
+              <Link to={`/profile/${notification.fromUser.id}`}>
+                <Avatar
+                  src={notification.fromUser.profile_picture}
+                  className={styles.card_avatar}
+                />
+              </Link>
+              <span>
+                <Link to={`/profile/${notification.fromUser.id}`}>
+                  {notification.fromUser.firstName}{" "}
+                  {notification.fromUser.lastName}
+                </Link>{" "}
+                posted on your wall
+              </span>
+            </Card>
           );
         }
         return null;
       })}
     </div>
   );
-});
+}
