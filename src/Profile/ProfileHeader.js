@@ -175,9 +175,9 @@ export default function ProfileHeader({user}) {
             ></StyledAvatar>
           )}
         </div>
-        <h1>
+        <h3>
           {user.firstName}   {user.lastName}
-        </h1>
+        </h3>
         {/* view current user profile and add/edit bio */}
         {currentUser.id === user.id ? (
           <div className={styles.bio}>
