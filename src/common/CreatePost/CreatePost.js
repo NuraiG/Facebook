@@ -27,14 +27,14 @@ import { useDropzone } from "react-dropzone";
 import { createPost } from "../../service";
 import { storage } from "../../firebase";
 
-// let possiblePlaceholders = [
-//   `What's on your mind, ${currentUser.firstName}?`,
-//   `Write something to ${user.firstName}...`,
-// ];
 
 export default function CreatePost({ target }) {
   const currentUser = useSelector(state => state.currentUser.currentUser);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [attachedFiles, setAttachedFiles] = useState([]);
+  const [postValue, setPostValue] = useState("");
+  const [postFeeling, setPostFeeling] = useState("");
+  const [showFeelingsModal, setShowFeelingsModal] = useState(false);
 
   const handleDialogOpen = () => {
     setIsDialogOpen(true);
@@ -44,7 +44,6 @@ export default function CreatePost({ target }) {
     setIsDialogOpen(false);
   };
 
-  const [attachedFiles, setAttachedFiles] = useState([]);
   const removeFromAttachedFiles = (file) => {
     let copy = [...attachedFiles]
     let index = copy.indexOf(file);
@@ -87,9 +86,6 @@ export default function CreatePost({ target }) {
     accept: "image/*",
   });
 
-  const [postValue, setPostValue] = useState("");
-  const [postFeeling, setPostFeeling] = useState("");
-  const [showFeelingsModal, setShowFeelingsModal] = useState(false);
   const openFeelingsModal = () => {
     setShowFeelingsModal(true);
     setIsDialogOpen(true);

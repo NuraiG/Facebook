@@ -45,6 +45,10 @@ export function getUserById(userId) {
   // .then((res) => console.log(res.data()));
 }
 
+export function getAllUsers() {
+  return database.collection("users").get();
+}
+
 // update bio
 export function updateUserBio(currId, userBio) {
   database
@@ -162,7 +166,7 @@ export function getAllPosts() {
   return database
     .collection("posts")
     .where("isDeleted", "!=", true)
-    .orderBy("isDeleted")
+    .orderBy("isDeleted");
 }
 
 export function getAllPostsForUser(userId) {
@@ -303,5 +307,3 @@ export function rejectFriendRequest(requestId) {
     resolvedOn: firebase.firestore.FieldValue.serverTimestamp(),
   });
 }
-
-

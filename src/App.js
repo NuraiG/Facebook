@@ -52,7 +52,7 @@ function App() {
   return (
     <BrowserRouter>
       <ThemeProvider theme={globalTheme}>
-        <Paper>
+        <Paper className="body">
           <div className="App light">
           { !isLoading ? 
             <Switch>

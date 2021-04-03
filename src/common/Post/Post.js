@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import Comment from "../Comment/Comment";
 import EmptyComment from "../Comment/EmptyComment";
-import { calculateAndFormatTime, getServerTime } from "../../timeUtils";
+import { calculateAndFormatTime, getServerTime } from "../../utils/timeUtils";
 
 // styles
 import styles from "./Post.module.scss";
@@ -16,33 +16,31 @@ import {
   Button,
   Card,
   Grid,
-  IconButton,
   ThemeProvider,
   Tooltip,
-  makeStyles,
+  makeStyles
 } from "@material-ui/core";
 // icons
-import MoreHorizIcon from "@material-ui/icons/MoreHoriz";
 import PlayArrowRoundedIcon from "@material-ui/icons/PlayArrowRounded";
 import ThumbUpAltIcon from "@material-ui/icons/ThumbUpAlt";
 import ThumbUpAltOutlinedIcon from "@material-ui/icons/ThumbUpAltOutlined";
 import ChatBubbleOutlineRoundedIcon from "@material-ui/icons/ChatBubbleOutlineRounded";
-import { truncateString } from "../../utils";
+import { truncateString } from "../../utils/utils";
 import { MAX_POST_LENGTH } from "../../constants";
 import {
   getCommentsForPost,
   getUserById,
   likePostRequest,
 } from "../../service";
-
+import PostOptionsBtn from "./PostOptionsBtn";
 
 export default function Post({ postObj }) {
   const currentUser = useSelector((state) => state.currentUser.currentUser);
-  let checkIfUserHasLiked = () => {
+  let checkIfUserHasLikedPost = () => {
     return postObj.likes.some((id) => id === currentUser.id);
   };
 
-  let [postIsLiked, setPostIsLiked] = useState(checkIfUserHasLiked());
+  let [postIsLiked, setPostIsLiked] = useState(checkIfUserHasLikedPost());
   let [commentsAreExpanded, setCommentsAreExpanded] = useState(false);
   let [comments, setComments] = useState([]);
   let [postTargetName, setPostTargetName] = useState(null);
@@ -132,11 +130,10 @@ export default function Post({ postObj }) {
               <span className={styles.timestamp}>{timeToDisplay}</span>
             </Tooltip>
           </Box>
-          <IconButton className={styles.more_btn}>
-            <MoreHorizIcon />
-          </IconButton>
+          {currentUser.id === postObj.createdById ? (
+            <PostOptionsBtn postObj={postObj}/>
+          ) : null}
         </Box>
-
         <Box className={styles.post_content}>
           {truncatedContent}
           {!wholeContentIsShown && isStringTruncated && (

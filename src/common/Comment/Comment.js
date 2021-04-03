@@ -3,10 +3,10 @@ import styles from "./Comment.module.scss";
 import { Link } from "react-router-dom";
 import ThumbUpAltIcon from "@material-ui/icons/ThumbUpAlt";
 import { useState, useCallback } from "react";
-import { getServerTime, getShortDate } from "../../timeUtils";
+import { getServerTime, getShortDate } from "../../utils/timeUtils";
 import { Tooltip } from "@material-ui/core";
 
-import { truncateString } from "../../utils";
+import { truncateString } from "../../utils/utils";
 import { MAX_COMMENT_LENGTH } from "../../constants";
 import { likeCommentRequest } from "../../service";
 

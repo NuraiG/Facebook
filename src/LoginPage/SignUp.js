@@ -12,7 +12,7 @@ import styles from "./SignUp.module.scss";
 import { customButtonBlueGreen } from "../customThemes";
 import { ThemeProvider } from "@material-ui/styles";
 import { addUserToCollection, register } from "../service";
-import { getTimestampFromDate } from "../timeUtils";
+import { getTimestampFromDate } from "../utils/timeUtils";
 import {validateEmail, validatePassword,validateNames,validateDate } from "../validate";
 import { useHistory } from "react-router-dom";
 
