@@ -55,6 +55,8 @@ export default function HeaderLeft() {
     if (anchorRef.current && anchorRef.current.contains(event.target)) {
       return;
     }
+    // add user to recent searches
+    setSearchInput("");
     setOpen(false);
   };
 
@@ -104,6 +106,7 @@ export default function HeaderLeft() {
         anchorEl={anchorRef.current}
         role={undefined}
         disablePortal
+        className={styles.dropdown_container}
       >
         <div className={filterUsers.length > 0 ? classes.paper : null}>
           <ClickAwayListener onClickAway={handleClose}>

@@ -23,9 +23,9 @@
         img {
           height: 40px;
         }
-        // > div {
-        //   display: none;
-        // }
+        > div.dropdown_container {
+          left: -20px !important;
+        }
         .header__input {
           display: flex;
           align-items: center;
@@ -44,7 +44,7 @@
             border-radius: 999px;
             border: none;
             outline-width: 0px;
-            padding: 9px 16px 7px 36px;
+            padding: 9px 10px 7px 37px;
             font-size: 15px;
             box-sizing: border-box;
             transition-timing-function: linear;
@@ -197,15 +197,16 @@
 }
 
 .dropdown {
-  width: 310px;
+  width: 290px;
   box-sizing: border-box;
   padding: 8px;
-  
+
   a.filtered_user {
     width: 100%;
     box-sizing: border-box;
     text-transform: none;
     font-weight: 700;
+    justify-content: flex-start;
   }
 }
 
