@@ -5,24 +5,40 @@
   overflow-y: scroll;
 
   .card {
+    padding: 4px;
     margin-bottom: 8px;
-    align-items: center;
     display: flex;
+    flex-direction: column;
 
-    a {
-      text-decoration: none;
-      font-weight: 700;
-      color: inherit;
+    .content_wrapper {
+      display: flex;
+      align-items: center;
 
-      &:active {
-        color: inherit;
+      .card_avatar {
+        margin-right: 5px;
       }
-      &:visited {
+      a {
+        text-decoration: none;
+        font-weight: 700;
         color: inherit;
+
+        &:active {
+          color: inherit;
+        }
+        &:visited {
+          color: inherit;
+        }
       }
     }
-    .card_avatar {
-      margin-right: 5px;
+
+    .timestamp {
+      margin-top: -7px;
+      font-size: 13px;
+      align-self: flex-end;
     }
+  }
+
+  .empty_notifications {
+    text-align: center;
   }
 }

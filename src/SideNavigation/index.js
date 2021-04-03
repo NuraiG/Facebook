@@ -18,7 +18,7 @@ export default function SideNavigation() {
         component={Link}
         to={`profile/${currentUser.id}`}
       >
-        {currentUser.firstName} { currentUser.lastName}
+        {currentUser.firstName} {currentUser.lastName}
       </Button>
       <a
         target="_blank"

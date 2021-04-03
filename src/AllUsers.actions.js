@@ -29,7 +29,6 @@ export const fetchAllUsers = () => {
         users.forEach((user) => {
           dbUsers.push({ ...user.data(), id: user.id });
         });
-        console.log(dbUsers);
 
         dispatch(fetchUsersSucceded(dbUsers));
       },

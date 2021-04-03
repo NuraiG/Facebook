@@ -67,7 +67,7 @@ export function updateUserBirthPlace(currId, userBirthPlace) {
   database
     .collection("users")
     .doc(currId)
-    .update({ birthPlace: userBirthPlace})
+    .update({ birthPlace: userBirthPlace })
     .then(() => {
       console.log("Document successfully written!");
     })
@@ -80,7 +80,7 @@ export function updateUserResidence(currId, residence) {
   database
     .collection("users")
     .doc(currId)
-    .update({ residence: residence})
+    .update({ residence: residence })
     .then(() => {
       console.log("Document successfully written!");
     })
@@ -229,12 +229,13 @@ export function likePostRequest(postId, currentUserId, toLike) {
     });
 }
 
-export function createComment(postId, commentData) {
+export function createComment(postId, postAuthorId, commentData) {
   return database
     .collection("comments")
     .doc()
     .set({
       postId: postId,
+      postAuthorId: postAuthorId,
       ...commentData,
       likes: [],
       timestamp: firebase.firestore.FieldValue.serverTimestamp(),
@@ -259,6 +260,10 @@ export function likeCommentRequest(commentId, currentUserId, toLike) {
         ? firebase.firestore.FieldValue.arrayUnion(currentUserId)
         : firebase.firestore.FieldValue.arrayRemove(currentUserId),
     });
+}
+
+export function getAllComments() {
+  return database.collection("comments").orderBy("timestamp");
 }
 
 export function getCommentsForPost(postId) {

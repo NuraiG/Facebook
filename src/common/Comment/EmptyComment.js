@@ -14,12 +14,12 @@ import { useDropzone } from "react-dropzone";
 import { storage } from "../../firebase";
 import { createComment } from "../../service";
 
-export default function EmptyComment({ postId }) {
+export default function EmptyComment({ postId, postAuthorId }) {
   const currentUser = useSelector((state) => state.currentUser.currentUser);
   const [comment, setComment] = useState("");
   const addComment = () => {
     if (comment.trim().length) {
-      createComment(postId, {
+      createComment(postId, postAuthorId, {
         createdById: currentUser.id,
         createdByFullName: currentUser.firstName + " " + currentUser.lastName,
         createdByPic: currentUser.profile_image || "",

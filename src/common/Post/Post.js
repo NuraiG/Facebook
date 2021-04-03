@@ -18,7 +18,7 @@ import {
   Grid,
   ThemeProvider,
   Tooltip,
-  makeStyles
+  makeStyles,
 } from "@material-ui/core";
 // icons
 import PlayArrowRoundedIcon from "@material-ui/icons/PlayArrowRounded";
@@ -131,7 +131,7 @@ export default function Post({ postObj }) {
             </Tooltip>
           </Box>
           {currentUser.id === postObj.createdById ? (
-            <PostOptionsBtn postObj={postObj}/>
+            <PostOptionsBtn postObj={postObj} />
           ) : null}
         </Box>
         <Box className={styles.post_content}>
@@ -215,7 +215,11 @@ export default function Post({ postObj }) {
           })}
         </div>
         <div className={styles.add_comment_container}>
-          <EmptyComment postId={postObj.id} currentUser={currentUser} />
+          <EmptyComment
+            postId={postObj.id}
+            postAuthorId={postObj.createdById}
+            currentUser={currentUser}
+          />
         </div>
       </Card>
     </ThemeProvider>
