@@ -1,0 +1,17 @@
+.loader {
+    // text-align: center;
+    min-height: 100vh;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    justify-content: center;
+    > img {
+        height: 200px;
+    }
+    > .progress {
+        margin: 30px auto;
+        width: 200px;
+        height: 200px;
+    }
+}

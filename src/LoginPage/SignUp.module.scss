@@ -37,6 +37,10 @@
             align-items: center;
             > div {
                 padding: 5px;
+                > span{
+                    font-size: 10px;
+                    color: rgb(204, 42, 42);
+                }
             }
         }
         > .additional {
@@ -45,8 +49,15 @@
             > div {
                 padding: 5px;
             }
+            >span{
+                font-size: 10px;
+                color: rgb(204, 42, 42);
+            }
 
         }
 
+    }
+    >span{
+        color: rgb(204, 42, 42);
     }
 }

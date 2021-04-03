@@ -1,4 +1,5 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
@@ -45,6 +46,9 @@ export default function CreatePostDialog({
   postFeeling,
   setPostFeeling,
 }) {
+   
+  const currentUser = useSelector(state => state.currentUser.currentUser);
+
   const {
     getRootProps: getRootPropsNoClick,
     getInputProps: getInputPropsNoClick,
@@ -119,9 +123,9 @@ export default function CreatePostDialog({
           ) : (
             <DialogContent className={styles.dialog_content}>
               <Box className={styles.post_author}>
-                <Avatar />
+                <Avatar  src={currentUser.profile_image}/>
                 <h3>
-                  John Doe
+                  {currentUser.firstName} { currentUser.lastName} 
                   {postFeeling.length > 0 ? " is feeling " + postFeeling : ""}
                 </h3>
               </Box>
