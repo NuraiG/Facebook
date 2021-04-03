@@ -59,7 +59,7 @@ export default function Intro({ userProfileData }) {
           <h2 className={styles.heading}>Intro</h2>
           {userProfileData.residence && (
             <Box className={styles.profile_info}>
-              <HomeRoundedIcon />
+              <HomeRoundedIcon fontSize="inherit"/>
               Lives in {userProfileData.residence}
             </Box>
           )}
@@ -79,7 +79,12 @@ export default function Intro({ userProfileData }) {
           </Box>
           {currentUser.id === userProfileData.id ? 
           <Box className={styles.btn}>
-          <Button variant="contained" color="default" fullWidth className={classes.button} onClick={handleDialogOpen}>Edit Details</Button>
+          <Button variant="contained" color="default" 
+          fullWidth 
+          className={classes.button} 
+          style={{ fontSize: '14px' }} 
+          onClick={handleDialogOpen}>
+            Edit Details</Button>
           </Box> : ""
           }
         </Card>

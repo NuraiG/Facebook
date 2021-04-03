@@ -65,7 +65,9 @@ export default function IntroUpdateDialog({
           <DialogActions className={styles.dialog_actions}>
             <Button
               color="primary"
-              onClick={() => updateProfilData() }
+              onClick={() => updateProfilData()
+               }
+               style={{ fontSize: '14px' }}
             >
               Save
             </Button>

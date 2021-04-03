@@ -34,6 +34,8 @@ import {
 } from "../../service";
 import PostOptionsBtn from "./PostOptionsBtn";
 
+import FbImageLibrary from 'react-fb-image-grid';
+
 export default function Post({ postObj }) {
   const currentUser = useSelector((state) => state.currentUser.currentUser);
   let checkIfUserHasLikedPost = () => {
@@ -110,7 +112,7 @@ export default function Post({ postObj }) {
         <Box className={styles.post_header}>
           <Avatar src={postObj.createdByPic} />
           <Box className={styles.post_info}>
-            <h3>
+            <h4>
               <Link to={`/profile/${postObj.createdById}`}>
                 {postObj.createdByFullName}
               </Link>
@@ -125,7 +127,7 @@ export default function Post({ postObj }) {
                   </Link>
                 </>
               )}
-            </h3>
+            </h4>
             <Tooltip title={fullDatePrettified} placement="bottom">
               <span className={styles.timestamp}>{timeToDisplay}</span>
             </Tooltip>
@@ -147,7 +149,9 @@ export default function Post({ postObj }) {
               See More
             </span>
           )}
+          { postObj.attachedImages ?  <FbImageLibrary images={postObj.attachedImages} countFrom={2}/> : ""}
         </Box>
+         
         <div className={styles.post_footer}>
           <Grid container className={styles.post_stats} justify="space-between">
             <Grid item>
@@ -156,14 +160,14 @@ export default function Post({ postObj }) {
                   <div className={styles.likes_icon}>
                     <ThumbUpAltIcon />
                   </div>
-                  {postObj.likes.length}
+                  <h5>{postObj.likes.length}</h5>
                 </span>
               )}
             </Grid>
             <Grid item>
               <span onClick={expandComments} className={styles.stats_link}>
                 {postObj.numberOfComments > 0 &&
-                  `${postObj.numberOfComments} Comments`}
+                 <h5> {postObj.numberOfComments} Comments </h5>} 
               </span>
             </Grid>
           </Grid>

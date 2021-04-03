@@ -17,6 +17,7 @@
         > h2 {
           text-align: center;
           font-weight: 700;
+          font-size: 20px;
 
           > button.close_btn {
             position: absolute;
@@ -50,7 +51,9 @@
           display: flex;
           > h3 {
             margin-left: 10px;
-            font-weight: 700;
+            margin-top: 5px;
+            font-weight: 600;
+            font-size: 16px;
           }
         }
         .dialog_input {

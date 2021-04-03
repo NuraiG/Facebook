@@ -116,6 +116,7 @@ export default function CreatePostDialog({
                   className={styles.feelings_btn}
                   color="primary"
                   variant="contained"
+                  style={{ fontSize: '14px' }}
                   onClick={() => setShowFeelingsModal(false)}
                   fullWidth
                   disabled={postFeeling.trim().length > 0 ? false : true}
@@ -167,17 +168,17 @@ export default function CreatePostDialog({
                 <span>Add to Your Post</span>
                 <Box className={styles.action_buttons}>
                   <input {...getInputProps()}></input>
-                  <Tooltip title="Photo/Video" placement="top">
+                  <Tooltip title={<h6>Photo/Video</h6>} placement="top">
                     <IconButton {...getRootProps({ className: "dropzone" })}>
                       <PhotoOutlinedIcon className={classes.greenBtn} />
                     </IconButton>
                   </Tooltip>
-                  <Tooltip title="Tag Friends" placement="top">
+                  <Tooltip title={<h6>Tag Friends</h6>} placement="top">
                     <IconButton onClick={onTag}>
                       <LocalOfferOutlinedIcon className={classes.blueBtn} />
                     </IconButton>
                   </Tooltip>
-                  <Tooltip title="Feeling" placement="top">
+                  <Tooltip title={<h6>Feeling</h6>} placement="top">
                     <IconButton onClick={() => setShowFeelingsModal(true)}>
                       <MoodOutlinedIcon className={classes.yellowBtn} />
                     </IconButton>
@@ -195,6 +196,7 @@ export default function CreatePostDialog({
                 variant="contained"
                 onClick={onClose}
                 fullWidth
+                style={{ fontSize: '14px' }}
                 disabled={
                   text.trim().length > 0 ||
                   files.length > 0 ||

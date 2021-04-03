@@ -9,12 +9,13 @@
   
   .profile_info {
     padding-top: 16px;
-    font-size: 15px;
+    font-size: 16px;
     display: flex;
     align-items: center;
   
     > svg {
       padding-right: 5px;
+      font-size: 26px;
     }
   }
   .btn{

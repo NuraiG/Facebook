@@ -21,22 +21,22 @@ export default function HeaderRight() {
           showFullName={false}
         />
 
-        <Tooltip title="Create" placement="bottom">
-          <IconButton color="primary" className={`${styles.icon_btn}`}>
+        <Tooltip title={<h6>Create</h6>} placement="bottom">
+          <IconButton color="primary" className={`${styles.icon_btn}`} >
             <AddIcon />
           </IconButton>
         </Tooltip>
-        <Tooltip title="Messenger" placement="bottom">
-          <IconButton color="primary" className={`${styles.icon_btn}`}>
+        <Tooltip title={<h6>Messenger</h6>} placement="bottom">
+          <IconButton color="primary" className={`${styles.icon_btn}`} >
             <ChatRoundedIcon />
           </IconButton>
         </Tooltip>
-        <Tooltip title="Notifications" placement="bottom">
-          <IconButton color="primary" className={`${styles.icon_btn}`}>
+        <Tooltip title={<h6>Notification</h6>} placement="bottom">
+          <IconButton color="primary" className={`${styles.icon_btn}`} >
             <NotificationsRoundedIcon />
           </IconButton>
         </Tooltip>
-        <Tooltip title="Account" placement="bottom">
+        <Tooltip title={<h6>Account</h6>} placement="bottom">
           <IconButton color="primary" className={`${styles.arrow_btn}`}>
             <ArrowDropDownRoundedIcon fontSize="large" />
           </IconButton>
