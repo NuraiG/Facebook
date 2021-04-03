@@ -42,6 +42,13 @@
                     color: rgb(204, 42, 42);
                 }
             }
+            .inputBase{
+                font-size: 16px; 
+                border: 1px solid gray;
+                border-radius: 4px;
+                padding: 10px;
+            }
+
         }
         > .additional {
             display: flex;
@@ -52,6 +59,13 @@
             >span{
                 font-size: 10px;
                 color: rgb(204, 42, 42);
+            }
+            .inputBase{
+                font-size: 16px; 
+                border: 1px solid gray;
+                border-radius: 4px;
+                padding: 10px;
+                margin: 10px 0;
             }
 
         }

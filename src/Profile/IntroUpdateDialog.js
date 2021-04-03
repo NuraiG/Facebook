@@ -37,7 +37,7 @@ export default function IntroUpdateDialog({
         className={styles.dialog}
       >
         <DialogTitle id="form-dialog-title" className={styles.dialog_title}>
-           Edit details
+           { true ? "Edit details" : "" }
           <ThemeProvider theme={grayButtonTheme}>
             <IconButton color="primary" onClick={onClose} className={styles.closebtn}>
               <CloseIcon />
@@ -65,7 +65,9 @@ export default function IntroUpdateDialog({
           <DialogActions className={styles.dialog_actions}>
             <Button
               color="primary"
-              onClick={() => updateProfilData() }
+              onClick={() => updateProfilData()
+               }
+               style={{ fontSize: '14px' }}
             >
               Save
             </Button>

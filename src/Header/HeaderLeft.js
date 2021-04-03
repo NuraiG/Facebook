@@ -116,6 +116,7 @@ export default function HeaderLeft() {
                   <Button
                     fullWidth
                     className={styles.filtered_user}
+                    style={{ fontSize: '14px' }} 
                     key={user.id}
                     onClick={handleClose}
                     component={Link}

@@ -4,13 +4,11 @@ import { useSelector } from "react-redux";
 // material icons
 import PhotoCameraOutlinedIcon from "@material-ui/icons/PhotoCameraOutlined";
 import InsertEmoticonSharpIcon from "@material-ui/icons/InsertEmoticonSharp";
-import CloseIcon from "@material-ui/icons/Close";
 
 //material ui
-import { Avatar, ThemeProvider,IconButton } from "@material-ui/core";
+import { Avatar} from "@material-ui/core";
 
 import styles from "./EmptyComment.module.scss";
-import { grayButtonTheme } from "../../customThemes";
 
 import { useDropzone } from "react-dropzone";
 import { storage } from "../../firebase";

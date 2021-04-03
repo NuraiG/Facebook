@@ -1,5 +1,4 @@
 import React , {useState} from "react";
-import { TextField } from "@material-ui/core";
 import {
   FormControl,
   FormLabel,
@@ -7,6 +6,7 @@ import {
   FormControlLabel,
   Radio,
   Button,
+  InputBase,
 } from "@material-ui/core";
 import styles from "./SignUp.module.scss";
 import { customButtonBlueGreen } from "../customThemes";
@@ -97,8 +97,9 @@ export default function Registration() {
           <p>It’s quick and easy.</p>
           <div className={styles.names}>
           <div>
-            <TextField
+            <InputBase
               id="firstName"
+              className={styles.inputBase}
               value={firstName}
               placeholder="First name"
               variant="outlined"
@@ -109,9 +110,10 @@ export default function Registration() {
             { !validateNames(firstName) ? <span>The first name must start with capital letter</span> : ""}
            </div>
            <div>
-            <TextField
+            <InputBase
               placeholder="Last name"
               id="lastName"
+              className={styles.inputBase}
               value={lastName}
               variant="outlined"
               required
@@ -123,17 +125,19 @@ export default function Registration() {
           </div>
           <div className={styles.additional}>
            
-            <TextField
+            <InputBase
               id="email"
               value={email}
+              className={styles.inputBase}
               placeholder="Email"
               variant="outlined"
               required
               onChange={(e) => onChangeHandler(e)}
             />
             {!validateEmail(email) ? <span>Invalid email</span> : ""}
-            <TextField
+            <InputBase
               id="password"
+              className={styles.inputBase}
               value={password}
               placeholder="New password"
               variant="outlined"
@@ -142,8 +146,9 @@ export default function Registration() {
               onChange={(e) => onChangeHandler(e)}
             />
             {!validatePassword(password) ? <span>Password must contain more than 6 characters</span> : "" }
-            <TextField
-              label="Birthday"
+            <InputBase
+              label={<h5>Birthday</h5>}
+              className={styles.inputBase}
               id="date"
               value={bDate}
               type="date"
@@ -153,7 +158,7 @@ export default function Registration() {
             {!validateDate(bDate) ? <span>You must be over 14 years old</span> : "" }
             <FormControl component="fieldset">
               <FormLabel component="legend" style={{ textAlign: "start" }}>
-                Gender
+                <h5>Gender</h5>
               </FormLabel>
               <RadioGroup
                 aria-label="gender"
@@ -167,19 +172,19 @@ export default function Registration() {
                   value="Female"
                   control={<Radio color="default" />}
                   labelPlacement="start"
-                  label="Female"
+                  label={<h5>Female</h5>}
                 />
                 <FormControlLabel
                   value="Male"
                   control={<Radio color="default" />}
                   labelPlacement="start"
-                  label="Male"
+                  label={<h5>Male</h5>}
                 />
                 <FormControlLabel
                   value="Other"
                   control={<Radio color="default" />}
                   labelPlacement="start"
-                  label="Custom"
+                  label={<h5>Custom</h5>}
                 />
               </RadioGroup>
             </FormControl>
@@ -198,13 +203,13 @@ export default function Registration() {
             . You may receive SMS Notifications from us and can opt out any
             time.
           </p>
-          {/* todo: sign up on click */}
           <ThemeProvider theme={customButtonBlueGreen}>
             <Button
               color="secondary"
               variant="contained"
               size="large"
               onClick={onSubmit}
+              style={{ fontSize: '14px' }} 
               disabled={
                 validateEmail(email) && 
                 validateNames(firstName) && 

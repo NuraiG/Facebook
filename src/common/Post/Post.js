@@ -112,7 +112,7 @@ export default function Post({ postObj }) {
         <Box className={styles.post_header}>
           <Avatar src={postObj.createdByPic} />
           <Box className={styles.post_info}>
-            <h3>
+            <h4>
               <Link to={`/profile/${postObj.createdById}`}>
                 {postObj.createdByFullName}
               </Link>
@@ -127,7 +127,7 @@ export default function Post({ postObj }) {
                   </Link>
                 </>
               )}
-            </h3>
+            </h4>
             <Tooltip title={fullDatePrettified} placement="bottom">
               <span className={styles.timestamp}>{timeToDisplay}</span>
             </Tooltip>

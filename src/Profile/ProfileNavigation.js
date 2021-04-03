@@ -106,9 +106,9 @@ export default function ProfileNavigation({ user }) {
                 onChange={handleChange}
                 aria-label="simple tabs example"
               >
-                <Tab label="Posts" {...a11yProps(0)} />
-                <Tab label="Photos" {...a11yProps(1)} />
-                <Tab label="Friends" {...a11yProps(2)} />
+                <Tab label="Posts"  style={{ fontSize: '14px' }}  {...a11yProps(0)} />
+                <Tab label="Photos"  style={{ fontSize: '14px' }}  {...a11yProps(1)} />
+                <Tab label="Friends"  style={{ fontSize: '14px' }}  {...a11yProps(2)} />
               </Tabs>
             </Typography>
             <ThemeProvider theme={customButtonBlueGreen}>
@@ -119,6 +119,7 @@ export default function ProfileNavigation({ user }) {
                   className={classes.menuButton}
                   startIcon={<PersonAddIcon />}
                   onClick={onSendFriendRequest}
+                  style={{ fontSize: '14px' }} 
                 >
                   Add friend
                 </Button>
