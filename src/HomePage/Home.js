@@ -13,6 +13,7 @@ import { NUMBER_OF_POSTS_PER_SCROLL } from "../constants";
 
 export default function Home() {
   const currentUser = useSelector((state) => state.currentUser.currentUser);
+  
   const [visiblePosts, setVisiblePosts] = useState([]);
   const [allPosts, setAllPosts] = useState([]);
   const [lastLoaded, setLastLoaded] = useState("");

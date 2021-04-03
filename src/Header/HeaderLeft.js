@@ -1,4 +1,5 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import logo from "./logo.png";
 
@@ -34,9 +35,10 @@ const useStyles = makeStyles(() => ({
 export default function HeaderLeft() {
   let [btnSelected, setBtnSelected] = useState(false);
   let [searchInput, setSearchInput] = useState("");
-  let [allUsers, setAllUsers] = useState([]);
+  // let [allUsers, setAllUsers] = useState([]);
   const [open, setOpen] = useState(false);
   const anchorRef = useRef(null);
+  const allUsers = useSelector((state) => state.allUsers.allUsers);
 
   let onSelect = () => {
     setBtnSelected(!btnSelected);
@@ -68,20 +70,20 @@ export default function HeaderLeft() {
         );
   }, [allUsers, searchInput]);
 
-  useEffect(() => {
-    getAllUsers().then((users) => {
-      let dbUsers = [];
-      users.forEach((doc) => {
-        let userData = doc.data();
-        dbUsers.push({
-          id: doc.id,
-          fullName: userData.firstName + " " + userData.lastName,
-          profilePic: userData.profile_image,
-        });
-      });
-      setAllUsers(dbUsers);
-    });
-  }, []);
+  // useEffect(() => {
+  //   getAllUsers().then((users) => {
+  //     let dbUsers = [];
+  //     users.forEach((doc) => {
+  //       let userData = doc.data();
+  //       dbUsers.push({
+  //         id: doc.id,
+  //         fullName: userData.firstName + " " + userData.lastName,
+  //         profilePic: userData.profile_image,
+  //       });
+  //     });
+  //     setAllUsers(dbUsers);
+  //   });
+  // }, []);
 
   const classes = useStyles();
   return (

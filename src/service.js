@@ -46,7 +46,7 @@ export function getUserById(userId) {
 }
 
 export function getAllUsers() {
-  return database.collection("users").get();
+  return database.collection("users");
 }
 
 // update bio
@@ -62,6 +62,7 @@ export function updateUserBio(currId, userBio) {
       console.error(error);
     });
 }
+
 export function updateUserBirthPlace(currId, userBirthPlace) {
   database
     .collection("users")
@@ -74,6 +75,7 @@ export function updateUserBirthPlace(currId, userBirthPlace) {
       console.error(error);
     });
 }
+
 export function updateUserResidence(currId, residence) {
   database
     .collection("users")
