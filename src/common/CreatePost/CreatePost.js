@@ -122,6 +122,7 @@ export default function CreatePost({ target }) {
 
   const onTag = () => {
     setPostValue(postValue + " @");
+    setIsDialogOpen(true);
     // TODO: on ' @' start suggesting friends and filter when typing
   };
 
