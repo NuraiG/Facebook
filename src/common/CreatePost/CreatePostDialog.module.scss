@@ -85,7 +85,9 @@
               rgba(255, 255, 255, 0.5) 0px 0px 0px 1px inset;
 
             li {
-              padding: 0px 7px;
+              padding: 4px 7px;
+              margin: 2px 0px;
+              border-radius: 8px;
 
               &:hover {
                 background-color: $primary-bg;
