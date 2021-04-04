@@ -1,21 +1,21 @@
 import { getAllUsers } from "./service";
 
-export const FETCH_USERS_FAILED = "FETCH_BOOKS_FAILED";
-export const FETCH_USERS_REQUESTED = "FETCH_BOOKS_REQUESTED";
-export const FETCH_USERS_SUCCEEDED = "FETCH_BOOKS_SUCCEEDED";
+export const FETCH_ALL_USERS_FAILED = "FETCH_ALL_USERS_FAILED";
+export const FETCH_ALL_USERS_REQUESTED = "FETCH_ALL_USERS_REQUESTED";
+export const FETCH_ALL_USERS_SUCCEEDED = "FETCH_ALL_USERS_SUCCEEDED";
 
 export const fetchUsersSucceded = (users) => ({
-  type: FETCH_USERS_SUCCEEDED,
+  type: FETCH_ALL_USERS_SUCCEEDED,
   payload: users,
 });
 
 export const fetchUsersFailed = (err) => ({
-  type: FETCH_USERS_FAILED,
+  type: FETCH_ALL_USERS_FAILED,
   payload: err,
 });
 
 export const fetchUsersRequested = () => ({
-  type: FETCH_USERS_REQUESTED,
+  type: FETCH_ALL_USERS_REQUESTED,
 });
 
 // Thunk actions

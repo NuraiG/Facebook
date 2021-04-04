@@ -25,7 +25,7 @@ import PlayArrowRoundedIcon from "@material-ui/icons/PlayArrowRounded";
 import ThumbUpAltIcon from "@material-ui/icons/ThumbUpAlt";
 import ThumbUpAltOutlinedIcon from "@material-ui/icons/ThumbUpAltOutlined";
 import ChatBubbleOutlineRoundedIcon from "@material-ui/icons/ChatBubbleOutlineRounded";
-import { truncateString } from "../../utils/utils";
+import { generateUuidv4, truncateString } from "../../utils/utils";
 import { MAX_POST_LENGTH } from "../../constants";
 import {
   getCommentsForPost,
@@ -45,6 +45,7 @@ export default function Post({ postObj }) {
   let [postIsLiked, setPostIsLiked] = useState(checkIfUserHasLikedPost());
   let [commentsAreExpanded, setCommentsAreExpanded] = useState(false);
   let [comments, setComments] = useState([]);
+  // let [prettyContent, setPrettyContent] = useState("");
   let [postTargetName, setPostTargetName] = useState(null);
   let [truncatedContent, setTruncatedContent] = useState(
     truncateString(postObj.content, MAX_POST_LENGTH)
@@ -62,6 +63,28 @@ export default function Post({ postObj }) {
   );
   // need this for the date tooltip
   let fullDatePrettified = new Date(postObj.timestamp?.toDate()).toUTCString();
+
+  const prettifyContentWithTaggedUsers = () => {
+    let tempConentCopy = postObj.content;
+    let prettifiedContent = [];
+    postObj.taggedUsers.forEach((tagged) => {
+      let fullString = `@[${tagged.fullName}](${tagged.id})`;
+      let index = tempConentCopy.indexOf(fullString);
+      let lastCharBeforeName = index - 1;
+      let charsBeforeName =
+        lastCharBeforeName > -1 ? tempConentCopy.slice(0, index - 1) : ``;
+      prettifiedContent.push(charsBeforeName);
+      let linkedName = (
+        <Link to={`/profile/${tagged.id}`} className={styles.tagged_user_link}>
+          {tagged.fullName}
+        </Link>
+      );
+      prettifiedContent.push(linkedName);
+      tempConentCopy = tempConentCopy.slice(index + fullString.length);
+    });
+    prettifiedContent.push(tempConentCopy);
+    return prettifiedContent;
+  };
 
   useEffect(() => {
     if (postObj.createdById !== postObj.postTargetId) {
@@ -140,23 +163,29 @@ export default function Post({ postObj }) {
           ) : null}
         </Box>
         <Box className={styles.post_content}>
-          {truncatedContent}
-          {!wholeContentIsShown && isStringTruncated && (
-            <span
-              className={styles.expand_content}
-              onClick={() => {
-                setTruncatedContent(postObj.content);
-                setWholeContentIsShown(true);
-              }}
-            >
-              See More
-            </span>
-          )}
+          {postObj.taggedUsers && postObj.taggedUsers.length > 0
+            ? prettifyContentWithTaggedUsers().map((str) => <span key={generateUuidv4()}>{str}</span>)
+            : truncatedContent}
+          {!wholeContentIsShown &&
+            isStringTruncated &&
+            !(postObj.taggedUsers && postObj.taggedUsers.length > 0) && (
+              <span
+                className={styles.expand_content}
+                onClick={() => {
+                  setTruncatedContent(postObj.content);
+                  setWholeContentIsShown(true);
+                }}
+              >
+                See More
+              </span>
+            )}
           {postObj.attachedImages ? (
             <FbImageLibrary
               images={postObj.attachedImages}
               countFrom={2}
-              className={postObj.attachedImages.length ? "" : styles.img_container}
+              className={
+                postObj.attachedImages.length ? "" : styles.img_container
+              }
             />
           ) : (
             ""

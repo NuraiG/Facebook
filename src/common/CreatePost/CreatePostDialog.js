@@ -1,15 +1,15 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import Button from "@material-ui/core/Button";
-import Dialog from "@material-ui/core/Dialog";
-import DialogActions from "@material-ui/core/DialogActions";
-import DialogContent from "@material-ui/core/DialogContent";
-import DialogTitle from "@material-ui/core/DialogTitle";
+import { MentionsInput, Mention } from "react-mentions";
 import {
   Avatar,
   Box,
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
   IconButton,
-  InputBase,
   makeStyles,
   ThemeProvider,
   Tooltip,
@@ -46,8 +46,11 @@ export default function CreatePostDialog({
   postFeeling,
   setPostFeeling,
   isPostBeingEdited,
+  postTaggedUsers,
+  setPostTaggedUsers,
 }) {
   const currentUser = useSelector((state) => state.currentUser.currentUser);
+  const allUsers = useSelector((state) => state.allUsers.allUsers);
 
   const {
     getRootProps: getRootPropsNoClick,
@@ -57,6 +60,27 @@ export default function CreatePostDialog({
     onDrop,
     accept: "image/*",
   });
+
+  let filterUsers = (query, callback) => {
+    return query.trim().length === 0
+      ? callback([])
+      : callback(
+          allUsers
+            .filter((user) =>
+              (user.firstName + " " + user.lastName)
+                .toLowerCase()
+                .includes(query.toLowerCase())
+            )
+            .map((user) => ({
+              display: user.firstName + " " + user.lastName,
+              id: user.id,
+            }))
+        );
+  };
+
+  const onAdd = (id, display) => {
+    setPostTaggedUsers([...postTaggedUsers, { id, fullName: display }]);
+  };
 
   const useStyles = makeStyles(() => ({
     greenBtn: {
@@ -69,6 +93,12 @@ export default function CreatePostDialog({
       fill: redOrangeTheme.palette.secondary.main,
     },
   }));
+
+  let style = {
+    input: {
+      overflow: "auto",
+    },
+  };
 
   const classes = useStyles();
 
@@ -116,7 +146,7 @@ export default function CreatePostDialog({
                   className={styles.feelings_btn}
                   color="primary"
                   variant="contained"
-                  style={{ fontSize: '14px' }}
+                  style={{ fontSize: "14px" }}
                   onClick={() => setShowFeelingsModal(false)}
                   fullWidth
                   disabled={postFeeling.trim().length > 0 ? false : true}
@@ -128,24 +158,30 @@ export default function CreatePostDialog({
           ) : (
             <DialogContent className={styles.dialog_content}>
               <Box className={styles.post_author}>
-                <Avatar src={currentUser.profile_image}/>
+                <Avatar src={currentUser.profile_image} />
                 <h3>
                   {currentUser.firstName} {currentUser.lastName}
                   {postFeeling.length > 0 ? " is feeling " + postFeeling : ""}
                 </h3>
               </Box>
-              <InputBase
+              <MentionsInput
                 className={styles.dialog_input}
-                inputProps={{ "aria-label": "naked" }}
-                fullWidth
-                multiline
-                rows={4}
                 placeholder={placeholder}
                 value={text}
-                onInput={(ev) => {
+                allowSpaceInQuery={true}
+                style={style}
+                onChange={(ev) => {
                   onInput(ev.target.value);
                 }}
-              />
+              >
+                <Mention
+                  displayTransform={(id, display) => `@${display}`}
+                  trigger=" @"
+                  appendSpaceOnAdd={true}
+                  data={filterUsers}
+                  onAdd={onAdd}
+                />
+              </MentionsInput>
               {files.length > 0 &&
                 files.map((file) => (
                   <div key={file} className={styles.attached_images_container}>
@@ -196,7 +232,7 @@ export default function CreatePostDialog({
                 variant="contained"
                 onClick={onClose}
                 fullWidth
-                style={{ fontSize: '14px' }}
+                style={{ fontSize: "14px" }}
                 disabled={
                   text.trim().length > 0 ||
                   files.length > 0 ||

@@ -44,14 +44,32 @@
         width: fit-content;
       }
     }
-
     .more_btn {
       margin-left: auto;
+
+      > span > svg {
+        font-size: 20px;
+      }
     }
   }
 
   .post_content {
     font-size: 16px;
+    .tagged_user_link {
+      text-decoration: none;
+      color: inherit;
+      font-weight: 700;
+      display: inline-block;
+      margin: 0px 4px;
+
+      &:active {
+        color: inherit;
+      }
+      &:visited {
+        color: inherit;
+      }
+    }
+
     .expand_content {
       cursor: pointer;
       font-weight: 700;

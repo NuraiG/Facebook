@@ -19,6 +19,7 @@
     "react-dropzone": "^11.3.2",
     "react-fb-image-grid": "^0.1.5",
     "react-infinite-scroll-component": "^6.0.0",
+    "react-mentions": "^4.1.1",
     "react-redux": "^7.2.3",
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.3",

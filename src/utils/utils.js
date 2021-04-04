@@ -27,6 +27,13 @@ function shuffleArray(array) {
   return arrayClone;
 }
 
+function generateUuidv4() {
+  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+    let r = Math.random() * 16 | 0, v = c === 'x' ? r : (r & 0x3 | 0x8);
+    return v.toString(16);
+  });
+}
+
 function debounce(callback, time) {
   let timerId;
   return function debounced(...params) {
@@ -35,4 +42,4 @@ function debounce(callback, time) {
   }
 }
 
-export { truncateString, shuffleArray, debounce };
+export { truncateString, shuffleArray, generateUuidv4, debounce };

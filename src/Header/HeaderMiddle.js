@@ -16,14 +16,16 @@ import PeopleAltIcon from "@material-ui/icons/PeopleAlt";
 export default function HeaderMiddle({activeTab}) {
   let [allHeaderOptions, setAllHeaderOptions] = useState([
     {
-      tooltip: "Home",
+      key: "Home",
+      tooltip: <h6>Home</h6>,
       selected: activeTab === "home",
       outline: <HomeOutlinedIcon color="secondary" fontSize="large" />,
       filled: <HomeRoundedIcon fontSize="large" />,
       linkTo: "/"
     },
     {
-      tooltip: "Friends",
+      key: "Friends",
+      tooltip: <h6>Friends</h6>,
       selected: activeTab === "friends",
       outline: <PeopleAltOutlinedIcon color="secondary" fontSize="large" />,
       filled: <PeopleAltIcon fontSize="large" />,
@@ -49,7 +51,7 @@ export default function HeaderMiddle({activeTab}) {
       <div className={styles.header__middle}>
         {allHeaderOptions.map((option) => (
           <HeaderNavOption
-            key={option.tooltip}
+            key={option.key}
             className={styles.header_btn}
             selected={option.selected}
             tooltip={option.tooltip}

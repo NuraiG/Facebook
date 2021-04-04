@@ -34,6 +34,7 @@ export default function CreatePost({ target }) {
   const [attachedFiles, setAttachedFiles] = useState([]);
   const [postValue, setPostValue] = useState("");
   const [postFeeling, setPostFeeling] = useState("");
+  const [postTaggedUsers, setPostTaggedUsers] = useState([]);
   const [showFeelingsModal, setShowFeelingsModal] = useState(false);
 
   const handleDialogOpen = () => {
@@ -103,6 +104,7 @@ export default function CreatePost({ target }) {
       attachedImages: attachedFiles,
       content: postValue.trim(),
       feeling: postFeeling.trim(),
+      taggedUsers: postTaggedUsers,
     })
       .then(() => {
         console.log("Document successfully written!");
@@ -120,6 +122,7 @@ export default function CreatePost({ target }) {
 
   const onTag = () => {
     setPostValue(postValue + " @");
+    setIsDialogOpen(true);
     // TODO: on ' @' start suggesting friends and filter when typing
   };
 
@@ -228,6 +231,8 @@ export default function CreatePost({ target }) {
         showFeelingsModal={showFeelingsModal}
         postFeeling={postFeeling}
         setPostFeeling={setPostFeeling}
+        postTaggedUsers={postTaggedUsers}
+        setPostTaggedUsers={setPostTaggedUsers}
       />
     </ThemeProvider>
   );

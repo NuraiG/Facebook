@@ -25,6 +25,8 @@ export function addUserToCollection(
       lastName: lastName,
       birthDate: birthDate,
       gender: gender,
+      images: [],
+      friends: [],
       registrationDate: firebase.firestore.FieldValue.serverTimestamp(),
     })
     .then(() => {

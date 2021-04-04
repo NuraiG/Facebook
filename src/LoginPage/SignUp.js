@@ -13,7 +13,7 @@ import { customButtonBlueGreen } from "../customThemes";
 import { ThemeProvider } from "@material-ui/styles";
 import { addUserToCollection, register } from "../service";
 import { getTimestampFromDate } from "../utils/timeUtils";
-import { validateEmail, validatePassword,validateNames,validateDate } from "../validate";
+import { validateEmail, validatePassword,validateNames,validateDate } from "../utils/validationUtils";
 import { useHistory } from "react-router-dom";
 
 export default function Registration() {
@@ -76,9 +76,9 @@ export default function Registration() {
      
         addUserToCollection(
           uid,
-          email,
-          firstName,
-          lastName,
+          email.trim(),
+          firstName.trim(),
+          lastName.trim(),
           getTimestampFromDate(bDate),
           gender
         );

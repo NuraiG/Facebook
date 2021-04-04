@@ -110,7 +110,7 @@ export default function ProfileNavigation({ user }) {
   };
 
   useEffect(() => {
-    getUserById(currentUser.id)
+    getUserById(user ? user.id : currentUser.id)
     .then((res)=> res.images)
       .then((images) => {
         let dbImages = [];
@@ -121,7 +121,7 @@ export default function ProfileNavigation({ user }) {
 
         setImages(dbImages);
       });
-  }, [currentUser.id,currentUser.images]);
+  }, [currentUser.id, user]);
  
 
   return (
