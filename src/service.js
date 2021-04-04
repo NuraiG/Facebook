@@ -314,3 +314,13 @@ export function rejectFriendRequest(requestId) {
     resolvedOn: firebase.firestore.FieldValue.serverTimestamp(),
   });
 }
+
+export function logout(){
+  firebase.auth().signOut().then(() => {
+    console.log("Sign-out successful.");
+  }).catch((error) => {
+    // An error happened.
+    console.log(error.message);
+  });
+}
+

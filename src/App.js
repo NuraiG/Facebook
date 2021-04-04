@@ -22,15 +22,11 @@ import { useDispatch, useSelector } from "react-redux";
 // react
 import { useEffect } from "react";
 
-//firebase
-import firebase from "./firebase";
 
 // current user actions
-import {setCurrentUser} from "./Profile/CurrentUser.actions";
+import {fetchCurrentUser} from "./Profile/CurrentUser.actions";
 import {fetchAllUsers} from "./AllUsers.actions";
 
-// DB requests
-import { getUserById } from "./service";
 
 
 function App() {
@@ -39,18 +35,9 @@ function App() {
   const isLoading = useSelector((state) => state.currentUser.isLoading);
   
   useEffect(() => {
-    firebase.auth().onAuthStateChanged(user => {
-      if (user) {
-        console.log("Signed in user: ", user);
-        getUserById(user.uid).then((res)=>{dispatch(setCurrentUser({...res, id: user.uid}))})
-      } else {
-        console.log("No user");
-        dispatch(setCurrentUser(null));
-      }
-    })
-  }, [dispatch]);
+    
+    dispatch(fetchCurrentUser());
 
-  useEffect(() => {
     dispatch(fetchAllUsers());
   }, [dispatch]);
 
