@@ -15,6 +15,7 @@ import {
     Card,
     Button
 } from "@material-ui/core";
+
 // Icons
 import AddIcon from "@material-ui/icons/Add";
 import ChatRoundedIcon from "@material-ui/icons/ChatRounded";
@@ -26,8 +27,6 @@ import ExitToAppRoundedIcon from '@material-ui/icons/ExitToAppRounded';
 
 import {logout} from "../service";
 
-import {useDispatch} from "react-redux";
-import {logout_user} from "../Profile/CurrentUser.actions";
 
 
 export default function HeaderRight() {
@@ -37,7 +36,6 @@ export default function HeaderRight() {
     const [openAccount, setOpenAccount] = useState(false);
     const anchorRef = useRef(null);
 
-    const dispatch = useDispatch();
 
     const handleOpenNotifications = () => {
         console.log(notificationsRef);
@@ -68,8 +66,6 @@ export default function HeaderRight() {
 
     const logOut = () => {
         logout();
-        dispatch(logout_user());
-        console.log('Log out');
     }
     return (
         <div className={

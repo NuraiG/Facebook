@@ -142,7 +142,7 @@ export default function ProfileNavigation({ user }) {
             </Typography>
             <ThemeProvider theme={customButtonBlueGreen}>
               {/* are friends */} {/* and a friend request has not been sent */}
-              {user.id !== currentUser.id ? (
+              {user.id !== currentUser.id  ? (
                 <Button
                   color="primary"
                   className={classes.menuButton}
