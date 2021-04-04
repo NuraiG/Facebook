@@ -1,7 +1,7 @@
 import {
-  FETCH_USERS_FAILED,
-  FETCH_USERS_REQUESTED,
-  FETCH_USERS_SUCCEEDED,
+  FETCH_ALL_USERS_FAILED,
+  FETCH_ALL_USERS_REQUESTED,
+  FETCH_ALL_USERS_SUCCEEDED,
 } from "./AllUsers.actions";
 
 const INITIAL_STATE = {
@@ -12,13 +12,13 @@ const INITIAL_STATE = {
 
 const reducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
-    case FETCH_USERS_REQUESTED:
+    case FETCH_ALL_USERS_REQUESTED:
       return {
         ...state,
         isLoading: true,
       };
 
-    case FETCH_USERS_SUCCEEDED:
+    case FETCH_ALL_USERS_SUCCEEDED:
       return {
         ...state,
         allUsers: [...action.payload],
@@ -26,7 +26,7 @@ const reducer = (state = INITIAL_STATE, action) => {
         error: null,
       };
 
-    case FETCH_USERS_FAILED:
+    case FETCH_ALL_USERS_FAILED:
       return {
         ...state,
         error: action.payload,

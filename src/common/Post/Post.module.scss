@@ -44,9 +44,12 @@
         width: fit-content;
       }
     }
-
     .more_btn {
       margin-left: auto;
+
+      > span > svg {
+        font-size: 20px;
+      }
     }
   }
 

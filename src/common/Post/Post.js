@@ -25,7 +25,7 @@ import PlayArrowRoundedIcon from "@material-ui/icons/PlayArrowRounded";
 import ThumbUpAltIcon from "@material-ui/icons/ThumbUpAlt";
 import ThumbUpAltOutlinedIcon from "@material-ui/icons/ThumbUpAltOutlined";
 import ChatBubbleOutlineRoundedIcon from "@material-ui/icons/ChatBubbleOutlineRounded";
-import { truncateString } from "../../utils/utils";
+import { generateUuidv4, truncateString } from "../../utils/utils";
 import { MAX_POST_LENGTH } from "../../constants";
 import {
   getCommentsForPost,
@@ -45,7 +45,7 @@ export default function Post({ postObj }) {
   let [postIsLiked, setPostIsLiked] = useState(checkIfUserHasLikedPost());
   let [commentsAreExpanded, setCommentsAreExpanded] = useState(false);
   let [comments, setComments] = useState([]);
-  let [prettyContent, setPrettyContent] = useState("");
+  // let [prettyContent, setPrettyContent] = useState("");
   let [postTargetName, setPostTargetName] = useState(null);
   let [truncatedContent, setTruncatedContent] = useState(
     truncateString(postObj.content, MAX_POST_LENGTH)
@@ -82,6 +82,7 @@ export default function Post({ postObj }) {
       prettifiedContent.push(linkedName);
       tempConentCopy = tempConentCopy.slice(index + fullString.length);
     });
+    prettifiedContent.push(tempConentCopy);
     return prettifiedContent;
   };
 
@@ -163,9 +164,7 @@ export default function Post({ postObj }) {
         </Box>
         <Box className={styles.post_content}>
           {postObj.taggedUsers && postObj.taggedUsers.length > 0
-            ? prettifyContentWithTaggedUsers().map((str) =>
-                <span>{str}</span>
-              )
+            ? prettifyContentWithTaggedUsers().map((str) => <span key={generateUuidv4()}>{str}</span>)
             : truncatedContent}
           {!wholeContentIsShown &&
             isStringTruncated &&
