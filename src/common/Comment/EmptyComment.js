@@ -52,7 +52,7 @@ export default function EmptyComment({postId, postAuthorId}) {
 
 
     let [attachedFiles, setAttachedFiles] = useState([]);
-    
+
     const onDrop = useCallback((newFiles) => {
         newFiles.forEach((file) => {
             const uploadTask = storage.ref().child("images/" + currentUser.id + Date.now()).put(file);
@@ -73,6 +73,7 @@ export default function EmptyComment({postId, postAuthorId}) {
             });
         });
     }, [attachedFiles, currentUser.id]);
+    
     const {getRootProps, getInputProps} = useDropzone({onDrop, accept: "image/*"});
 
 

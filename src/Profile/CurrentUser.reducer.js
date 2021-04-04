@@ -1,22 +1,38 @@
 import {
   ADD_TO_FRINDS_LIST,
-  SET_CURRENT_USER,
+  // SET_CURRENT_USER,
   UPDATE_USER_COVER_PICTURE,
   UPDATE_USER_PROFILE,
   UPDATE_USER_PROFILE_PICTURE,
+  LOGOUT_USER,
+  FETCH_CURRENT_USER_FAILED,
+  FETCH_CURRENT_USER_REQUESTED,
+  FETCH_CURRENT_USER_SUCCEEDED,
 } from "./CurrentUser.actions";
 
 const INITIAL_STATE = {
   currentUser: {},
   isLoading: true,
+  error: null,
 };
 
 const reducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
-    case SET_CURRENT_USER:
+    case FETCH_CURRENT_USER_REQUESTED:
+      return {
+        ...state,
+        isLoading: true,
+      };
+    case FETCH_CURRENT_USER_SUCCEEDED:
       return {
         currentUser: { ...action.payload },
         isLoading: false,
+      };
+    case FETCH_CURRENT_USER_FAILED:
+      return {
+        ...state,
+        isLoading: false,
+        error: action.payload,
       };
 
     case UPDATE_USER_PROFILE_PICTURE:
@@ -46,6 +62,11 @@ const reducer = (state = INITIAL_STATE, action) => {
           ...state.currentUser,
           ...action.payload,
         },
+        isLoading: false,
+      };
+    case LOGOUT_USER:
+      return {
+        currentUser: {},
         isLoading: false,
       };
 
