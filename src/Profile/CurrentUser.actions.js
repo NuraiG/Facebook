@@ -36,7 +36,7 @@ export const updateUserProfile = (updatetedData) => ({
   payload: updatetedData,
 });
 
-export const logout_user = ()=>({
+export const logout_user = () =>({
   type: LOGOUT_USER,
 });
 
