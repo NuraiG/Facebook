@@ -29,6 +29,12 @@ export default function Registration() {
 
   const [error, setError] = useState("");
 
+  const [isValidUserName, setIsValidUserName]= useState(true);
+  const [isValidLastName, setIsValidLastName]= useState(true);
+  const [isValidEmail, setIsValidEmail] = useState(true);
+  const [isValidPassword, setIsValidPassword]= useState(true);
+  const [isValidAge, setIsValidAge] = useState(true);
+
   const history = useHistory();
 
  
@@ -106,8 +112,9 @@ export default function Registration() {
               required
               style={{ alignSelf: "flex-start" }}
               onChange={(e) => onChangeHandler(e)}
+              onBlur={()=> (setIsValidUserName(validateNames(firstName)))}
             />
-            { !validateNames(firstName) ? <span>The first name must start with capital letter</span> : ""}
+            { !isValidUserName ? <span>The first name must contain at least 2 characters</span> : ""}
            </div>
            <div>
             <InputBase
@@ -119,8 +126,9 @@ export default function Registration() {
               required
               style={{ alignSelf: "flex-end" }}
               onChange={(e) => onChangeHandler(e)}
+              onBlur={()=> (setIsValidLastName(validateNames(lastName)))}
             />
-            {!validateNames(lastName) ? <span>The last name must start with capital letter</span> : ""}
+            {!isValidLastName ? <span>The last name must contain at least 2 characters</span> : ""}
             </div>
           </div>
           <div className={styles.additional}>
@@ -133,8 +141,9 @@ export default function Registration() {
               variant="outlined"
               required
               onChange={(e) => onChangeHandler(e)}
+              onBlur={()=> (setIsValidEmail(validateEmail(email)))}
             />
-            {!validateEmail(email) ? <span>Invalid email</span> : ""}
+            {!isValidEmail ? <span>Invalid email</span> : ""}
             <InputBase
               id="password"
               className={styles.inputBase}
@@ -144,8 +153,9 @@ export default function Registration() {
               required
               type="password"
               onChange={(e) => onChangeHandler(e)}
+              onBlur={()=> (setIsValidPassword(validatePassword(password)))}
             />
-            {!validatePassword(password) ? <span>Password must contain more than 6 characters</span> : "" }
+            {!isValidPassword ? <span>Password must contain more than 6 characters</span> : "" }
             <InputBase
               label={<h5>Birthday</h5>}
               className={styles.inputBase}
@@ -154,8 +164,9 @@ export default function Registration() {
               type="date"
               inputlabelprops={{ shrink: true }}
               onChange={(e) => onChangeHandler(e)}
+              onBlur={()=> (setIsValidAge(validateDate(bDate)))}
             />
-            {!validateDate(bDate) ? <span>You must be over 14 years old</span> : "" }
+            {!isValidAge ? <span>You must be over 14 years old</span> : "" }
             <FormControl component="fieldset">
               <FormLabel component="legend" style={{ textAlign: "start" }}>
                 <h5>Gender</h5>

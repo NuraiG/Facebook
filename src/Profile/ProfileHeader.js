@@ -142,7 +142,7 @@ export default function ProfileHeader({user}) {
               style={{ fontSize: '14px' }} 
               startIcon={<PhotoCameraIcon />}
             >
-              {currentUser.cover_image ? 'Edit Cover Photo' : 'Cover Photo' }
+              {currentUser.cover_image ? 'Edit Cover Photo' : ' Add Cover Photo' }
             </Button>
           </div>
         )}
