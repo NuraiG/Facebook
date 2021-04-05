@@ -9,8 +9,6 @@ export const FETCH_CURRENT_USER_FAILED = "FETCH_CURRENT_USER_FAILED";
 export const FETCH_CURRENT_USER_REQUESTED = "FETCH_CURRENT_USER_REQUESTED";
 export const FETCH_CURRENT_USER_SUCCEEDED = "FETCH_CURRENT_USER_SUCCEEDED";
 
-
-
 export const updateUserProfilePic = (url) => ({
   type: UPDATE_USER_PROFILE_PICTURE,
   payload: url,
@@ -45,22 +43,19 @@ export const fetchCurrentUserRequested = () => ({
   type: FETCH_CURRENT_USER_REQUESTED,
 });
 
-
 //Thunk actions for current user;
 
 export const fetchCurrentUser = () => {
   return function (dispatch) {
     dispatch(fetchCurrentUserRequested());
-    firebase.auth().onAuthStateChanged(user => {
+    firebase.auth().onAuthStateChanged((user) => {
       if (user) {
-        getUserById(user.uid).then((res)=>{dispatch(fetchCurrentUserSucceded({...res, id: user.uid}))})
-      }
-      else{
+        getUserById(user.uid).then((res) => {
+          dispatch(fetchCurrentUserSucceded({ ...res, id: user.uid }));
+        });
+      } else {
         dispatch(fetchCurrentUserFailed("FETCH_CURRENT_USER_FAILED"));
       }
-    })
-  }
-}
-
-
-
+    });
+  };
+};

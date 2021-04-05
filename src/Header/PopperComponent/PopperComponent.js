@@ -1,7 +1,8 @@
-import { ClickAwayListener, makeStyles, Popper } from "@material-ui/core";
 import React from "react";
-import { grayTheme } from "../customThemes";
+import { grayTheme } from "../../customThemes";
 import styles from "./PopperComponent.module.scss";
+
+import { ClickAwayListener, makeStyles, Popper } from "@material-ui/core";
 
 const useStyles = makeStyles(() => ({
   paper: {

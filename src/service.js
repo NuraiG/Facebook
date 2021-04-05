@@ -27,6 +27,7 @@ export function addUserToCollection(
       gender: gender,
       images: [],
       friends: [],
+      notificationsLastRead: firebase.firestore.FieldValue.serverTimestamp(),
       registrationDate: firebase.firestore.FieldValue.serverTimestamp(),
     })
     .then(() => {
@@ -150,6 +151,15 @@ export function removeFromFriends(currentUserId, friendId) {
         friends: firebase.firestore.FieldValue.arrayRemove(currentUserId),
       }),
   ]);
+}
+
+export function readNotifications(currentUserId) {
+  return database
+  .collection("users")
+  .doc(currentUserId)
+  .update({
+    notificationsLastRead: firebase.firestore.FieldValue.serverTimestamp(),
+  });
 }
 
 export function createPost(postData) {

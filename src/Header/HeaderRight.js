@@ -4,6 +4,8 @@ import { Link } from "react-router-dom";
 
 import AvatarComponent from "../common/SmallAvatar/AvatarComponent";
 import CreatePostDialog from "../common/CreatePost/CreatePostDialog";
+import PopperComponent from "./PopperComponent/PopperComponent";
+import NotificationButton from "./Notifications/NotificationButton";
 
 import { createPost, logout } from "../service";
 import { storage } from "../firebase";
@@ -23,20 +25,14 @@ import {
 // Icons
 import AddIcon from "@material-ui/icons/Add";
 import ChatRoundedIcon from "@material-ui/icons/ChatRounded";
-import NotificationsRoundedIcon from "@material-ui/icons/NotificationsRounded";
 import ArrowDropDownRoundedIcon from "@material-ui/icons/ArrowDropDownRounded";
-import PopperComponent from "./PopperComponent";
-import NotificationsPopupContent from "./NotificationsPopupContent";
 import ExitToAppRoundedIcon from "@material-ui/icons/ExitToAppRounded";
 
 export default function HeaderRight() {
-  const [openNotifications, setOpenNotifications] = useState(false);
-  const notificationsRef = useRef(null);
-
   const [openAccount, setOpenAccount] = useState(false);
   const anchorRef = useRef(null);
 
-  const currentUser = useSelector(state => state.currentUser.currentUser);
+  const currentUser = useSelector((state) => state.currentUser.currentUser);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [attachedFiles, setAttachedFiles] = useState([]);
   const [postValue, setPostValue] = useState("");
@@ -53,11 +49,11 @@ export default function HeaderRight() {
   };
 
   const removeFromAttachedFiles = (file) => {
-    let copy = [...attachedFiles]
+    let copy = [...attachedFiles];
     let index = copy.indexOf(file);
     copy.splice(index, 1);
     setAttachedFiles(copy);
-  }
+  };
 
   const onDrop = useCallback(
     (newFiles) => {
@@ -120,21 +116,6 @@ export default function HeaderRight() {
   const onTag = () => {
     setPostValue(postValue + " @");
     setIsDialogOpen(true);
-  };
-
-  const handleOpenNotifications = () => {
-    console.log(notificationsRef);
-    setOpenNotifications(true);
-  };
-
-  const handleCloseNotifications = (event) => {
-    if (
-      notificationsRef.current &&
-      notificationsRef.current.contains(event.target)
-    ) {
-      return;
-    }
-    setOpenNotifications(false);
   };
 
   const handleOpenLogout = () => {
@@ -201,25 +182,7 @@ export default function HeaderRight() {
             <ChatRoundedIcon />
           </IconButton>
         </Tooltip>
-        <Tooltip title={<h6>Notifications</h6>} placement="bottom">
-          <IconButton
-            color="primary"
-            className={`${styles.icon_btn}`}
-            ref={notificationsRef}
-            aria-controls={openNotifications ? "menu-list-grow" : undefined}
-            aria-haspopup="true"
-            onClick={handleOpenNotifications}
-          >
-            <NotificationsRoundedIcon />
-          </IconButton>
-        </Tooltip>
-        <PopperComponent
-          open={openNotifications}
-          anchorEl={notificationsRef.current ? notificationsRef : undefined}
-          handleClose={handleCloseNotifications}
-        >
-          <NotificationsPopupContent />
-        </PopperComponent>
+        <NotificationButton />
         <Tooltip title={<h6>Account</h6>} placement="bottom">
           <IconButton
             color="primary"
