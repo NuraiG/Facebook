@@ -1,5 +1,5 @@
 import React, { useCallback, useRef, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
 import AvatarComponent from "../common/SmallAvatar/AvatarComponent";
@@ -27,6 +27,7 @@ import AddIcon from "@material-ui/icons/Add";
 import ChatRoundedIcon from "@material-ui/icons/ChatRounded";
 import ArrowDropDownRoundedIcon from "@material-ui/icons/ArrowDropDownRounded";
 import ExitToAppRoundedIcon from "@material-ui/icons/ExitToAppRounded";
+import { logOutUser } from "../Profile/CurrentUser.actions";
 
 export default function HeaderRight() {
   const [openAccount, setOpenAccount] = useState(false);
@@ -39,6 +40,7 @@ export default function HeaderRight() {
   const [postFeeling, setPostFeeling] = useState("");
   const [postTaggedUsers, setPostTaggedUsers] = useState([]);
   const [showFeelingsModal, setShowFeelingsModal] = useState(false);
+  const dispatch = useDispatch();
 
   const handleDialogOpen = () => {
     setIsDialogOpen(true);
@@ -134,7 +136,14 @@ export default function HeaderRight() {
   };
 
   const logOut = () => {
-    logout();
+    logout()
+      .then(() => {
+        dispatch(logOutUser());
+      })
+      .catch((error) => {
+        // An error happened.
+        console.log(error.message);
+      });
   };
   return (
     <div className={styles.header__right}>

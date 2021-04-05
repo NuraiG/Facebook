@@ -328,7 +328,8 @@ export function rejectFriendRequest(requestId) {
 }
 
 export function logout(){
-  firebase.auth().signOut().then(() => {
+  return firebase.auth().signOut()
+  .then(() => {
     console.log("Sign-out successful.");
   }).catch((error) => {
     // An error happened.

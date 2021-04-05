@@ -8,6 +8,7 @@ export const UPDATE_USER_PROFILE = "UPDATE_USER_PROFILE";
 export const FETCH_CURRENT_USER_FAILED = "FETCH_CURRENT_USER_FAILED";
 export const FETCH_CURRENT_USER_REQUESTED = "FETCH_CURRENT_USER_REQUESTED";
 export const FETCH_CURRENT_USER_SUCCEEDED = "FETCH_CURRENT_USER_SUCCEEDED";
+export const LOG_OUT_CURRENT_USER = "LOG_OUT_CURRENT_USER";
 
 export const updateUserProfilePic = (url) => ({
   type: UPDATE_USER_PROFILE_PICTURE,
@@ -42,6 +43,10 @@ export const fetchCurrentUserFailed = (err) => ({
 export const fetchCurrentUserRequested = () => ({
   type: FETCH_CURRENT_USER_REQUESTED,
 });
+
+export const logOutUser = () => ({
+  type: LOG_OUT_CURRENT_USER,
+})
 
 //Thunk actions for current user;
 

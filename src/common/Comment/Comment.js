@@ -1,10 +1,9 @@
-import Avatar from "@material-ui/core/Avatar";
-import styles from "./Comment.module.scss";
-import { Link } from "react-router-dom";
-import ThumbUpAltIcon from "@material-ui/icons/ThumbUpAlt";
 import { useState, useCallback } from "react";
+import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
+import styles from "./Comment.module.scss";
+
 import { getServerTime, getShortDate } from "../../utils/timeUtils";
-import { Tooltip } from "@material-ui/core";
 
 import { truncateString } from "../../utils/utils";
 import { MAX_COMMENT_LENGTH } from "../../constants";
@@ -12,20 +11,13 @@ import { likeCommentRequest } from "../../service";
 
 import FbImageLibrary from 'react-fb-image-grid';
 
-let currentUser = {
-  id: "U99cAvfTmfhuHurhus6D5X2ejfo1",
-  profile_image: "",
-  firstName: "Елица",
-  lastName: "Иванова",
-  registrationDate: "March 29, 2021 at 1:47:01 PM UTC+3",
-  birthDate: "March 29, 2000 at 1:47:01 PM UTC+3",
-  birthPlace: "Sofia",
-  residence: "Sofia",
-  gender: "Female",
-  //...
-};
+import { Avatar, Tooltip } from "@material-ui/core";
+
+import ThumbUpAltIcon from "@material-ui/icons/ThumbUpAlt";
 
 export default function Comment({ commentObj }) {
+  const currentUser = useSelector((state) => state.currentUser.currentUser);
+
   // get the time for the post, formatted based on how long ago it was made
   let timeToDisplay = getShortDate(
     getServerTime()?.toDate(),
