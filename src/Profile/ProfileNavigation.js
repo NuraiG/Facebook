@@ -110,17 +110,19 @@ export default function ProfileNavigation({ user }) {
   };
 
   useEffect(() => {
-    getUserById(user ? user.id : currentUser.id)
-    .then((res)=> res.images)
-      .then((images) => {
-        let dbImages = [];
-
-        images.forEach((img) => {
-          dbImages.push(img);
+    if (user ? user.id : currentUser.id) {
+      getUserById(user ? user.id : currentUser.id)
+      .then((res) => res.images)
+        .then((images) => {
+          let dbImages = [];
+  
+          images.forEach((img) => {
+            dbImages.push(img);
+          });
+  
+          setImages(dbImages);
         });
-
-        setImages(dbImages);
-      });
+    }
   }, [currentUser.id, user]);
  
 

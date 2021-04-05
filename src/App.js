@@ -5,7 +5,7 @@ import Profile from "./Profile/Profile";
 import SignUp from "./LoginPage/SignUp";
 import Error from "./ErrorPage/Error";
 import Header from "./Header/Header";
-import Loader from "./common/Loader/Loader"
+import Loader from "./common/Loader/Loader";
 
 // styles
 import "./App.css";
@@ -22,22 +22,17 @@ import { useDispatch, useSelector } from "react-redux";
 // react
 import { useEffect } from "react";
 
-
 // current user actions
-import {fetchCurrentUser} from "./Profile/CurrentUser.actions";
-import {fetchAllUsers} from "./AllUsers.actions";
-
-
+import { fetchCurrentUser } from "./Profile/CurrentUser.actions";
+import { fetchAllUsers } from "./AllUsers.actions";
 
 function App() {
   const dispatch = useDispatch();
   const currentUser = useSelector((state) => state.currentUser.currentUser);
   const isLoading = useSelector((state) => state.currentUser.isLoading);
-  
-  useEffect(() => {
-    
-    dispatch(fetchCurrentUser());
 
+  useEffect(() => {
+    dispatch(fetchCurrentUser());
     dispatch(fetchAllUsers());
   }, [dispatch]);
 
@@ -46,37 +41,46 @@ function App() {
       <ThemeProvider theme={globalTheme}>
         <Paper className="body">
           <div className="App light">
-          { !isLoading ? 
-            <Switch>
-              <Route exact path="/login">
-                {/* when we stop testing, login and sign up page should not be openable when logged in */}
-                {/* {user ? <Redirect to="/" /> : <Login />} */}
-                <Login />
-              </Route>
+            {!isLoading ? (
+              <Switch>
+                <Route exact path="/login">
+                  {currentUser.id ? <Redirect to="/" /> : <Login />}
+                </Route>
 
-              <Route exact path="/signUp">
-                {/* {user ? <Redirect to="/" /> : <SignUp />} */}
-                <SignUp />
-              </Route>
+                <Route exact path="/signUp">
+                  {currentUser.id ? <Redirect to="/" /> : <SignUp />}
+                </Route>
 
-              <Route path="/profile/:id">
-                <Profile />
-              </Route>
+                <Route path="/profile/:id">
+                  {currentUser.id ? <Profile /> : <Redirect to="/login" />}
+                </Route>
 
-              <Route exact path="/friends">
-                <Header activeTab="friends" />
-                <FriendRequestPage />
-              </Route>
+                <Route exact path="/friends">
+                  {currentUser.id ? (
+                    <>
+                      <Header activeTab="friends" />
+                      <FriendRequestPage />
+                    </>
+                  ) : (
+                    <Redirect to="/login" />
+                  )}
+                </Route>
 
-              <Route exact path="/">
-                {currentUser ? <Home user={currentUser} /> : <Redirect to="/login" />}
-              </Route>
+                <Route exact path="/">
+                  {currentUser.id ? (
+                    <Home user={currentUser} />
+                  ) : (
+                    <Redirect to="/login" />
+                  )}
+                </Route>
 
-              <Route path="*">
-                <Error />
-              </Route>
-            </Switch>
-             : <Loader /> }
+                <Route path="*">
+                  {currentUser.id ? <Error /> : <Redirect to="/login" />}
+                </Route>
+              </Switch>
+            ) : (
+              <Loader />
+            )}
           </div>
         </Paper>
       </ThemeProvider>

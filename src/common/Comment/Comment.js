@@ -99,7 +99,7 @@ export default function Comment({ commentObj }) {
         ) : (
           <button onClick={() => addLikes()}><h6>Like</h6></button>
         )}{" "}
-        <Tooltip title={fullDatePrettified} placement="bottom">
+        <Tooltip title={<h6>{fullDatePrettified}</h6>} placement="bottom">
           <span className={styles.timestamp}>{timeToDisplay}</span>
         </Tooltip>
       </div>

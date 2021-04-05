@@ -58,7 +58,7 @@ export default function NotificationButton() {
   };
 
   useEffect(() => {
-    if (allUsers) {
+    if (allUsers && currentUser.id) {
       getMyFriendRequests(currentUser.id).onSnapshot((snapshot) => {
         let allFriendRequests = [];
         snapshot.docChanges().forEach((change) => {
