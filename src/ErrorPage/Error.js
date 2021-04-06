@@ -1,5 +1,7 @@
-import Header from "../Header/Header";
 import React from "react";
+import { useTranslation } from "react-i18next";
+import Header from "../Header/Header";
+
 import styles from "./Error.module.scss";
 import error from "./404_error.svg";
 import { Button, Grid, Link } from "@material-ui/core";
@@ -9,6 +11,7 @@ import { useHistory } from "react-router-dom";
 import Typography from "@material-ui/core/Typography";
 
 export default function Error() {
+  const { t } = useTranslation();
   const history = useHistory();
   const goBack = () => {
     history.goBack();
@@ -21,11 +24,8 @@ export default function Error() {
         <Grid item xs={4}>
           <div className={styles.container}>
             <img src={error} alt="Error" className={styles.error}></img>
-            <h1>This page isn't available</h1>
-            <p>
-              The link may be broken, or the page may have been removed. Check
-              to see if the link you're trying to open is correct.
-            </p>
+            <h1>{t("errorPage.heading")}</h1>
+            <p>{t("errorPage.message")}</p>
             <ThemeProvider theme={customButtonBlueGreen}>
               <Button
                 color="primary"
@@ -36,7 +36,7 @@ export default function Error() {
                 }}
                 style={{ fontSize: "14px" }}
               >
-                Go to News Feed
+                {t("errorPage.toNewsfeed")}
               </Button>
               <Typography>
                 <Link
@@ -45,12 +45,12 @@ export default function Error() {
                   }}
                   className={styles.cursor}
                 >
-                  Go Back
+                  {t("errorPage.back")}
                 </Link>
               </Typography>
               <Typography>
                 <Link href="https://www.facebook.com/help">
-                  Visit Help Centre
+                  {t("errorPage.helpCenter")}
                 </Link>
               </Typography>
             </ThemeProvider>

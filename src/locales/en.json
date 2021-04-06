@@ -17,12 +17,15 @@
     "selectFeelingBtn": "Select Feeling",
     "feeling": " is feeling ",
     "addToPost": "Add to Your Post",
-    "comments": "Comments",
+    "post": "Post",
+    "comments": "{{count}} Comment",
+    "comments_plural": "{{count}} Comments",
     "like": "Like",
     "comment": "Comment",
     "seeMore": "See More",
     "delete": "Delete post",
-    "edit": "Edit post"
+    "edit": "Edit post",
+    "save": "Save"
   },
   "errorPage": {
     "heading": "This page isn't available",
@@ -43,6 +46,7 @@
     "messenger": "Messenger",
     "account": "Account",
     "logout": "Log Out",
+    "languageChange": "Change the language",
     "notifications": "Notifications",
     "notificationsEmpty": "You have no notifications yet",
     "notificationFriendInvite": " sent you a friend request",
@@ -72,6 +76,7 @@
     "genderC": "Custom"
   },
   "profilePage": {
+    "intro": "Intro",
     "residence": "Lives in ",
     "birthPlace": "From ",
     "bornOn": "Born on ",
@@ -86,7 +91,7 @@
     "editCover": "Edit Cover Photo",
     "addBio": "Add Bio",
     "editBio": "Edit Bio",
-    "editBioPlaceholder": "Describe how you are",
+    "editBioPlaceholder": "Describe who you are",
     "cancel": "Cancel",
     "addFriendBtn": "Add friend",
     "posts": "Posts",

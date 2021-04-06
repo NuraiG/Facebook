@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
+
 import Comment from "../Comment/Comment";
 import EmptyComment from "../Comment/EmptyComment";
 import { calculateAndFormatTime, getServerTime } from "../../utils/timeUtils";
@@ -46,6 +48,7 @@ export default function Post({ postObj }) {
   let [commentsAreExpanded, setCommentsAreExpanded] = useState(false);
   let [comments, setComments] = useState([]);
   let [postTargetName, setPostTargetName] = useState(null);
+  const { t } = useTranslation();
   let [truncatedContent, setTruncatedContent] = useState(
     truncateString(postObj.content, MAX_POST_LENGTH)
   );
@@ -139,7 +142,7 @@ export default function Post({ postObj }) {
                 {postObj.createdByFullName}
               </Link>
               {postObj.feeling.length
-                ? `\u00A0is feeling ${postObj.feeling}`
+                ? `\u00A0${t("post.feeling")} ${postObj.feeling}`
                 : null}
               {postTargetName && (
                 <>
@@ -175,7 +178,7 @@ export default function Post({ postObj }) {
                   setWholeContentIsShown(true);
                 }}
               >
-                See More
+                {t("post.seeMore")}
               </span>
             )}
           {postObj.attachedImages ? (
@@ -206,7 +209,7 @@ export default function Post({ postObj }) {
             <Grid item>
               <span onClick={expandComments} className={styles.stats_link}>
                 {postObj.numberOfComments > 0 && (
-                  <h5> {postObj.numberOfComments} Comments </h5>
+                  <h5>{t("post.comments", {count: postObj.numberOfComments})}</h5>
                 )}
               </span>
             </Grid>
@@ -232,7 +235,7 @@ export default function Post({ postObj }) {
                   color="secondary"
                   className={postIsLiked ? styles.liked : ""}
                 >
-                  Like
+                  {t("post.like")}
                 </Button>
               </Grid>
               <Grid item xs={6}>
@@ -242,7 +245,7 @@ export default function Post({ postObj }) {
                     startIcon={<ChatBubbleOutlineRoundedIcon />}
                     color="secondary"
                   >
-                    Comment
+                    {t("post.comment")}
                   </Button>
                 </a>
               </Grid>

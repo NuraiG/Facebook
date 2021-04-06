@@ -54,7 +54,7 @@ export default function NotificationsPopupContent({ allNotifications }) {
         })
       ) : (
         <div className={styles.empty_notifications}>
-          You have no notifications yet
+          {t("header.notificationsEmpty")}
         </div>
       )}
     </div>

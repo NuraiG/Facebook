@@ -146,7 +146,7 @@ export default function HeaderRight() {
   };
 
   const toggleChecked = () => {
-    let language = checked ? "bg" : "en";
+    let language = checked ? "en" : "bg";
     setChecked(!checked);
     i18n.changeLanguage(language);
   };
@@ -169,7 +169,9 @@ export default function HeaderRight() {
         <CreatePostDialog
           state={isDialogOpen}
           onClose={handleDialogClose}
-          placeholder={`What's on your mind, ${currentUser.firstName}?`}
+          placeholder={t("post.placeholderCurrentUser", {
+            firstName: currentUser.firstName,
+          })}
           text={postValue}
           onInput={setPostValue}
           onSubmit={onSubmit}
@@ -226,8 +228,13 @@ export default function HeaderRight() {
               </Button>
             </Link>
           </Card>
-          <Card>
-            <Switch checked={checked} onChange={toggleChecked} />
+          <Card className={styles.language_container}>
+            <h4>{t("header.languageChange")}</h4>
+            <div className={styles.language_switch}>
+              <div>en</div>
+              <Switch checked={checked} onChange={toggleChecked} />
+              <div>bg</div>
+            </div>
           </Card>
         </PopperComponent>
       </ThemeProvider>

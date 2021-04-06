@@ -85,7 +85,6 @@ export default function HeaderLeft() {
           aria-controls={open ? "menu-list-grow" : undefined}
           aria-haspopup="true"
           onClick={handleOpen}
-          // placeholder="Search Facebook"
           placeholder={t("header.search")}
           onInput={onInput}
         />
