@@ -1,6 +1,10 @@
-import React, { useState,  useCallback } from "react";
-import  { storage } from "../firebase";
-import {updateUserBio, editProfileImage, editCoverImage} from "../service";
+import React, { useState, useCallback } from "react";
+import { storage } from "../firebase";
+import {
+  updateUserBio,
+  editProfileImage,
+  editCoverImage,
+} from "../service";
 
 //material ui
 import {
@@ -24,85 +28,92 @@ import { makeStyles } from "@material-ui/core/styles";
 import { useDropzone } from "react-dropzone";
 
 import { useDispatch, useSelector } from "react-redux";
-import {updateUserProfilePic , updateUserCoverPic,updateUserProfile } from "./CurrentUser.actions";
+import {
+  updateUserProfilePic,
+  updateUserCoverPic,
+  updateUserProfile,
+} from "./CurrentUser.actions";
 
-
-export default function ProfileHeader({user}) {
+export default function ProfileHeader({ user }) {
   const currentUser = useSelector((state) => state.currentUser.currentUser);
 
   const [isTextAreaOpen, setTextArea] = useState(false);
   const [bio, setBio] = useState(currentUser.bio);
 
-  
   const dispatch = useDispatch();
 
   // add or edit cover image
-  const onDropCover = useCallback((acceptedFile) => { 
-    const uploadTask = storage
-    .ref()
-    .child("images/"+ currentUser.id + "_"+ Date.now())
-    .put(acceptedFile[0]);
+  const onDropCover = useCallback(
+    (acceptedFile) => {
+      const uploadTask = storage
+        .ref()
+        .child("images/" + currentUser.id + "_" + Date.now())
+        .put(acceptedFile[0]);
 
-  uploadTask.on(
-    "state_changed",
-    (snapshot) => {
-      console.log("Upload is done");
+      uploadTask.on(
+        "state_changed",
+        (snapshot) => {
+          console.log("Upload is done");
+        },
+        (error) => {},
+        () => {
+          uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
+            editCoverImage(currentUser.id, downloadURL);
+            dispatch(updateUserCoverPic(downloadURL));
+          });
+        }
+      );
     },
-    (error) => {},
-    () => {
-      uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
-        editCoverImage(currentUser.id,downloadURL);
-        dispatch(updateUserCoverPic(downloadURL));
-      });
-    }
+    [currentUser.id, dispatch]
   );
 
-  }, [currentUser.id,dispatch]);
-
-  const { getRootProps: getRootPropsCover, getInputProps: getInputPropsCover } = useDropzone({
+  const {
+    getRootProps: getRootPropsCover,
+    getInputProps: getInputPropsCover,
+  } = useDropzone({
     onDrop: onDropCover,
     accept: "image/*",
   });
 
+  // add or edit profile image;
+  const onDrop = useCallback(
+    (acceptedFile) => {
+      const uploadTask = storage
+        .ref()
+        .child("images/" + currentUser.id + "_" + Date.now())
+        .put(acceptedFile[0]);
 
-// add or edit profile image;
-  const onDrop = useCallback((acceptedFile) => { 
-    const uploadTask = storage
-    .ref()
-    .child("images/" + currentUser.id + "_"+ Date.now())
-    .put(acceptedFile[0]);
-
-  uploadTask.on(
-    "state_changed",
-    (snapshot) => {
-      let progress= (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-      console.log("Upload is " + progress + "% done");
+      uploadTask.on(
+        "state_changed",
+        (snapshot) => {
+          let progress =
+            (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+          console.log("Upload is " + progress + "% done");
+        },
+        (error) => {
+          console.log(error);
+        },
+        () => {
+          uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
+            editProfileImage(currentUser.id, downloadURL);
+            dispatch(updateUserProfilePic(downloadURL));
+          });
+        }
+      );
     },
-    (error) => {
-      console.log(error);
-    },
-    () => {
-      uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
-        editProfileImage(currentUser.id,downloadURL);
-        dispatch(updateUserProfilePic(downloadURL));
-      });
-    }
+    [currentUser.id, dispatch]
   );
-  }, [currentUser.id,dispatch]);
 
-  
   const { getRootProps, getInputProps } = useDropzone({
     onDrop,
     accept: "image/*",
-  }); 
-
-  
+  });
 
   //edit bio/add bio
-   const changeBio=()=>{
-    updateUserBio(currentUser.id,bio);
-    dispatch(updateUserProfile({...currentUser, bio:bio}));
-   }
+  const changeBio = () => {
+    updateUserBio(currentUser.id, bio);
+    dispatch(updateUserProfile({ ...currentUser, bio: bio }));
+  };
 
   // created custom avatar
   const StyledAvatar = withStyles({
@@ -134,12 +145,12 @@ export default function ProfileHeader({user}) {
           <div className={styles.btn}>
             <input {...getInputPropsCover()}></input>
             <Button
-            {...getRootPropsCover({ className: "dropzone" })}
+              {...getRootPropsCover({ className: "dropzone" })}
               variant="contained"
               color="default"
               className={classes.button}
               size="large"
-              style={{ fontSize: '14px' }} 
+              style={{ fontSize: "14px" }}
               startIcon={<PhotoCameraIcon />}
             >
               {currentUser.cover_image ? 'Edit Cover Photo' : ' Add Cover Photo' }
@@ -150,23 +161,23 @@ export default function ProfileHeader({user}) {
         <div className={styles.profilImage}>
           {currentUser.id === user.id ? (
             <React.Fragment>
-            <input {...getInputProps()}></input>
-            <Badge
-              overlap="circle"
-              anchorOrigin={{
-                vertical: "bottom",
-                horizontal: "right",
-              }}
-              badgeContent={
-                <PhotoCameraIcon 
-                fontSize="large"
-                {...getRootProps({ className: "dropzone" })}
-                  className={styles.icon}
-                />
-              }
-            >
-              <StyledAvatar src={currentUser.profile_image}></StyledAvatar>
-            </Badge>
+              <input {...getInputProps()}></input>
+              <Badge
+                overlap="circle"
+                anchorOrigin={{
+                  vertical: "bottom",
+                  horizontal: "right",
+                }}
+                badgeContent={
+                  <PhotoCameraIcon
+                    fontSize="large"
+                    {...getRootProps({ className: "dropzone" })}
+                    className={styles.icon}
+                  />
+                }
+              >
+                <StyledAvatar src={currentUser.profile_image}></StyledAvatar>
+              </Badge>
             </React.Fragment>
           ) : (
             <StyledAvatar
@@ -176,19 +187,19 @@ export default function ProfileHeader({user}) {
           )}
         </div>
         <h3>
-          {user.firstName}   {user.lastName}
+          {user.firstName} {user.lastName}
         </h3>
         {/* view current user profile and add/edit bio */}
         {currentUser.id === user.id ? (
           <div className={styles.bio}>
-          <p>{currentUser.bio}</p>
+            <p>{currentUser.bio}</p>
             {!isTextAreaOpen ? (
               <span
                 onClick={() => {
                   setTextArea(true);
                 }}
               >
-                {currentUser.bio ? 'Edit Bio' : 'Add Bio' }
+                {currentUser.bio ? "Edit Bio" : "Add Bio"}
               </span>
             ) : null}
             {isTextAreaOpen ? (
@@ -196,20 +207,25 @@ export default function ProfileHeader({user}) {
                 <Card>
                   <CardActionArea>
                     <CardContent>
-                      <InputBase placeholder="Describe how your are" 
-                      multiline 
-                      className={styles.dialog_input} 
-                      value={bio} 
-                      onInput={(ev)=>{setBio(ev.target.value)}}/>
+                      <InputBase
+                        placeholder="Describe how you are"
+                        multiline
+                        className={styles.dialog_input}
+                        value={bio}
+                        onInput={(ev) => {
+                          setBio(ev.target.value);
+                        }}
+                      />
                     </CardContent>
                   </CardActionArea>
                   <CardActions>
                     <Button onClick={() => setTextArea(false)}>Cancel</Button>
-                    <Button onClick={() =>{
-                     changeBio()
-                     setTextArea(false)
-                    }
-                    }>
+                    <Button
+                      onClick={() => {
+                        changeBio();
+                        setTextArea(false);
+                      }}
+                    >
                       Save
                     </Button>
                   </CardActions>

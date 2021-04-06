@@ -3,20 +3,25 @@
   color: inherit;
   font-family: Segoe UI Historic, Segoe UI, Helvetica, Arial, sans-serif;
 
-  :active {
+  &:active {
     color: inherit;
   }
-
+  &:visited {
+    color: inherit;
+  }
+  &:hover {
+    text-decoration: none;
+  }
   .avatar_wrapper > span > div {
     height: 28px;
     width: 28px;
     margin-right: 6px;
   }
-
   .avatar_text {
     text-transform: none;
     font-weight: 700;
     font-family: inherit;
     font-size: 15px;
+    margin: 7px 0px;
   }
 }

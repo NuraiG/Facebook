@@ -103,7 +103,6 @@ export default function PostOptionsBtn({ postObj }) {
 
   const onTag = () => {
     setPostValue(postValue + " @");
-    // TODO: on ' @' start suggesting friends and filter when typing
   };
 
   const open = Boolean(anchorEl);

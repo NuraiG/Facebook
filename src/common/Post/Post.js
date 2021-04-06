@@ -45,7 +45,6 @@ export default function Post({ postObj }) {
   let [postIsLiked, setPostIsLiked] = useState(checkIfUserHasLikedPost());
   let [commentsAreExpanded, setCommentsAreExpanded] = useState(false);
   let [comments, setComments] = useState([]);
-  // let [prettyContent, setPrettyContent] = useState("");
   let [postTargetName, setPostTargetName] = useState(null);
   let [truncatedContent, setTruncatedContent] = useState(
     truncateString(postObj.content, MAX_POST_LENGTH)

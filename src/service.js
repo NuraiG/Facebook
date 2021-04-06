@@ -27,6 +27,7 @@ export function addUserToCollection(
       gender: gender,
       images: [],
       friends: [],
+      notificationsLastRead: firebase.firestore.FieldValue.serverTimestamp(),
       registrationDate: firebase.firestore.FieldValue.serverTimestamp(),
     })
     .then(() => {
@@ -150,6 +151,12 @@ export function removeFromFriends(currentUserId, friendId) {
         friends: firebase.firestore.FieldValue.arrayRemove(currentUserId),
       }),
   ]);
+}
+
+export function readNotifications(currentUserId) {
+  return database.collection("users").doc(currentUserId).update({
+    notificationsLastRead: firebase.firestore.FieldValue.serverTimestamp(),
+  });
 }
 
 export function createPost(postData) {
@@ -317,12 +324,27 @@ export function rejectFriendRequest(requestId) {
   });
 }
 
-export function logout(){
-  firebase.auth().signOut().then(() => {
-    console.log("Sign-out successful.");
-  }).catch((error) => {
-    // An error happened.
-    console.log(error.message);
-  });
+export function getActiveFriendRequestsBetweenUsers(
+  currentUserId,
+  otherUserId
+) {
+  return database
+    .collection("friendRequests")
+    .where("from", "==", currentUserId)
+    .where("to", "==", otherUserId)
+    .where("status", "==", "pending")
+    .get();
 }
 
+export function logout() {
+  return firebase
+    .auth()
+    .signOut()
+    .then(() => {
+      console.log("Sign-out successful.");
+    })
+    .catch((error) => {
+      // An error happened.
+      console.log(error.message);
+    });
+}

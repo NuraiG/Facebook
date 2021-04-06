@@ -25,7 +25,7 @@ export default function PostsFeed({ userId }) {
 
   useEffect(() => {
     if (userId) {
-      getAllPostsForUser(userId).onSnapshot((data) => {
+      let unsubscribe = getAllPostsForUser(userId).onSnapshot((data) => {
         let currentPosts = [];
         data.forEach((post) =>
           currentPosts.push({ id: post.id, ...post.data() })
@@ -34,6 +34,7 @@ export default function PostsFeed({ userId }) {
         setVisiblePosts(currentPosts.slice(0, NUMBER_OF_POSTS_PER_SCROLL));
         setLastLoaded(currentPosts[1]);
       });
+      return () => unsubscribe();
     }
   }, [userId]);
 

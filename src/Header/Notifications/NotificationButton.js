@@ -1,25 +1,64 @@
-import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
-import { NOTIFICATION_TYPES } from "../constants";
-import { getAllComments, getAllPosts, getMyFriendRequests } from "../service";
+import React, { useEffect, useRef, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import NotificationsPopupContent from "./NotificationsPopupContent";
+import PopperComponent from "../PopperComponent/PopperComponent";
 
-import styles from "./PopperComponent.module.scss";
+import styles from "../Header.module.scss";
 
-import { Avatar, Card } from "@material-ui/core";
+import { IconButton, Tooltip } from "@material-ui/core";
+
+import NotificationsRoundedIcon from "@material-ui/icons/NotificationsRounded";
+import { NOTIFICATION_TYPES } from "../../constants";
 import {
-  compareObjByDBTimestamp,
-  getServerTime,
-  getShortDate,
-} from "../utils/timeUtils";
+  getAllComments,
+  getAllPosts,
+  getMyFriendRequests,
+  readNotifications,
+} from "../../service";
+import { updateUserProfile } from "../../Profile/CurrentUser.actions";
+import { getServerTime } from "../../utils/timeUtils";
 
-export default function NotificationsPopupContent() {
+export default function NotificationButton() {
+  const [openNotifications, setOpenNotifications] = useState(false);
+  const notificationsRef = useRef(null);
+
   const currentUser = useSelector((state) => state.currentUser.currentUser);
   const allUsers = useSelector((state) => state.allUsers.allUsers);
   const [allNotifications, setAllNotifications] = useState([]);
 
+  const dispatch = useDispatch();
+
+  const handleOpenNotifications = () => {
+    setOpenNotifications(true);
+    dispatch(
+      updateUserProfile({
+        ...currentUser,
+        notificationsLastRead: getServerTime(),
+      })
+    );
+    readNotifications(currentUser.id);
+  };
+
+  const handleCloseNotifications = (event) => {
+    if (
+      notificationsRef.current &&
+      notificationsRef.current.contains(event.target)
+    ) {
+      return;
+    }
+    setOpenNotifications(false);
+  };
+
+  const getNewNotifications = () => {
+    return allNotifications.filter(
+      (notification) =>
+        notification.timestamp?.toDate() >
+        currentUser.notificationsLastRead?.toDate()
+    );
+  };
+
   useEffect(() => {
-    if (allUsers) {
+    if (allUsers && currentUser.id) {
       getMyFriendRequests(currentUser.id).onSnapshot((snapshot) => {
         let allFriendRequests = [];
         snapshot.docChanges().forEach((change) => {
@@ -63,17 +102,24 @@ export default function NotificationsPopupContent() {
                 id: change.doc.id,
                 type: NOTIFICATION_TYPES.NEW_POST_ON_WALL,
               });
+            } else if (
+              change.doc
+                .data()
+                .taggedUsers.find((user) => user.id === currentUser.id)
+            ) {
+              allPostsOnMyWall.push({
+                ...change.doc.data(),
+                id: change.doc.id,
+                type: NOTIFICATION_TYPES.TAGGED_ON_POST,
+              });
             }
           }
-          if (change.type === "modified") {
+          if (
+            (change.type === "modified" &&
+              change.doc.data().isDeleted === true) ||
+            change.type === "removed"
+          ) {
             // check if post has been deleted
-            if (change.doc.data().isDeleted === true) {
-              setAllNotifications(
-                allNotifications.filter((notif) => notif.id !== change.doc.id)
-              );
-            }
-          }
-          if (change.type === "removed") {
             setAllNotifications(
               allNotifications.filter((notif) => notif.id !== change.doc.id)
             );
@@ -138,41 +184,31 @@ export default function NotificationsPopupContent() {
   }, [currentUser.id, allNotifications, allUsers]);
 
   return (
-    <div>
-      {allNotifications.length > 0
-        ? allNotifications.sort(compareObjByDBTimestamp).map((notification) => {
-            return (
-              <Card key={notification.id} className={styles.card}>
-                <div className={styles.content_wrapper}>
-                  <Link to={`/profile/${notification.fromUser.id}`}>
-                    <Avatar
-                      src={notification.fromUser.profile_image}
-                      className={styles.card_avatar}
-                    />
-                  </Link>
-                  <span>
-                    <Link to={`/profile/${notification.fromUser.id}`}>
-                      {notification.fromUser.firstName}{" "}
-                      {notification.fromUser.lastName}
-                    </Link>
-                    {notification.type === NOTIFICATION_TYPES.FRIEND_REQUEST
-                      ? " sent you a friend request"
-                      : notification.type ===
-                        NOTIFICATION_TYPES.NEW_POST_ON_WALL
-                      ? " posted on your wall"
-                      : " commented on your post"}
-                  </span>
-                </div>
-                <div className={styles.timestamp}>
-                  {getShortDate(
-                    getServerTime()?.toDate(),
-                    new Date(notification.timestamp?.toDate())
-                  )}
-                </div>
-              </Card>
-            );
-          })
-        : <div className={styles.empty_notifications}>You have no notifications yet</div>}
-    </div>
+    <>
+      <Tooltip title={<h6>Notifications</h6>} placement="bottom">
+        <IconButton
+          color="primary"
+          className={`${styles.icon_btn} ${styles.notification_btn}`}
+          ref={notificationsRef}
+          aria-controls={openNotifications ? "menu-list-grow" : undefined}
+          aria-haspopup="true"
+          onClick={handleOpenNotifications}
+        >
+          <NotificationsRoundedIcon />
+          {getNewNotifications().length > 0 ? (
+            <div className={styles.notifications_count}>
+              <div>{getNewNotifications().length}</div>
+            </div>
+          ) : null}
+        </IconButton>
+      </Tooltip>
+      <PopperComponent
+        open={openNotifications}
+        anchorEl={notificationsRef.current ? notificationsRef : undefined}
+        handleClose={handleCloseNotifications}
+      >
+        <NotificationsPopupContent allNotifications={allNotifications} />
+      </PopperComponent>
+    </>
   );
 }

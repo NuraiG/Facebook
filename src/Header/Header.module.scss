@@ -30,6 +30,8 @@
           display: flex;
           align-items: center;
           position: relative;
+          margin-bottom: 0px;
+
           > svg {
             position: absolute;
             left: 12px;
@@ -41,6 +43,7 @@
           > input {
             width: 240px;
             height: 40px;
+            font-weight: 400;
             border-radius: 999px;
             border: none;
             outline-width: 0px;
@@ -177,7 +180,30 @@
     button.icon_btn {
       padding: 12px;
       margin-right: 8px;
-      > span > svg{
+
+      &.notification_btn > span {
+        position: relative;
+
+        > .notifications_count {
+          width: 19px;
+          height: 19px;
+          padding-top: 1px;
+          box-sizing: border-box;
+          font-weight: 700;
+          font-size: 13px;
+          line-height: 13px;
+          position: absolute;
+          top: -15px;
+          right: -10px;
+          border-radius: 50%;
+          background-color: $red-accent;
+          color: $secondary-txt;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+      }
+      > span > svg {
         font-size: 20px;
       }
     }

@@ -1,4 +1,4 @@
-import React,{useState} from "react";
+import React, { useState } from "react";
 import styles from "./Intro.module.scss";
 
 import { Box, Card, ThemeProvider, Button } from "@material-ui/core";
@@ -9,20 +9,17 @@ import CakeIcon from "@material-ui/icons/Cake";
 import WatchLaterIcon from "@material-ui/icons/WatchLater";
 import { grayTheme } from "../customThemes";
 
-
 import { makeStyles } from "@material-ui/core/styles";
 
-import {useSelector, useDispatch } from "react-redux";
-import {updateUserProfile } from "./CurrentUser.actions";
+import { useSelector, useDispatch } from "react-redux";
+import { updateUserProfile } from "./CurrentUser.actions";
 
-import {updateUserBirthPlace,updateUserResidence} from "../service"
+import { updateUserBirthPlace, updateUserResidence } from "../service";
 
 import IntroUpdateDialog from "./IntroUpdateDialog";
 
-
-
 export default function Intro({ userProfileData }) {
-  const currentUser = useSelector(state => state.currentUser.currentUser);
+  const currentUser = useSelector((state) => state.currentUser.currentUser);
 
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [birthPlaceInput, setBirthPlace] = useState(currentUser.birthPlace);
@@ -38,13 +35,18 @@ export default function Intro({ userProfileData }) {
     setIsDialogOpen(false);
   };
 
-
-  const saveData =()=>{
-    updateUserResidence(currentUser.id,residenceInput);
-    updateUserBirthPlace(currentUser.id,birthPlaceInput);
-    dispatch(updateUserProfile({...currentUser, birthPlace:birthPlaceInput,residence:residenceInput})); 
+  const saveData = () => {
+    updateUserResidence(currentUser.id, residenceInput);
+    updateUserBirthPlace(currentUser.id, birthPlaceInput);
+    dispatch(
+      updateUserProfile({
+        ...currentUser,
+        birthPlace: birthPlaceInput,
+        residence: residenceInput,
+      })
+    );
     setIsDialogOpen(false);
-  }
+  };
 
   const useStyles = makeStyles((theme) => ({
     button: {
@@ -59,11 +61,11 @@ export default function Intro({ userProfileData }) {
           <h2 className={styles.heading}>Intro</h2>
           {userProfileData.residence && (
             <Box className={styles.profile_info}>
-              <HomeRoundedIcon fontSize="inherit"/>
+              <HomeRoundedIcon fontSize="inherit" />
               Lives in {userProfileData.residence}
             </Box>
           )}
-          {userProfileData.birthPlace &&(
+          {userProfileData.birthPlace && (
             <Box className={styles.profile_info}>
               <RoomIcon />
               From {userProfileData.birthPlace}
@@ -75,29 +77,36 @@ export default function Intro({ userProfileData }) {
           </Box>
           <Box className={styles.profile_info}>
             <WatchLaterIcon />
-            Joined on {userProfileData.registrationDate?.toDate().toDateString()}
+            Joined on{" "}
+            {userProfileData.registrationDate?.toDate().toDateString()}
           </Box>
-          {currentUser.id === userProfileData.id ? 
-          <Box className={styles.btn}>
-          <Button variant="contained" color="default" 
-          fullWidth 
-          className={classes.button} 
-          style={{ fontSize: '14px' }} 
-          onClick={handleDialogOpen}>
-            Edit Details</Button>
-          </Box> : ""
-          }
+          {currentUser.id === userProfileData.id ? (
+            <Box className={styles.btn}>
+              <Button
+                variant="contained"
+                color="default"
+                fullWidth
+                className={classes.button}
+                style={{ fontSize: "14px" }}
+                onClick={handleDialogOpen}
+              >
+                Edit Details
+              </Button>
+            </Box>
+          ) : (
+            ""
+          )}
         </Card>
       </ThemeProvider>
-      <IntroUpdateDialog 
-       isOpen={isDialogOpen}
-       onClose={handleDialogClose}
-       birthPlace={birthPlaceInput}
-       onChangeBirthPlace={setBirthPlace}
-       onChangeResidence={setResidence}
-       residence={residenceInput}
-       updateProfilData={saveData}
-       />
+      <IntroUpdateDialog
+        isOpen={isDialogOpen}
+        onClose={handleDialogClose}
+        birthPlace={birthPlaceInput}
+        onChangeBirthPlace={setBirthPlace}
+        onChangeResidence={setResidence}
+        residence={residenceInput}
+        updateProfilData={saveData}
+      />
     </aside>
   );
 }

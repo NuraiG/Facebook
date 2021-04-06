@@ -6,6 +6,7 @@ import {
   FETCH_CURRENT_USER_FAILED,
   FETCH_CURRENT_USER_REQUESTED,
   FETCH_CURRENT_USER_SUCCEEDED,
+  LOG_OUT_CURRENT_USER,
 } from "./CurrentUser.actions";
 
 const INITIAL_STATE = {
@@ -16,7 +17,6 @@ const INITIAL_STATE = {
 
 const reducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
-
     case FETCH_CURRENT_USER_REQUESTED:
       return {
         ...state,
@@ -63,6 +63,13 @@ const reducer = (state = INITIAL_STATE, action) => {
         },
         isLoading: false,
       };
+
+    case LOG_OUT_CURRENT_USER:
+      return {
+        currentUser: {},
+        isLoading: false,
+      };
+
     default:
       return state;
   }

@@ -33,8 +33,9 @@ export default function Home() {
 
   useEffect(() => {
     if (currentUser.friends) {
-      getAllPosts().onSnapshot((data) => {
+      let unsubscribe = getAllPosts().onSnapshot((data) => {
         let currentPosts = [];
+        let otherPosts = [];
         data.forEach((post) => {
           // if the post is published on one of the currentUser's friends walls
           if (
@@ -43,25 +44,18 @@ export default function Home() {
             post.data().createdById === currentUser.id
           ) {
             currentPosts.push({ id: post.id, ...post.data() });
+          } else {
+            otherPosts.push({ id: post.id, ...post.data() });
           }
         });
-        // TODO: figure out how to shuffle posts so that they only get shuffled once
-        // let shuffledPosts = shuffleArray(currentPosts);
-        let shuffledPosts = [...currentPosts];
-        setAllPosts(shuffledPosts);
+        let allPostsForNewsfeed = [...currentPosts, ...otherPosts];
+        setAllPosts(allPostsForNewsfeed);
 
-        setVisiblePosts(shuffledPosts.slice(0, NUMBER_OF_POSTS_PER_SCROLL));
-        setLastLoaded(shuffledPosts[1]);
+        setVisiblePosts(allPostsForNewsfeed.slice(0, NUMBER_OF_POSTS_PER_SCROLL));
+        setLastLoaded(allPostsForNewsfeed[1]);
       });
 
-      // if (unshuffledPosts.length) {
-      //   let shuffledPosts = shuffleArray(unshuffledPosts);
-      //   console.log(shuffledPosts);
-      //   setAllPosts(shuffledPosts);
-
-      //   setVisiblePosts(shuffledPosts.slice(0, 2));
-      //   setLastLoadedId(shuffledPosts[1].id);
-      // }
+      return () => unsubscribe();
     }
   }, [currentUser.friends, currentUser.id]);
 

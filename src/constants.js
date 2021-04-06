@@ -7,4 +7,5 @@ export const NOTIFICATION_TYPES = {
     FRIEND_REQUEST: "friendRequest",
     NEW_POST_ON_WALL: "newPost",
     NEW_COMMENT_ON_POST: "newComment",
+    TAGGED_ON_POST: "tagged",
 }
