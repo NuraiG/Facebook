@@ -7,14 +7,14 @@ import HomeRoundedIcon from "@material-ui/icons/HomeRounded";
 import RoomIcon from "@material-ui/icons/Room";
 import CakeIcon from "@material-ui/icons/Cake";
 import WatchLaterIcon from "@material-ui/icons/WatchLater";
-import { grayTheme } from "../customThemes";
+import { grayTheme } from "../../customThemes";
 
 import { makeStyles } from "@material-ui/core/styles";
 
 import { useSelector, useDispatch } from "react-redux";
-import { updateUserProfile } from "./CurrentUser.actions";
+import { updateUserProfile } from "./../CurrentUser.actions";
 
-import { updateUserBirthPlace, updateUserResidence } from "../service";
+import { updateUserBirthPlace, updateUserResidence } from "../../service";
 
 import IntroUpdateDialog from "./IntroUpdateDialog";
 

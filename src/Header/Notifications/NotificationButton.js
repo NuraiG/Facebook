@@ -8,7 +8,7 @@ import styles from "../Header.module.scss";
 import { IconButton, Tooltip } from "@material-ui/core";
 
 import NotificationsRoundedIcon from "@material-ui/icons/NotificationsRounded";
-import { NOTIFICATION_TYPES } from "../../constants";
+import { NOTIFICATION_TYPES } from "../../constants/constants";
 import {
   getAllComments,
   getAllPosts,

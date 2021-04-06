@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { NOTIFICATION_TYPES } from "../../constants";
+import { NOTIFICATION_TYPES } from "../../constants/constants";
 
 import styles from "../PopperComponent/PopperComponent.module.scss";
 

@@ -1,10 +1,10 @@
 import React, { useState, useCallback } from "react";
-import { storage } from "../firebase";
+import { storage } from "../../firebase";
 import {
   updateUserBio,
   editProfileImage,
   editCoverImage,
-} from "../service";
+} from "../../service";
 
 //material ui
 import {
@@ -32,7 +32,7 @@ import {
   updateUserProfilePic,
   updateUserCoverPic,
   updateUserProfile,
-} from "./CurrentUser.actions";
+} from "../CurrentUser.actions";
 
 export default function ProfileHeader({ user }) {
   const currentUser = useSelector((state) => state.currentUser.currentUser);

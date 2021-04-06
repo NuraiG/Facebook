@@ -17,7 +17,7 @@ import RoomIcon from "@material-ui/icons/Room";
 
 import styles from "./IntroUpdateDialog.module.scss";
 
-import { grayButtonTheme, customButtonBlueGreen } from "../customThemes";
+import { grayButtonTheme, customButtonBlueGreen } from "../../customThemes";
 
 export default function IntroUpdateDialog({
   isOpen,

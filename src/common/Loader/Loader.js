@@ -1,6 +1,6 @@
 import React from "react";
 import CircularProgress from "@material-ui/core/CircularProgress";
-import facebook from "../../LoginPage/facebook-loginPage.svg";
+import facebook from "../../LoginPage/Login/facebook-loginPage.svg";
 import { ThemeProvider } from "@material-ui/core";
 import { globalTheme, blueGreenTheme } from "../../customThemes";
 import styles from "./Loader.module.scss";

@@ -6,7 +6,7 @@ import styles from "./Comment.module.scss";
 import { getServerTime, getShortDate } from "../../utils/timeUtils";
 
 import { truncateString } from "../../utils/utils";
-import { MAX_COMMENT_LENGTH } from "../../constants";
+import { MAX_COMMENT_LENGTH } from "../../constants/constants";
 import { likeCommentRequest } from "../../service";
 
 import FbImageLibrary from 'react-fb-image-grid';
