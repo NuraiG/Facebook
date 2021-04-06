@@ -239,7 +239,7 @@ export default function Post({ postObj }) {
                 </Button>
               </Grid>
               <Grid item xs={6}>
-                <a href={`#${postObj.postId}`} className={styles.comment_link}>
+                <a href={`#${postObj.id}`} className={styles.comment_link}>
                   <Button
                     fullWidth
                     startIcon={<ChatBubbleOutlineRoundedIcon />}
