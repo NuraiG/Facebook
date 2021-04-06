@@ -5,7 +5,7 @@
 * React
 * React redux
 * Material-UI
-* Farebase
+* Firebase
 
 ### Main Functionalities:
 * login
