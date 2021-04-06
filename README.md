@@ -1,12 +1,13 @@
-# Final project for IT Talents Season 12 - a working recreation of Facebook.
+# Facebook
+## Final project for IT Talents Season 12 - a working recreation of Facebook.
 
-## Technologies and libraries:
+### Technologies and libraries:
 * React
 * React redux
 * Material-UI
 * Farebase
 
-## Main Functionalities:
+### Main Functionalities:
 * login
 * register
 * logout
