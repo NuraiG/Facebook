@@ -154,10 +154,7 @@ export function removeFromFriends(currentUserId, friendId) {
 }
 
 export function readNotifications(currentUserId) {
-  return database
-  .collection("users")
-  .doc(currentUserId)
-  .update({
+  return database.collection("users").doc(currentUserId).update({
     notificationsLastRead: firebase.firestore.FieldValue.serverTimestamp(),
   });
 }
@@ -327,13 +324,27 @@ export function rejectFriendRequest(requestId) {
   });
 }
 
-export function logout(){
-  return firebase.auth().signOut()
-  .then(() => {
-    console.log("Sign-out successful.");
-  }).catch((error) => {
-    // An error happened.
-    console.log(error.message);
-  });
+export function getActiveFriendRequestsBetweenUsers(
+  currentUserId,
+  otherUserId
+) {
+  return database
+    .collection("friendRequests")
+    .where("from", "==", currentUserId)
+    .where("to", "==", otherUserId)
+    .where("status", "==", "pending")
+    .get();
 }
 
+export function logout() {
+  return firebase
+    .auth()
+    .signOut()
+    .then(() => {
+      console.log("Sign-out successful.");
+    })
+    .catch((error) => {
+      // An error happened.
+      console.log(error.message);
+    });
+}

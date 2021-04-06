@@ -25,7 +25,6 @@ export default function Profile({ userId, hideHeader }) {
     } else {
       let currentId = userId ? userId : id;
       getUserById(currentId).then((user) => {
-        console.log(user);
         setUser({ ...user, id: currentId });
       });
     }

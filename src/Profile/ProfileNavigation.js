@@ -26,7 +26,7 @@ import CreatePost from "../common/CreatePost/CreatePost";
 
 import { Grid , Paper} from "@material-ui/core";
 import PostsFeed from "./ProfilePostsFeed";
-import { sendFriendRequest } from "../service";
+import { getActiveFriendRequestsBetweenUsers, sendFriendRequest } from "../service";
 import { useEffect } from "react";
 
 import styles from "./Profile.module.scss";
@@ -89,6 +89,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function ProfileNavigation({ user }) {
   const currentUser = useSelector((state) => state.currentUser.currentUser);
+  const [friendInviteSent, setFriendInviteSent] = useState(false);
   const classes = useStyles();
   const [value, setValue] = useState(0);
 
@@ -124,6 +125,30 @@ export default function ProfileNavigation({ user }) {
         });
     }
   }, [currentUser.id, user]);
+
+  useEffect(() => {
+    if (currentUser.id && user.id && currentUser.id !== user.id) {
+      getActiveFriendRequestsBetweenUsers(currentUser.id, user.id).then(
+        (res) => {
+          res.forEach(request => {
+            setFriendInviteSent(true);
+            console.log(request.data());
+          })
+        }
+      );
+
+      if (!friendInviteSent) {
+        getActiveFriendRequestsBetweenUsers(user.id, currentUser.id).then(
+          (res) => {
+            res.forEach(request => {
+              setFriendInviteSent(true);
+              console.log(request.data());
+            })
+          }
+        );
+      }
+    }
+  }, [currentUser.id, user.id, friendInviteSent]);
  
 
   return (
@@ -144,7 +169,7 @@ export default function ProfileNavigation({ user }) {
             </Typography>
             <ThemeProvider theme={customButtonBlueGreen}>
               {/* are friends */} {/* and a friend request has not been sent */}
-              {user.id !== currentUser.id  ? (
+              {user.id !== currentUser.id && !currentUser.friends.includes(user.id) && !friendInviteSent ? (
                 <Button
                   color="primary"
                   className={classes.menuButton}
