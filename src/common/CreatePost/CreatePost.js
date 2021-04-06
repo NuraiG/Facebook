@@ -1,5 +1,8 @@
 import React, { useCallback, useState } from "react";
 import { useSelector } from "react-redux";
+import { useTranslation } from "react-i18next";
+import { useDropzone } from "react-dropzone";
+
 import {
   Avatar,
   Button,
@@ -23,8 +26,6 @@ import LocalOfferOutlinedIcon from "@material-ui/icons/LocalOfferOutlined";
 import MoodOutlinedIcon from "@material-ui/icons/MoodOutlined";
 import CreatePostDialog from "./CreatePostDialog";
 
-
-import { useDropzone } from "react-dropzone";
 import { createPost } from "../../service";
 import { storage } from "../../firebase";
 
@@ -39,6 +40,7 @@ export default function CreatePost({ target }) {
   const [showFeelingsModal, setShowFeelingsModal] = useState(false);
   const [isEmojiPickerOpen, setEmojiPickerOpen] = useState(false);
   const [chosenEmoji,setChosenEmoji]=useState(null);
+  const { t } = useTranslation();
 
   const handleDialogOpen = () => {
     setIsDialogOpen(true);
@@ -156,8 +158,8 @@ export default function CreatePost({ target }) {
 
   let placeholder =
     currentUser.id === target.id
-      ? `What's on your mind, ${currentUser.firstName}?`
-      : `Write something to ${target.firstName}...`;
+      ? t("post.placeholderCurrentUser", {firstName: currentUser.firstName})
+      : t("post.placeholderOtherUser", {firstName: currentUser.firstName});
 
   return (
     <ThemeProvider theme={grayTheme}>
@@ -194,7 +196,7 @@ export default function CreatePost({ target }) {
                   />
                 }
               >
-                Photo/Video
+                {t("post.photoBtn")}
               </Button>
             </Grid>
             <Grid item xs={4}>
@@ -207,7 +209,7 @@ export default function CreatePost({ target }) {
                 }
                 onClick={onTag}
               >
-                Tag
+                {t("post.tagBtn")}
               </Button>
             </Grid>
             <Grid item xs={4}>
@@ -218,7 +220,7 @@ export default function CreatePost({ target }) {
                 color="secondary"
                 startIcon={<MoodOutlinedIcon className={classes.yellowBtn} />}
               >
-                Feeling
+                {t("post.feelingBtn")}
               </Button>
             </Grid>
           </Grid>

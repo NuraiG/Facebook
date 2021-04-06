@@ -1,5 +1,6 @@
 import React, {useState, useCallback} from "react";
 import {useSelector} from "react-redux";
+import { useTranslation } from "react-i18next";
 
 // material icons
 import PhotoCameraOutlinedIcon from "@material-ui/icons/PhotoCameraOutlined";
@@ -17,12 +18,12 @@ import {createComment} from "../../service";
 import Picker from 'emoji-picker-react';
 
 export default function EmptyComment({postId, postAuthorId}) {
-
     const currentUser = useSelector((state) => state.currentUser.currentUser);
-
     const [comment, setComment] = useState("");
     const [chosenEmoji, setChosenEmoji] = useState(null);
     const [isEmojiPickerOpen, setEmojiPickerOpen] = useState(false);
+    const [attachedFiles, setAttachedFiles] = useState([]);
+    const { t } = useTranslation();
 
     const addComment = () => {
         if (comment.trim().length) {
@@ -49,9 +50,6 @@ export default function EmptyComment({postId, postAuthorId}) {
     const addSmileToComment = () => {
         setEmojiPickerOpen(true);
     };
-
-
-    let [attachedFiles, setAttachedFiles] = useState([]);
 
     const onDrop = useCallback((newFiles) => {
         newFiles.forEach((file) => {
@@ -96,7 +94,7 @@ export default function EmptyComment({postId, postAuthorId}) {
                     id={postId}
                     value={comment}
                     label="Your comment here"
-                    placeholder="Write a comment..."
+                    placeholder={t("comment.emptyComment")}
                     onChange={
                         (ev) => setComment(ev.target.value)
                     }

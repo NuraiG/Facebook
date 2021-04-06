@@ -1,0 +1,101 @@
+{
+  "comment": {
+    "like": "Like",
+    "unlike": "Unlike",
+    "seeMore": "Вижте повече",
+    "emptyComment": "Напишете коментар..."
+  },
+  "post": {
+    "placeholderCurrentUser": "Какво мислите, {{firstName}}?",
+    "placeholderOtherUser": "Напишете нещо на {{firstName}}...",
+    "photoBtn": "Снимка",
+    "tagBtn": "Отбелязване",
+    "feelingBtn": "Чувство",
+    "postHeaderCreate": "Публикация",
+    "postHeaderEdit": "Редактиране на публикация",
+    "postHeaderFeeling": "Как се чувствате?",
+    "selectFeelingBtn": "Избери чувство",
+    "feeling": " се чувства ",
+    "addToPost": "Добави към поста",
+    "post": "Публикуване",
+    "comments": "{{count}} коментар",
+    "comments_plural": "{{count}} коментара",
+    "like": "Харесване",
+    "comment": "Коментар",
+    "seeMore": "Вижте повече",
+    "delete": "Изтрий публикация",
+    "edit": "Редактирай публикация",
+    "save": "Запази"
+  },
+  "errorPage": {
+    "heading": "This page isn't available",
+    "message": "The link may be broken, or the page may have been removed. Check to see if the link you're trying to open is correct.",
+    "toNewsfeed": "Go to News Feed",
+    "back": "Go Back",
+    "helpCenter": "Visit Help Center"
+  },
+  "friendRequestsPage": {
+    "confirm": "Потвърждаване",
+    "remove": "Премахване"
+  },
+  "header": {
+    "search": "Търсене във Facebook",
+    "home": "Начало",
+    "friends": "Приятели",
+    "create": "Създаване",
+    "messenger": "Messenger",
+    "account": "Акаунт",
+    "logout": "Изход",
+    "languageChange": "Смени езика",
+    "notifications": "Известия",
+    "notificationsEmpty": "Все още нямаш известия",
+    "notificationFriendInvite": " ти изпрати покана за приятелство",
+    "notificationPost": " публикува на стената ти",
+    "notificationComment": " коментира публикацията ти",
+    "notificationTag": " те отбеляза в публикация"
+  },
+  "homePage": {
+    "loading": "Зреждане...",
+    "covidInfo": "COVID-19 Информационен център",
+    "friends": "Приятели"
+  },
+  "loginPage": {
+    "heading": "Connect with friends and the world around you on Facebook.",
+    "errorMsg": "Invalid email or password",
+    "forgottenPass": "Forgot Password?",
+    "signUp": "Sign Up",
+    "signUpHeading": "It’s quick and easy.",
+    "invalidFistName": "The first name must start with capital letter",
+    "invalidLastName": "The last name must start with capital letter",
+    "invalidEmail": "Invalid email",
+    "invalidPass": "Password must contain more than 6 characters",
+    "birthday": "Birthday",
+    "gender": "Gender",
+    "genderF": "Female",
+    "genderM": "Male",
+    "genderC": "Custom"
+  },
+  "profilePage": {
+    "intro": "Представяне",
+    "residence": "Живее в ",
+    "birthPlace": "От ",
+    "bornOn": "Роден на ",
+    "joinedOn": "Присъедини се на ",
+    "editDetails": "Редактиране",
+    "editIntroHeading": "Редактиране на детайли",
+    "disclaimer": "Details that you select will be public and won't be posted to News Feed.",
+    "residenceQuestion": "Къде живееш?",
+    "birthPlaceQuestion": "Къде си роден?",
+    "save": "Запази",
+    "addCover": "Add Cover Photo",
+    "editCover": "Edit Cover Photo",
+    "addBio": "Добавяне на биография",
+    "editBio": "Редактиране на биография",
+    "editBioPlaceholder": "Опишете себе си",
+    "cancel": "Отказ",
+    "addFriendBtn": "Добавяне",
+    "posts": "Публикации",
+    "photos": "Снимки",
+    "friends": "Приятели"
+  }
+}

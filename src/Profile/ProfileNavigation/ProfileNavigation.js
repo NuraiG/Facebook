@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useTranslation } from "react-i18next";
 
 import { makeStyles } from "@material-ui/core/styles";
 
@@ -97,6 +98,8 @@ export default function ProfileNavigation({ user }) {
 
   const [images, setImages] = useState([]);
 
+  const { t } = useTranslation();
+
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
@@ -161,17 +164,17 @@ export default function ProfileNavigation({ user }) {
                 aria-label="simple tabs example"
               >
                 <Tab
-                  label="Posts"
+                  label={t("profilePage.posts")}
                   style={{ fontSize: "14px" }}
                   {...a11yProps(0)}
                 />
                 <Tab
-                  label="Photos"
+                  label={t("profilePage.photos")}
                   style={{ fontSize: "14px" }}
                   {...a11yProps(1)}
                 />
                 {/* <Tab
-                  label="Friends"
+                  label={t("profilePage.friends")}
                   style={{ fontSize: "14px" }}
                   {...a11yProps(2)}
                 /> */}
@@ -188,7 +191,7 @@ export default function ProfileNavigation({ user }) {
                   onClick={onSendFriendRequest}
                   style={{ fontSize: "14px" }}
                 >
-                  Add friend
+                  {t("profilePage.addFriendBtn")}
                 </Button>
               ) : (
                 " "

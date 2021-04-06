@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { useTranslation } from "react-i18next";
 import NotificationsPopupContent from "./NotificationsPopupContent";
 import PopperComponent from "../PopperComponent/PopperComponent";
 
@@ -25,6 +26,7 @@ export default function NotificationButton() {
   const currentUser = useSelector((state) => state.currentUser.currentUser);
   const allUsers = useSelector((state) => state.allUsers.allUsers);
   const [allNotifications, setAllNotifications] = useState([]);
+  const { t } = useTranslation();
 
   const dispatch = useDispatch();
 
@@ -185,7 +187,7 @@ export default function NotificationButton() {
 
   return (
     <>
-      <Tooltip title={<h6>Notifications</h6>} placement="bottom">
+      <Tooltip title={<h6>{t("header.notifications")}</h6>} placement="bottom">
         <IconButton
           color="primary"
           className={`${styles.icon_btn} ${styles.notification_btn}`}

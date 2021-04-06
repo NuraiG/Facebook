@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useTranslation } from "react-i18next";
 import styles from "./Intro.module.scss";
 
 import { Box, Card, ThemeProvider, Button } from "@material-ui/core";
@@ -24,6 +25,8 @@ export default function Intro({ userProfileData }) {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [birthPlaceInput, setBirthPlace] = useState(currentUser.birthPlace);
   const [residenceInput, setResidence] = useState(currentUser.residence);
+
+  const { t } = useTranslation();
 
   const dispatch = useDispatch();
 
@@ -58,26 +61,29 @@ export default function Intro({ userProfileData }) {
     <aside>
       <ThemeProvider theme={grayTheme}>
         <Card color="secondary" className={styles.card}>
-          <h2 className={styles.heading}>Intro</h2>
+          <h2 className={styles.heading}>{t("profilePage.intro")}</h2>
           {userProfileData.residence && (
             <Box className={styles.profile_info}>
               <HomeRoundedIcon fontSize="inherit" />
-              Lives in {userProfileData.residence}
+              {t("profilePage.residence")}
+              {userProfileData.residence}
             </Box>
           )}
           {userProfileData.birthPlace && (
             <Box className={styles.profile_info}>
               <RoomIcon />
-              From {userProfileData.birthPlace}
+              {t("profilePage.birthPlace")}
+              {userProfileData.birthPlace}
             </Box>
           )}
           <Box className={styles.profile_info}>
             <CakeIcon />
-            Born on {userProfileData.birthDate?.toDate().toDateString()}
+            {t("profilePage.bornOn")}
+            {userProfileData.birthDate?.toDate().toDateString()}
           </Box>
           <Box className={styles.profile_info}>
             <WatchLaterIcon />
-            Joined on{" "}
+            {t("profilePage.joinedOn")}
             {userProfileData.registrationDate?.toDate().toDateString()}
           </Box>
           {currentUser.id === userProfileData.id ? (
@@ -90,7 +96,7 @@ export default function Intro({ userProfileData }) {
                 style={{ fontSize: "14px" }}
                 onClick={handleDialogOpen}
               >
-                Edit Details
+                {t("profilePage.editDetails")}
               </Button>
             </Box>
           ) : (

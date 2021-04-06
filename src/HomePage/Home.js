@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import { useTranslation } from "react-i18next";
+
 import Header from "../Header/Header";
 import SideNavigation from "../SideNavigation";
 import CreatePost from "../common/CreatePost/CreatePost";
@@ -17,6 +19,7 @@ export default function Home() {
   const [visiblePosts, setVisiblePosts] = useState([]);
   const [allPosts, setAllPosts] = useState([]);
   const [lastLoaded, setLastLoaded] = useState("");
+  const { t } = useTranslation();
 
   let fetchMoreData = () => {
     let postsToReturn = [];
@@ -72,7 +75,7 @@ export default function Home() {
             dataLength={visiblePosts.length}
             next={fetchMoreData}
             hasMore={allPosts.length > visiblePosts.length}
-            loader={<h4>Loading...</h4>}
+            loader={<h4>{t("homePage.loading")}</h4>}
           >
             {visiblePosts.map((current) => (
               <Post key={current.id} postObj={current} />

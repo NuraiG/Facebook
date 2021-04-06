@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { useTranslation } from "react-i18next";
 import styles from "./SideNavigation.module.scss";
 import { Avatar, Button } from "@material-ui/core";
 import LocalHospitalIcon from "@material-ui/icons/LocalHospital";
@@ -8,6 +9,7 @@ import PeopleAltIcon from "@material-ui/icons/PeopleAlt";
 
 export default function SideNavigation() {
   const currentUser = useSelector((state) => state.currentUser.currentUser);
+  const { t } = useTranslation();
 
   return (
     <aside className={styles.container}>
@@ -31,7 +33,7 @@ export default function SideNavigation() {
           fullWidth
           startIcon={<LocalHospitalIcon className={styles.hospital_icon} />}
         >
-          COVID-19 Information Center
+          {t("homePage.covidInfo")}
         </Button>
       </a>
       <Button
@@ -41,7 +43,7 @@ export default function SideNavigation() {
         component={Link}
         to="/friends"
       >
-        Friends
+        {t("homePage.friends")}
       </Button>
     </aside>
   );

@@ -141,6 +141,21 @@
           margin-right: 10px;
         }
 
+        .language_container {
+          font-size: 16px;
+          text-align: center;
+
+          > h4 {
+            font-size: 16px;
+          }
+
+          > .language_switch {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+          }
+        }
+
         @media (max-width: 700px) {
           .header__info {
             display: none;

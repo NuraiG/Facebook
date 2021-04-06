@@ -1,10 +1,7 @@
 import React, { useState, useCallback } from "react";
+import { useTranslation } from "react-i18next";
 import { storage } from "../../firebase";
-import {
-  updateUserBio,
-  editProfileImage,
-  editCoverImage,
-} from "../../service";
+import { updateUserBio, editProfileImage, editCoverImage } from "../../service";
 
 //material ui
 import {
@@ -39,6 +36,7 @@ export default function ProfileHeader({ user }) {
 
   const [isTextAreaOpen, setTextArea] = useState(false);
   const [bio, setBio] = useState(currentUser.bio);
+  const { t } = useTranslation();
 
   const dispatch = useDispatch();
 
@@ -153,7 +151,9 @@ export default function ProfileHeader({ user }) {
               style={{ fontSize: "14px" }}
               startIcon={<PhotoCameraIcon />}
             >
-              {currentUser.cover_image ? 'Edit Cover Photo' : ' Add Cover Photo' }
+              {currentUser.cover_image
+                ? t("profilePage.editCover")
+                : t("profilePage.addCover")}
             </Button>
           </div>
         )}
@@ -199,7 +199,9 @@ export default function ProfileHeader({ user }) {
                   setTextArea(true);
                 }}
               >
-                {currentUser.bio ? "Edit Bio" : "Add Bio"}
+                {currentUser.bio
+                  ? t("profilePage.editBio")
+                  : t("profilePage.addBio")}
               </span>
             ) : null}
             {isTextAreaOpen ? (
@@ -208,7 +210,7 @@ export default function ProfileHeader({ user }) {
                   <CardActionArea>
                     <CardContent>
                       <InputBase
-                        placeholder="Describe how you are"
+                        placeholder={t("profilePage.editBioPlaceholder")}
                         multiline
                         className={styles.dialog_input}
                         value={bio}
@@ -219,14 +221,16 @@ export default function ProfileHeader({ user }) {
                     </CardContent>
                   </CardActionArea>
                   <CardActions>
-                    <Button onClick={() => setTextArea(false)}>Cancel</Button>
+                    <Button onClick={() => setTextArea(false)}>
+                      {t("profilePage.cancel")}
+                    </Button>
                     <Button
                       onClick={() => {
                         changeBio();
                         setTextArea(false);
                       }}
                     >
-                      Save
+                      {t("profilePage.save")}
                     </Button>
                   </CardActions>
                 </Card>

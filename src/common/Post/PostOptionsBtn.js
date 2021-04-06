@@ -1,5 +1,6 @@
 import React, { useCallback, useState } from "react";
 import { useSelector } from "react-redux";
+import { useTranslation } from "react-i18next";
 import styles from "./Post.module.scss";
 
 import { Button, IconButton, makeStyles, Popper } from "@material-ui/core";
@@ -27,6 +28,7 @@ export default function PostOptionsBtn({ postObj }) {
   const [postValue, setPostValue] = useState(postObj.content);
   const [postFeeling, setPostFeeling] = useState(postObj.feeling);
   const [showFeelingsModal, setShowFeelingsModal] = useState(false);
+  const { t } = useTranslation();
   const currentUser = useSelector((state) => state.currentUser.currentUser);
 
   const handleDialogOpen = () => {
@@ -117,17 +119,21 @@ export default function PostOptionsBtn({ postObj }) {
       >
         <MoreHorizIcon />
       </IconButton>
-      <Popper
-        id={id}
-        open={open}
-        anchorEl={anchorEl}
-      >
+      <Popper id={id} open={open} anchorEl={anchorEl}>
         <div className={`${classes.paper} ${styles.post_actions_popper}`}>
-          <Button fullWidth onClick={onDelete} className={styles.post_actions_btn}>
-            Delete post
+          <Button
+            fullWidth
+            onClick={onDelete}
+            className={styles.post_actions_btn}
+          >
+            <h5>{t("post.delete")}</h5>
           </Button>
-          <Button fullWidth onClick={handleDialogOpen} className={styles.post_actions_btn}>
-            Edit post
+          <Button
+            fullWidth
+            onClick={handleDialogOpen}
+            className={styles.post_actions_btn}
+          >
+            <h5>{t("post.edit")}</h5>
           </Button>
         </div>
       </Popper>

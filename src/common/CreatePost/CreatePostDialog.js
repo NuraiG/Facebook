@@ -1,5 +1,6 @@
 import React from "react";
 import { useSelector } from "react-redux";
+import { useTranslation } from "react-i18next";
 import { MentionsInput, Mention } from "react-mentions";
 import {
   Avatar,
@@ -20,10 +21,9 @@ import PhotoOutlinedIcon from "@material-ui/icons/PhotoOutlined";
 import LocalOfferOutlinedIcon from "@material-ui/icons/LocalOfferOutlined";
 import MoodOutlinedIcon from "@material-ui/icons/MoodOutlined";
 import ArrowBackRoundedIcon from "@material-ui/icons/ArrowBackRounded";
-import SentimentSatisfiedOutlinedIcon from '@material-ui/icons/SentimentSatisfiedOutlined';
+import SentimentSatisfiedOutlinedIcon from "@material-ui/icons/SentimentSatisfiedOutlined";
 
-import Picker from 'emoji-picker-react';
-
+import Picker from "emoji-picker-react";
 
 import {
   grayButtonTheme,
@@ -58,6 +58,7 @@ export default function CreatePostDialog({
 }) {
   const currentUser = useSelector((state) => state.currentUser.currentUser);
   const allUsers = useSelector((state) => state.allUsers.allUsers);
+  const { t } = useTranslation();
 
   const {
     getRootProps: getRootPropsNoClick,
@@ -122,10 +123,11 @@ export default function CreatePostDialog({
       >
         <DialogTitle id="form-dialog-title" className={styles.dialog_title}>
           {showFeelingsModal
-            ? "How are you feeling?"
+            // ? "How are you feeling?"
+            ? t("post.postHeaderFeeling")
             : isPostBeingEdited
-            ? "Edit Post"
-            : "Create Post"}
+            ? t("post.postHeaderEdit")
+            : t("post.postHeaderCreate")}
           <ThemeProvider theme={grayButtonTheme}>
             <IconButton
               color="primary"
@@ -146,7 +148,7 @@ export default function CreatePostDialog({
                 <input
                   className={styles.feelings_input}
                   type="text"
-                  placeholder="How are you feeling?"
+                  placeholder={t("post.postHeaderFeeling")}
                   value={postFeeling}
                   onInput={(ev) => setPostFeeling(ev.target.value)}
                 />
@@ -161,7 +163,7 @@ export default function CreatePostDialog({
                   fullWidth
                   disabled={postFeeling.trim().length > 0 ? false : true}
                 >
-                  Select Feeling
+                  {t("post.selectFeelingBtn")}
                 </Button>
               </ThemeProvider>
             </DialogContent>
@@ -171,7 +173,7 @@ export default function CreatePostDialog({
                 <Avatar src={currentUser.profile_image} />
                 <h3>
                   {currentUser.firstName} {currentUser.lastName}
-                  {postFeeling.length > 0 ? " is feeling " + postFeeling : ""}
+                  {postFeeling.length > 0 ? t("post.feeling") + postFeeling : ""}
                 </h3>
               </Box>
               <MentionsInput
@@ -210,18 +212,25 @@ export default function CreatePostDialog({
               <div {...getRootPropsNoClick()} className={styles.drag_file}>
                 <input {...getInputPropsNoClick()} />
               </div>
-              {
-                    isEmojiPickerOpen ? <Picker onEmojiClick={onEmojiClick}/> : null
-                } 
+              {isEmojiPickerOpen ? (
+                <Picker onEmojiClick={onEmojiClick} />
+              ) : null}
               <Box className={styles.emoji_button}>
-                  <Tooltip title={<h6>Emoji</h6>} placement="top">
-                    <IconButton onClick={()=>{setEmojiPickerOpen(!isEmojiPickerOpen)}}>
-                      <SentimentSatisfiedOutlinedIcon  fullwidt= "large" className={classes.grayBtn} />
-                    </IconButton>
-                   </Tooltip>
-                 </Box>
+                <Tooltip title={<h6>Emoji</h6>} placement="top">
+                  <IconButton
+                    onClick={() => {
+                      setEmojiPickerOpen(!isEmojiPickerOpen);
+                    }}
+                  >
+                    <SentimentSatisfiedOutlinedIcon
+                      fullwidt="large"
+                      className={classes.grayBtn}
+                    />
+                  </IconButton>
+                </Tooltip>
+              </Box>
               <Box className={styles.post_actions}>
-                <span>Add to Your Post</span>
+                <span>{t("post.addToPost")}</span>
                 <Box className={styles.action_buttons}>
                   <input {...getInputProps()}></input>
                   <Tooltip title={<h6>Photo/Video</h6>} placement="top">
@@ -229,12 +238,12 @@ export default function CreatePostDialog({
                       <PhotoOutlinedIcon className={classes.greenBtn} />
                     </IconButton>
                   </Tooltip>
-                  <Tooltip title={<h6>Tag Friends</h6>} placement="top">
+                  <Tooltip title={<h6>{t("post.tagBtn")}</h6>} placement="top">
                     <IconButton onClick={onTag}>
                       <LocalOfferOutlinedIcon className={classes.blueBtn} />
                     </IconButton>
                   </Tooltip>
-                  <Tooltip title={<h6>Feeling</h6>} placement="top">
+                  <Tooltip title={<h6>{t("post.feelingBtn")}</h6>} placement="top">
                     <IconButton onClick={() => setShowFeelingsModal(true)}>
                       <MoodOutlinedIcon className={classes.yellowBtn} />
                     </IconButton>
@@ -261,7 +270,7 @@ export default function CreatePostDialog({
                     : true
                 }
               >
-                {isPostBeingEdited ? "Save" : "Post"}
+                {isPostBeingEdited ? t("post.save") : t("post.post")}
               </Button>
             </DialogActions>
           </ThemeProvider>

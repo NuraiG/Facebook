@@ -1,6 +1,8 @@
 import React, { useCallback, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import i18n from "../localization/i18n";
+import { useTranslation } from "react-i18next";
 
 import AvatarComponent from "../common/SmallAvatar/AvatarComponent";
 import CreatePostDialog from "../common/CreatePost/CreatePostDialog";
@@ -20,6 +22,7 @@ import {
   Tooltip,
   Card,
   Button,
+  Switch,
 } from "@material-ui/core";
 
 // Icons
@@ -42,7 +45,9 @@ export default function HeaderRight() {
   const [showFeelingsModal, setShowFeelingsModal] = useState(false);
   const [isEmojiPickerOpen, setEmojiPickerOpen] = useState(false);
   const [chosenEmoji,setChosenEmoji]=useState(null);
+  const [isInEnglish, setIsInEnglish] = useState(true);
   const dispatch = useDispatch();
+  const { t } = useTranslation();
 
   const handleDialogOpen = () => {
     setIsDialogOpen(true);
@@ -134,12 +139,6 @@ export default function HeaderRight() {
   };
 
   const handleCloseLogout = (ev) => {
-    // if (
-    // anchorRef.current &&
-    // anchorRef.current.contains(ev.target)
-    // ) {
-    // return;
-    // }
     setOpenAccount(false);
   };
 
@@ -153,6 +152,12 @@ export default function HeaderRight() {
         console.log(error.message);
       });
   };
+
+  const toggleChecked = () => {
+    let currentLanguage = isInEnglish ? "bg" : "en";
+    setIsInEnglish(!isInEnglish);
+    i18n.changeLanguage(currentLanguage);
+  };
   return (
     <div className={styles.header__right}>
       <ThemeProvider theme={grayButtonTheme}>
@@ -160,7 +165,7 @@ export default function HeaderRight() {
           className={`${styles.header__info}`}
           showFullName={false}
         />
-        <Tooltip title={<h6>Create</h6>} placement="bottom">
+        <Tooltip title={<h6>{t("header.create")}</h6>} placement="bottom">
           <IconButton
             color="primary"
             className={`${styles.icon_btn}`}
@@ -172,7 +177,9 @@ export default function HeaderRight() {
         <CreatePostDialog
           state={isDialogOpen}
           onClose={handleDialogClose}
-          placeholder={`What's on your mind, ${currentUser.firstName}?`}
+          placeholder={t("post.placeholderCurrentUser", {
+            firstName: currentUser.firstName,
+          })}
           text={postValue}
           onInput={setPostValue}
           onSubmit={onSubmit}
@@ -190,7 +197,7 @@ export default function HeaderRight() {
           setEmojiPickerOpen = {setEmojiPickerOpen}
           onEmojiClick={onEmojiClick}
         />
-        <Tooltip title={<h6>Messenger</h6>} placement="bottom">
+        <Tooltip title={<h6>{t("header.messenger")}</h6>} placement="bottom">
           <IconButton
             color="primary"
             className={`${styles.icon_btn}`}
@@ -203,7 +210,7 @@ export default function HeaderRight() {
           </IconButton>
         </Tooltip>
         <NotificationButton />
-        <Tooltip title={<h6>Account</h6>} placement="bottom">
+        <Tooltip title={<h6>{t("header.account")}</h6>} placement="bottom">
           <IconButton
             color="primary"
             className={`${styles.arrow_btn}`}
@@ -228,9 +235,17 @@ export default function HeaderRight() {
                 style={{ fontSize: "14px" }}
                 startIcon={<ExitToAppRoundedIcon />}
               >
-                Log Out
+                {t("header.logout")}
               </Button>
             </Link>
+          </Card>
+          <Card className={styles.language_container}>
+            <h4>{t("header.languageChange")}</h4>
+            <div className={styles.language_switch}>
+              <div>en</div>
+              <Switch checked={!isInEnglish} onChange={toggleChecked} />
+              <div>bg</div>
+            </div>
           </Card>
         </PopperComponent>
       </ThemeProvider>

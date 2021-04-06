@@ -1,6 +1,7 @@
 import { useState, useCallback } from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import styles from "./Comment.module.scss";
 
 import { getServerTime, getShortDate } from "../../utils/timeUtils";
@@ -17,6 +18,7 @@ import ThumbUpAltIcon from "@material-ui/icons/ThumbUpAlt";
 
 export default function Comment({ commentObj }) {
   const currentUser = useSelector((state) => state.currentUser.currentUser);
+  const { t } = useTranslation();
 
   // get the time for the post, formatted based on how long ago it was made
   let timeToDisplay = getShortDate(
@@ -72,7 +74,7 @@ export default function Comment({ commentObj }) {
                   setWholeContentIsShown(true);
                 }}
               >
-                See More
+                {t("comment.seeMore")}
               </span>
             )}
             { commentObj.attachedImages ?  <FbImageLibrary images={commentObj.attachedImages} countFrom={2}/> : ""}
@@ -87,9 +89,9 @@ export default function Comment({ commentObj }) {
           ) : null}{" "}
         </div>
         {isLiked ? (
-          <button onClick={() => addLikes()}><h6>Unlike</h6></button>
+          <button onClick={() => addLikes()}><h6>{t("comment.unlike")}</h6></button>
         ) : (
-          <button onClick={() => addLikes()}><h6>Like</h6></button>
+          <button onClick={() => addLikes()}><h6>{t("comment.like")}</h6></button>
         )}{" "}
         <Tooltip title={<h6>{fullDatePrettified}</h6>} placement="bottom">
           <span className={styles.timestamp}>{timeToDisplay}</span>
