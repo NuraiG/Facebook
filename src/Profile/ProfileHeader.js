@@ -208,7 +208,7 @@ export default function ProfileHeader({ user }) {
                   <CardActionArea>
                     <CardContent>
                       <InputBase
-                        placeholder="Describe how your are"
+                        placeholder="Describe how you are"
                         multiline
                         className={styles.dialog_input}
                         value={bio}
