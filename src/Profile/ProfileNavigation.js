@@ -27,7 +27,7 @@ import CreatePost from "../common/CreatePost/CreatePost";
 
 import { Grid , Paper} from "@material-ui/core";
 import PostsFeed from "./ProfilePostsFeed";
-import { sendFriendRequest , getMyFriendRequests, getMyFriendRequestsFrom } from "../service";
+import { sendFriendRequest , getMyFriendRequests} from "../service";
 import { useEffect } from "react";
 
 import styles from "./Profile.module.scss";
@@ -97,33 +97,33 @@ export default function ProfileNavigation({ user }) {
   const [myFriendRequests,setMyFriendsReguestList]=useState([]);
  
 
-  useEffect(() => {
-    if (currentUser.id) {
-      // get friend requests to current user
-      getMyFriendRequests(currentUser.id).onSnapshot((friend) => {
-        let dbFriendRequests = [];
-        friend.forEach((doc) => {
-          dbFriendRequests.push(doc.data().from); 
-        });
-        setMyFriendsReguestList([...dbFriendRequests]);
-      });
-    }
-  }, [currentUser.id]);
+  // useEffect(() => {
+  //   if (currentUser.id) {
+  //     // get friend requests to current user
+  //     getMyFriendRequests(currentUser.id).onSnapshot((friend) => {
+  //       let dbFriendRequests = [];
+  //       friend.forEach((doc) => {
+  //         dbFriendRequests.push(doc.data().from); 
+  //       });
+  //       setMyFriendsReguestList([...dbFriendRequests]);
+  //     });
+  //   }
+  // }, [currentUser.id]);
 
-  useEffect(() => {
-    if (currentUser.id) {
-      // get friend requests from current user
-      getMyFriendRequestsFrom(currentUser.id).onSnapshot((friend) => {
-        let dbFriendRequests = [];
-        friend.forEach((doc) => {
-          dbFriendRequests.push(doc.data().to);
-        });
-        setMyFriendsReguestList([...dbFriendRequests]);
-      });
-    }
-  }, [currentUser.id]);
+  // useEffect(() => {
+  //   if (currentUser.id) {
+  //     // get friend requests from current user
+  //     getMyFriendRequestsFrom(currentUser.id).onSnapshot((friend) => {
+  //       let dbFriendRequests = [];
+  //       friend.forEach((doc) => {
+  //         dbFriendRequests.push(doc.data().to);
+  //       });
+  //       setMyFriendsReguestList([...dbFriendRequests]);
+  //     });
+  //   }
+  // }, [currentUser.id]);
 
-  console.log('Request',myFriendRequests);
+  // console.log('Request',myFriendRequests);
 
 
   const handleChange = (event, newValue) => {
@@ -173,7 +173,7 @@ export default function ProfileNavigation({ user }) {
             </Typography>
             <ThemeProvider theme={customButtonBlueGreen}>
               {/* are friends */} {/* and a friend request has not been sent */}
-              {((user.id !== currentUser.id || currentUser.friends.includes(user.id)) && !myFriendRequests.includes(user.id)) ? (
+              {(user.id !== currentUser.id || currentUser.friends.includes(user.id)) ? (
                 <Button
                   color="primary"
                   className={classes.menuButton}
@@ -183,7 +183,7 @@ export default function ProfileNavigation({ user }) {
                 >
                   Add friend
                 </Button>
-              ) : "" }
+              ) : " " }
             </ThemeProvider>
           </Toolbar>
         </AppBar>

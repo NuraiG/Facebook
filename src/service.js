@@ -325,11 +325,11 @@ export function logout(){
     console.log(error.message);
   });
 }
-export function getMyFriendRequestsFrom(currentUserId) {
-  return database
-    .collection("friendRequests")
-    .where("from", "==", currentUserId)
-    .where("status", "==", "pending")
-    .orderBy("timestamp", "desc");
-}
+// export function getMyFriendRequestsFrom(currentUserId) {
+//   return database
+//     .collection("friendRequests")
+//     .where("from", "==", currentUserId)
+//     .where("status", "==", "pending")
+//     .orderBy("timestamp", "desc");
+// }
 
