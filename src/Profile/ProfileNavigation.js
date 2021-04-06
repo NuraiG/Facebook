@@ -18,7 +18,6 @@ import {
 import { useSelector } from "react-redux";
 
 import PersonAddIcon from "@material-ui/icons/PersonAdd";
-import HourglassEmptyIcon from '@material-ui/icons/HourglassEmpty';
 
 import { grayTheme, customButtonBlueGreen } from "../customThemes";
 
@@ -27,7 +26,7 @@ import CreatePost from "../common/CreatePost/CreatePost";
 
 import { Grid , Paper} from "@material-ui/core";
 import PostsFeed from "./ProfilePostsFeed";
-import { sendFriendRequest , getMyFriendRequests} from "../service";
+import { sendFriendRequest } from "../service";
 import { useEffect } from "react";
 
 import styles from "./Profile.module.scss";
@@ -94,36 +93,6 @@ export default function ProfileNavigation({ user }) {
   const [value, setValue] = useState(0);
 
   const [images, setImages]= useState([]);
-  const [myFriendRequests,setMyFriendsReguestList]=useState([]);
- 
-
-  // useEffect(() => {
-  //   if (currentUser.id) {
-  //     // get friend requests to current user
-  //     getMyFriendRequests(currentUser.id).onSnapshot((friend) => {
-  //       let dbFriendRequests = [];
-  //       friend.forEach((doc) => {
-  //         dbFriendRequests.push(doc.data().from); 
-  //       });
-  //       setMyFriendsReguestList([...dbFriendRequests]);
-  //     });
-  //   }
-  // }, [currentUser.id]);
-
-  // useEffect(() => {
-  //   if (currentUser.id) {
-  //     // get friend requests from current user
-  //     getMyFriendRequestsFrom(currentUser.id).onSnapshot((friend) => {
-  //       let dbFriendRequests = [];
-  //       friend.forEach((doc) => {
-  //         dbFriendRequests.push(doc.data().to);
-  //       });
-  //       setMyFriendsReguestList([...dbFriendRequests]);
-  //     });
-  //   }
-  // }, [currentUser.id]);
-
-  // console.log('Request',myFriendRequests);
 
 
   const handleChange = (event, newValue) => {
