@@ -79,7 +79,7 @@ export default function Login() {
                 <ThemeProvider theme={customButtonBlueGreen}>
                     <Button color="primary" variant="contained" size="large" style={{ fontSize: '14px' }}  onClick={onSubmit}>Log In</Button>
                 </ThemeProvider>
-                <Link to='/forgottenPassword'>Forgot Password?</Link>
+                <Link to='/login'>Forgot Password?</Link>
                 <Divider flexItem/>
                 <ThemeProvider theme={customButtonBlueGreen}>
                     <Link to='/signUp'

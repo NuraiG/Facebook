@@ -23,6 +23,7 @@ import LocalOfferOutlinedIcon from "@material-ui/icons/LocalOfferOutlined";
 import MoodOutlinedIcon from "@material-ui/icons/MoodOutlined";
 import CreatePostDialog from "./CreatePostDialog";
 
+
 import { useDropzone } from "react-dropzone";
 import { createPost } from "../../service";
 import { storage } from "../../firebase";
@@ -36,6 +37,8 @@ export default function CreatePost({ target }) {
   const [postFeeling, setPostFeeling] = useState("");
   const [postTaggedUsers, setPostTaggedUsers] = useState([]);
   const [showFeelingsModal, setShowFeelingsModal] = useState(false);
+  const [isEmojiPickerOpen, setEmojiPickerOpen] = useState(false);
+  const [chosenEmoji,setChosenEmoji]=useState(null);
 
   const handleDialogOpen = () => {
     setIsDialogOpen(true);
@@ -51,6 +54,12 @@ export default function CreatePost({ target }) {
     copy.splice(index, 1);
     setAttachedFiles(copy);
   }
+  const onEmojiClick = (event, emojiObject) => {
+    let add;
+    setChosenEmoji(emojiObject.emoji);
+    chosenEmoji ? add = postValue + " " + chosenEmoji + " " : add = postValue;
+    setPostValue(add);
+};
 
   const onDrop = useCallback(
     (newFiles) => {
@@ -232,6 +241,9 @@ export default function CreatePost({ target }) {
         setPostFeeling={setPostFeeling}
         postTaggedUsers={postTaggedUsers}
         setPostTaggedUsers={setPostTaggedUsers}
+        isEmojiPickerOpen={isEmojiPickerOpen}
+        setEmojiPickerOpen = {setEmojiPickerOpen}
+        onEmojiClick={onEmojiClick}
       />
     </ThemeProvider>
   );
