@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useTranslation } from "react-i18next";
 import HeaderNavOption from "./HeaderNavOption";
 
 // styles
@@ -14,10 +15,12 @@ import PeopleAltOutlinedIcon from "@material-ui/icons/PeopleAltOutlined";
 import PeopleAltIcon from "@material-ui/icons/PeopleAlt";
 
 export default function HeaderMiddle({activeTab}) {
+  const { t } = useTranslation();
+
   let [allHeaderOptions, setAllHeaderOptions] = useState([
     {
       key: "Home",
-      tooltip: <h6>Home</h6>,
+      tooltip: <h6>{t("header.home")}</h6>,
       selected: activeTab === "home",
       outline: <HomeOutlinedIcon color="secondary" fontSize="large" />,
       filled: <HomeRoundedIcon fontSize="large" />,
@@ -25,7 +28,7 @@ export default function HeaderMiddle({activeTab}) {
     },
     {
       key: "Friends",
-      tooltip: <h6>Friends</h6>,
+      tooltip: <h6>{t("header.friends")}</h6>,
       selected: activeTab === "friends",
       outline: <PeopleAltOutlinedIcon color="secondary" fontSize="large" />,
       filled: <PeopleAltIcon fontSize="large" />,

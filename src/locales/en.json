@@ -1,0 +1,96 @@
+{
+  "comment": {
+    "like": "Like",
+    "unlike": "Unlike",
+    "seeMore": "See More",
+    "emptyComment": "Write a comment..."
+  },
+  "post": {
+    "placeholderCurrentUser": "What's on your mind, {{firstName}}?",
+    "placeholderOtherUser": "Write something to {{firstName}}...",
+    "photoBtn": "Photo/Video",
+    "tagBtn": "Tag",
+    "feelingBtn": "Feeling",
+    "postHeaderCreate": "Create Post",
+    "postHeaderEdit": "Edit Post",
+    "postHeaderFeeling": "How are you feeling?",
+    "selectFeelingBtn": "Select Feeling",
+    "feeling": " is feeling ",
+    "addToPost": "Add to Your Post",
+    "comments": "Comments",
+    "like": "Like",
+    "comment": "Comment",
+    "seeMore": "See More",
+    "delete": "Delete post",
+    "edit": "Edit post"
+  },
+  "errorPage": {
+    "heading": "This page isn't available",
+    "message": "The link may be broken, or the page may have been removed. Check to see if the link you're trying to open is correct.",
+    "toNewsfeed": "Go to News Feed",
+    "back": "Go Back",
+    "helpCenter": "Visit Help Center"
+  },
+  "friendRequestsPage": {
+    "confirm": "Confirm",
+    "remove": "Remove"
+  },
+  "header": {
+    "search": "Search Facebook",
+    "home": "Home",
+    "friends": "Friends",
+    "create": "Create",
+    "messenger": "Messenger",
+    "account": "Account",
+    "logout": "Log Out",
+    "notifications": "Notifications",
+    "notificationsEmpty": "You have no notifications yet",
+    "notificationFriendInvite": " sent you a friend request",
+    "notificationPost": " posted on your wall",
+    "notificationComment": " commented on your post",
+    "notificationTag": " tagged you in a post"
+  },
+  "homePage": {
+    "loading": "Loading...",
+    "covidInfo": "COVID-19 Information Center",
+    "friends": "Friends"
+  },
+  "loginPage": {
+    "heading": "Connect with friends and the world around you on Facebook.",
+    "errorMsg": "Invalid email or password",
+    "forgottenPass": "Forgot Password?",
+    "signUp": "Sign Up",
+    "signUpHeading": "It’s quick and easy.",
+    "invalidFistName": "The first name must start with capital letter",
+    "invalidLastName": "The last name must start with capital letter",
+    "invalidEmail": "Invalid email",
+    "invalidPass": "Password must contain more than 6 characters",
+    "birthday": "Birthday",
+    "gender": "Gender",
+    "genderF": "Female",
+    "genderM": "Male",
+    "genderC": "Custom"
+  },
+  "profilePage": {
+    "residence": "Lives in ",
+    "birthPlace": "From ",
+    "bornOn": "Born on ",
+    "joinedOn": "Joined on ",
+    "editDetails": "Edit Details",
+    "editIntroHeading": "Customise your Intro",
+    "disclaimer": "Details that you select will be public and won't be posted to News Feed.",
+    "residenceQuestion": "Where do you live?",
+    "birthPlaceQuestion": "Where are you from?",
+    "save": "Save",
+    "addCover": "Add Cover Photo",
+    "editCover": "Edit Cover Photo",
+    "addBio": "Add Bio",
+    "editBio": "Edit Bio",
+    "editBioPlaceholder": "Describe how you are",
+    "cancel": "Cancel",
+    "addFriendBtn": "Add friend",
+    "posts": "Posts",
+    "photos": "Photos",
+    "friends": "Friends"
+  }
+}

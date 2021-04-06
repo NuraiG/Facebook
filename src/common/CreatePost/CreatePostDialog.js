@@ -20,10 +20,9 @@ import PhotoOutlinedIcon from "@material-ui/icons/PhotoOutlined";
 import LocalOfferOutlinedIcon from "@material-ui/icons/LocalOfferOutlined";
 import MoodOutlinedIcon from "@material-ui/icons/MoodOutlined";
 import ArrowBackRoundedIcon from "@material-ui/icons/ArrowBackRounded";
-import SentimentSatisfiedOutlinedIcon from '@material-ui/icons/SentimentSatisfiedOutlined';
+import SentimentSatisfiedOutlinedIcon from "@material-ui/icons/SentimentSatisfiedOutlined";
 
-import Picker from 'emoji-picker-react';
-
+import Picker from "emoji-picker-react";
 
 import {
   grayButtonTheme,
@@ -210,16 +209,23 @@ export default function CreatePostDialog({
               <div {...getRootPropsNoClick()} className={styles.drag_file}>
                 <input {...getInputPropsNoClick()} />
               </div>
-              {
-                    isEmojiPickerOpen ? <Picker onEmojiClick={onEmojiClick}/> : null
-                } 
+              {isEmojiPickerOpen ? (
+                <Picker onEmojiClick={onEmojiClick} />
+              ) : null}
               <Box className={styles.emoji_button}>
-                  <Tooltip title={<h6>Emoji</h6>} placement="top">
-                    <IconButton onClick={()=>{setEmojiPickerOpen(!isEmojiPickerOpen)}}>
-                      <SentimentSatisfiedOutlinedIcon  fullwidt= "large" className={classes.grayBtn} />
-                    </IconButton>
-                   </Tooltip>
-                 </Box>
+                <Tooltip title={<h6>Emoji</h6>} placement="top">
+                  <IconButton
+                    onClick={() => {
+                      setEmojiPickerOpen(!isEmojiPickerOpen);
+                    }}
+                  >
+                    <SentimentSatisfiedOutlinedIcon
+                      fullwidt="large"
+                      className={classes.grayBtn}
+                    />
+                  </IconButton>
+                </Tooltip>
+              </Box>
               <Box className={styles.post_actions}>
                 <span>Add to Your Post</span>
                 <Box className={styles.action_buttons}>

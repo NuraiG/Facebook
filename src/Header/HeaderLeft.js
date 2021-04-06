@@ -1,6 +1,7 @@
 import React, { useMemo, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import logo from "./logo.png";
 
 // styles
@@ -37,6 +38,7 @@ export default function HeaderLeft() {
   const [open, setOpen] = useState(false);
   const anchorRef = useRef(null);
   const allUsers = useSelector((state) => state.allUsers.allUsers);
+  const { t } = useTranslation();
 
   let onSelect = () => {
     setBtnSelected(!btnSelected);
@@ -83,7 +85,8 @@ export default function HeaderLeft() {
           aria-controls={open ? "menu-list-grow" : undefined}
           aria-haspopup="true"
           onClick={handleOpen}
-          placeholder="Search Facebook"
+          // placeholder="Search Facebook"
+          placeholder={t("header.search")}
           onInput={onInput}
         />
         <SearchIcon />

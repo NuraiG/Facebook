@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import { NOTIFICATION_TYPES } from "../../constants";
 
 import styles from "../PopperComponent/PopperComponent.module.scss";
@@ -12,6 +13,8 @@ import {
 } from "../../utils/timeUtils";
 
 export default function NotificationsPopupContent({ allNotifications }) {
+  const { t } = useTranslation();
+
   return (
     <div>
       {allNotifications.length > 0 ? (
@@ -31,13 +34,13 @@ export default function NotificationsPopupContent({ allNotifications }) {
                     {notification.fromUser.lastName}
                   </Link>
                   {notification.type === NOTIFICATION_TYPES.FRIEND_REQUEST
-                    ? " sent you a friend request"
+                    ? t("header.notificationFriendInvite")
                     : notification.type === NOTIFICATION_TYPES.NEW_POST_ON_WALL
-                    ? " posted on your wall"
+                    ? t("header.notificationPost")
                     : notification.type ===
                       NOTIFICATION_TYPES.NEW_COMMENT_ON_POST
-                    ? " commented on your post"
-                    : " tagged you in a post"}
+                    ? t("header.notificationComment")
+                    : t("header.notificationTag")}
                 </span>
               </div>
               <div className={styles.timestamp}>
