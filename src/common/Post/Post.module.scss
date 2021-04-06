@@ -147,7 +147,9 @@
 .post_actions_popper {
   button.post_actions_btn {
     text-transform: none;
-    font-weight: 700;
+    h5 {
+      font-weight: 700;
+    }
   }
 }
 

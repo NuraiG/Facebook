@@ -126,14 +126,14 @@ export default function PostOptionsBtn({ postObj }) {
             onClick={onDelete}
             className={styles.post_actions_btn}
           >
-            {t("post.delete")}
+            <h5>{t("post.delete")}</h5>
           </Button>
           <Button
             fullWidth
             onClick={handleDialogOpen}
             className={styles.post_actions_btn}
           >
-            {t("post.edit")}
+            <h5>{t("post.edit")}</h5>
           </Button>
         </div>
       </Popper>
