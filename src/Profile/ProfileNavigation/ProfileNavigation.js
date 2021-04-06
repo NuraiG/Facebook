@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useTranslation } from "react-i18next";
 
 import { makeStyles } from "@material-ui/core/styles";
 
@@ -19,22 +20,22 @@ import { useSelector } from "react-redux";
 
 import PersonAddIcon from "@material-ui/icons/PersonAdd";
 
-import { grayTheme, customButtonBlueGreen } from "../customThemes";
+import { grayTheme, customButtonBlueGreen } from "../../customThemes";
 
-import Intro from "./Intro";
-import CreatePost from "../common/CreatePost/CreatePost";
+import Intro from "../Intro/Intro";
+import CreatePost from "../../common/CreatePost/CreatePost";
 
 import { Grid, Paper } from "@material-ui/core";
-import PostsFeed from "./ProfilePostsFeed";
+import PostsFeed from "../ProfilePostsFeed";
 import {
   getActiveFriendRequestsBetweenUsers,
   sendFriendRequest,
-} from "../service";
+} from "../../service";
 import { useEffect } from "react";
 
-import styles from "./Profile.module.scss";
+import styles from "../Profile.module.scss";
 
-import { getUserById } from "../service";
+import { getUserById } from "../../service";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -96,6 +97,8 @@ export default function ProfileNavigation({ user }) {
   const [value, setValue] = useState(0);
 
   const [images, setImages] = useState([]);
+
+  const { t } = useTranslation();
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -161,20 +164,20 @@ export default function ProfileNavigation({ user }) {
                 aria-label="simple tabs example"
               >
                 <Tab
-                  label="Posts"
+                  label={t("profilePage.posts")}
                   style={{ fontSize: "14px" }}
                   {...a11yProps(0)}
                 />
                 <Tab
-                  label="Photos"
+                  label={t("profilePage.photos")}
                   style={{ fontSize: "14px" }}
                   {...a11yProps(1)}
                 />
-                <Tab
-                  label="Friends"
+                {/* <Tab
+                  label={t("profilePage.friends")}
                   style={{ fontSize: "14px" }}
                   {...a11yProps(2)}
-                />
+                /> */}
               </Tabs>
             </Typography>
             <ThemeProvider theme={customButtonBlueGreen}>
@@ -188,7 +191,7 @@ export default function ProfileNavigation({ user }) {
                   onClick={onSendFriendRequest}
                   style={{ fontSize: "14px" }}
                 >
-                  Add friend
+                  {t("profilePage.addFriendBtn")}
                 </Button>
               ) : (
                 " "
@@ -229,9 +232,9 @@ export default function ProfileNavigation({ user }) {
             </Grid>
           </React.Fragment>
         </TabPanel>
-        <TabPanel value={value} index={2}>
+        {/* <TabPanel value={value} index={2}>
           Friends
-        </TabPanel>
+        </TabPanel> */}
       </div>
     </ThemeProvider>
   );

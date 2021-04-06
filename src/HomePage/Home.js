@@ -11,7 +11,7 @@ import styles from "./Home.module.scss";
 import { Grid } from "@material-ui/core";
 import { getAllPosts } from "../service";
 import InfiniteScroll from "react-infinite-scroll-component";
-import { NUMBER_OF_POSTS_PER_SCROLL } from "../constants";
+import { NUMBER_OF_POSTS_PER_SCROLL } from "../constants/constants";
 
 export default function Home() {
   const currentUser = useSelector((state) => state.currentUser.currentUser);

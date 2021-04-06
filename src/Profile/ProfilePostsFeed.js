@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import Post from "../common/Post/Post";
-import { NUMBER_OF_POSTS_PER_SCROLL } from "../constants";
+import { NUMBER_OF_POSTS_PER_SCROLL } from "../constants/constants";
 import { getAllPostsForUser } from "../service";
 import { compareObjByDBTimestamp } from "../utils/timeUtils";
 
