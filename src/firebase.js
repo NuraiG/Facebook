@@ -10,6 +10,17 @@ const firebaseConfig = {
   measurementId: "G-43C3G6MNHR",
 };
 
+// backup config
+// const firebaseConfig = {
+//   apiKey: "AIzaSyDsNRNnjC1QXKrNk81LFpQqKF4WsIBktAw",
+//   authDomain: "facebook-clone-backup.firebaseapp.com",
+//   projectId: "facebook-clone-backup",
+//   storageBucket: "facebook-clone-backup.appspot.com",
+//   messagingSenderId: "1046385282729",
+//   appId: "1:1046385282729:web:3bdd80122c46dfc41be3b8",
+//   measurementId: "G-Y0ZDZGP3YB"
+// };
+
 firebase.initializeApp(firebaseConfig);
 
 const database = firebase.firestore();
