@@ -40,6 +40,8 @@ export default function HeaderRight() {
   const [postFeeling, setPostFeeling] = useState("");
   const [postTaggedUsers, setPostTaggedUsers] = useState([]);
   const [showFeelingsModal, setShowFeelingsModal] = useState(false);
+  const [isEmojiPickerOpen, setEmojiPickerOpen] = useState(false);
+  const [chosenEmoji,setChosenEmoji]=useState(null);
   const dispatch = useDispatch();
 
   const handleDialogOpen = () => {
@@ -49,6 +51,12 @@ export default function HeaderRight() {
   const handleDialogClose = () => {
     setIsDialogOpen(false);
   };
+  const onEmojiClick = (event, emojiObject) => {
+    let add;
+    setChosenEmoji(emojiObject.emoji);
+    chosenEmoji ? add = postValue + " " + chosenEmoji + " " : add = postValue;
+    setPostValue(add);
+};
 
   const removeFromAttachedFiles = (file) => {
     let copy = [...attachedFiles];
@@ -178,6 +186,9 @@ export default function HeaderRight() {
           setPostFeeling={setPostFeeling}
           postTaggedUsers={postTaggedUsers}
           setPostTaggedUsers={setPostTaggedUsers}
+          isEmojiPickerOpen={isEmojiPickerOpen}
+          setEmojiPickerOpen = {setEmojiPickerOpen}
+          onEmojiClick={onEmojiClick}
         />
         <Tooltip title={<h6>Messenger</h6>} placement="bottom">
           <IconButton

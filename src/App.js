@@ -1,8 +1,8 @@
 import { BrowserRouter, Redirect, Route, Switch } from "react-router-dom";
 import Home from "./HomePage/Home";
-import Login from "./LoginPage/Login";
+import Login from "./LoginPage/Login/Login";
 import Profile from "./Profile/Profile";
-import SignUp from "./LoginPage/SignUp";
+import SignUp from "./LoginPage/SignUp/SignUp";
 import Error from "./ErrorPage/Error";
 import Header from "./Header/Header";
 import Loader from "./common/Loader/Loader";
@@ -24,7 +24,7 @@ import { useEffect } from "react";
 
 // current user actions
 import { fetchCurrentUser } from "./Profile/CurrentUser.actions";
-import { fetchAllUsers } from "./AllUsers.actions";
+import { fetchAllUsers } from "./redux/AllUsers.actions";
 
 function App() {
   const dispatch = useDispatch();

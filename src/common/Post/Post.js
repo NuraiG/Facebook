@@ -26,7 +26,7 @@ import ThumbUpAltIcon from "@material-ui/icons/ThumbUpAlt";
 import ThumbUpAltOutlinedIcon from "@material-ui/icons/ThumbUpAltOutlined";
 import ChatBubbleOutlineRoundedIcon from "@material-ui/icons/ChatBubbleOutlineRounded";
 import { generateUuidv4, truncateString } from "../../utils/utils";
-import { MAX_POST_LENGTH } from "../../constants";
+import { MAX_POST_LENGTH } from "../../constants/constants";
 import {
   getCommentsForPost,
   getUserById,

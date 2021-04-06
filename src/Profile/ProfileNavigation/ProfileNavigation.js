@@ -19,22 +19,22 @@ import { useSelector } from "react-redux";
 
 import PersonAddIcon from "@material-ui/icons/PersonAdd";
 
-import { grayTheme, customButtonBlueGreen } from "../customThemes";
+import { grayTheme, customButtonBlueGreen } from "../../customThemes";
 
-import Intro from "./Intro";
-import CreatePost from "../common/CreatePost/CreatePost";
+import Intro from "../Intro/Intro";
+import CreatePost from "../../common/CreatePost/CreatePost";
 
 import { Grid, Paper } from "@material-ui/core";
-import PostsFeed from "./ProfilePostsFeed";
+import PostsFeed from "../ProfilePostsFeed";
 import {
   getActiveFriendRequestsBetweenUsers,
   sendFriendRequest,
-} from "../service";
+} from "../../service";
 import { useEffect } from "react";
 
-import styles from "./Profile.module.scss";
+import styles from "../Profile.module.scss";
 
-import { getUserById } from "../service";
+import { getUserById } from "../../service";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -170,11 +170,11 @@ export default function ProfileNavigation({ user }) {
                   style={{ fontSize: "14px" }}
                   {...a11yProps(1)}
                 />
-                <Tab
+                {/* <Tab
                   label="Friends"
                   style={{ fontSize: "14px" }}
                   {...a11yProps(2)}
-                />
+                /> */}
               </Tabs>
             </Typography>
             <ThemeProvider theme={customButtonBlueGreen}>
@@ -229,9 +229,9 @@ export default function ProfileNavigation({ user }) {
             </Grid>
           </React.Fragment>
         </TabPanel>
-        <TabPanel value={value} index={2}>
+        {/* <TabPanel value={value} index={2}>
           Friends
-        </TabPanel>
+        </TabPanel> */}
       </div>
     </ThemeProvider>
   );

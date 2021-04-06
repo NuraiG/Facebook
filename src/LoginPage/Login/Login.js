@@ -1,11 +1,11 @@
 import React, {useState} from 'react';
-import {Divider, Button,InputBase} from '@material-ui/core';
-import {Link} from 'react-router-dom';
+import { Divider, Button, InputBase } from '@material-ui/core';
+import { Link } from 'react-router-dom';
 import styles from './Login.module.scss';
-import {ThemeProvider} from '@material-ui/styles';
+import { ThemeProvider } from '@material-ui/styles';
 import facebook from './facebook-loginPage.svg';
-import { customButtonBlueGreen } from "../customThemes";
-import { login } from '../service';
+import { customButtonBlueGreen } from "../../customThemes";
+import { login } from '../../service';
 import { useHistory } from "react-router-dom";
 
 export default function Login() {

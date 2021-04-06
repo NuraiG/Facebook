@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react";
 import Header from "../Header/Header";
 import { useParams } from "react-router-dom";
-import ProfileHeader from "./ProfileHeader";
-// import Intro from "./Intro";
+import ProfileHeader from "./ProfileHeader/ProfileHeader";
+// import Intro from "./Intro/Intro";
 // import CreatePost from "../common/CreatePost/CreatePost";
 
 import { Grid } from "@material-ui/core";
 // import PostsFeed from "./ProfilePostsFeed";
-import ProfileNavigation from "./ProfileNavigation";
+import ProfileNavigation from "./ProfileNavigation/ProfileNavigation";
 import { getUserById } from "../service";
 import { useSelector } from "react-redux";
 

@@ -1,4 +1,4 @@
-import { getAllUsers } from "./service";
+import { getAllUsers } from "../service";
 
 export const FETCH_ALL_USERS_FAILED = "FETCH_ALL_USERS_FAILED";
 export const FETCH_ALL_USERS_REQUESTED = "FETCH_ALL_USERS_REQUESTED";
