@@ -1,172 +1,180 @@
 @import "../../constants.scss";
 
 .dialog {
-  > div:nth-of-type(3) {
-    > div:nth-of-type(1) {
-      width: 90%;
-      max-width: 500px;
-      padding: 16px;
-      box-sizing: border-box;
-      position: relative;
+    > div:nth-of-type(3) {
+        > div:nth-of-type(1) {
+            width: 90%;
+            max-width: 500px;
+            padding: 16px;
+            box-sizing: border-box;
+            position: relative;
 
-      .dialog_title {
-        border-bottom: 1px solid $inner-border;
-        padding-top: 0;
-        padding-bottom: 15px;
-        margin-bottom: 16px;
-        > h2 {
-          text-align: center;
-          font-weight: 700;
-          font-size: 20px;
+            .dialog_title {
+                border-bottom: 1px solid $inner-border;
+                padding-top: 0;
+                padding-bottom: 15px;
+                margin-bottom: 16px;
+                > h2 {
+                    text-align: center;
+                    font-weight: 700;
+                    font-size: 20px;
 
-          > button.close_btn {
-            position: absolute;
-            top: 12px;
-            right: 12px;
-            padding: 8px;
-            z-index: 10;
+                    > button.close_btn {
+                        position: absolute;
+                        top: 12px;
+                        right: 12px;
+                        padding: 8px;
+                        z-index: 10;
 
-            svg {
-              font-size: 22px;
+                        svg {
+                            font-size: 22px;
+                        }
+                        svg:nth-of-type(2) {
+                            display: none;
+                        }
+                    }
+
+                    > button.back_btn {
+                        position: absolute;
+                        top: 12px;
+                        left: 12px;
+                        padding: 8px;
+                        z-index: 10;
+
+                        svg {
+                            font-size: 22px;
+                        }
+                        svg:nth-of-type(1) {
+                            display: none;
+                        }
+                    }
+                }
             }
-            svg:nth-of-type(2) {
-              display: none;
+            .dialog_content {
+                padding: 0;
+
+                .post_author {
+                    display: flex;
+                    > h3 {
+                        margin-left: 10px;
+                        margin-top: 5px;
+                        font-weight: 600;
+                        font-size: 16px;
+                    }
+                }
+                .dialog_input {
+                    font-size: 24px;
+                    z-index: 10;
+                    height: 120px;
+                    margin: 5px 0;
+                    border: 0;
+                    overflow: auto;
+
+                    textarea {
+                        border: 0;
+                        outline: 0;
+                    }
+
+                    div:nth-of-type(2) {
+                        margin-top: 24px !important;
+                        font-size: 20px;
+                        border-radius: 8px;
+                        padding: 5px;
+                        box-shadow: rgba(0, 0, 0, 0.2) 0 12px 28px 0, rgba(0, 0, 0, 0.1) 0 2px 4px 0, rgba(255, 255, 255, 0.5) 0 0 0 1px inset;
+
+                        li {
+                            padding: 4px 7px;
+                            margin: 2px 0;
+                            border-radius: 8px;
+
+                            &:hover {
+                                background-color: $primary-bg;
+                            }
+                        }
+                    }
+                }
+                .drag_file {
+                    position: absolute;
+                    width: 100%;
+                    height: 100%;
+                    top: 0;
+                    left: 0;
+                    outline: 0;
+                }
+                .emoji_button {
+                    text-align: right;
+                    > button {
+                        padding: 10px;
+                        z-index: 10;
+                        svg {
+                            font-size: 30px;
+                        }
+                    }
+                }
+
+                .post_actions {
+                    width: 100%;
+                    border-radius: 8px;
+                    border: 1px solid $divider;
+                    padding: 8px;
+                    box-sizing: border-box;
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    > span {
+                        font-weight: 700;
+                    }
+                    .action_buttons {
+                        > button {
+                            padding: 5px;
+                            z-index: 10;
+                            svg {
+                                font-size: 30px;
+                            }
+                        }
+                    }
+                }
+                .attached_images_container {
+                    max-width: 100%;
+                    position: relative;
+
+                    .attached_images {
+                        max-width: 100%;
+                    }
+
+                    .remove_img {
+                        position: absolute;
+                        top: 10px;
+                        right: 10px;
+                        z-index: 10;
+                    }
+                }
             }
-          }
-
-          > button.back_btn {
-            position: absolute;
-            top: 12px;
-            left: 12px;
-            padding: 8px;
-            z-index: 10;
-
-            svg {
-              font-size: 22px;
+            .dialog_actions {
+                padding: 16px 0 0;
             }
-            svg:nth-of-type(1) {
-              display: none;
-            }
-          }
-        }
-      }
-      .dialog_content {
-        padding: 0px;
-
-        .post_author {
-          display: flex;
-          > h3 {
-            margin-left: 10px;
-            margin-top: 5px;
-            font-weight: 600;
-            font-size: 16px;
-          }
-        }
-        .dialog_input {
-          font-size: 24px;
-          z-index: 10;
-          height: 120px;
-          margin: 5px 0px;
-          border: 0px;
-          overflow: auto;
-
-          textarea {
-            border: 0px;
-            outline: 0px;
-          }
-
-          div:nth-of-type(2) {
-            margin-top: 24px !important;
-            font-size: 20px;
-            border-radius: 8px;
-            padding: 5px;
-            box-shadow: rgba(0, 0, 0, 0.2) 0px 12px 28px 0px,
-              rgba(0, 0, 0, 0.1) 0px 2px 4px 0px,
-              rgba(255, 255, 255, 0.5) 0px 0px 0px 1px inset;
-
-            li {
-              padding: 4px 7px;
-              margin: 2px 0px;
-              border-radius: 8px;
-
-              &:hover {
+            div.feelings_input_wrapper {
+                display: flex;
+                outline-width: 0;
+                border: none;
+                padding: 8px 12px;
+                border-radius: 999px;
                 background-color: $primary-bg;
-              }
+                justify-content: space-between;
+                width: 100%;
+                box-sizing: border-box;
+                input.feelings_input {
+                    outline-width: 0;
+                    border: none;
+                    border-radius: 999px;
+                    background-color: $primary-bg;
+                    width: 100%;
+                    font-size: 17px;
+                }
             }
-          }
-        }
-        .drag_file {
-          position: absolute;
-          width: 100%;
-          height: 100%;
-          top: 0;
-          left: 0;
-          outline: 0px;
-        }
-        .post_actions {
-          width: 100%;
-          border-radius: 8px;
-          border: 1px solid $divider;
-          padding: 8px 8px;
-          box-sizing: border-box;
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-          > span {
-            font-weight: 700;
-          }
-          .action_buttons {
-            > button {
-              padding: 5px;
-              z-index: 10;
-              svg {
-                font-size: 30px;
-              }
+            .feelings_btn {
+                margin-top: 16px;
             }
-          }
         }
-        .attached_images_container {
-          max-width: 100%;
-          position: relative;
-
-          .attached_images {
-            max-width: 100%;
-          }
-
-          .remove_img {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            z-index: 10;
-          }
-        }
-      }
-      .dialog_actions {
-        padding: 0px;
-        padding-top: 16px;
-      }
-      div.feelings_input_wrapper {
-        display: flex;
-        outline-width: 0;
-        border: none;
-        padding: 8px 12px;
-        border-radius: 999px;
-        background-color: $primary-bg;
-        justify-content: space-between;
-        width: 100%;
-        box-sizing: border-box;
-        input.feelings_input {
-          outline-width: 0;
-          border: none;
-          border-radius: 999px;
-          background-color: $primary-bg;
-          width: 100%;
-          font-size: 17px;
-        }
-      }
-      .feelings_btn {
-        margin-top: 16px;
-      }
     }
-  }
 }

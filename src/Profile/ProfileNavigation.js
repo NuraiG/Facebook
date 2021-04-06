@@ -94,6 +94,7 @@ export default function ProfileNavigation({ user }) {
 
   const [images, setImages]= useState([]);
 
+
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
@@ -114,7 +115,6 @@ export default function ProfileNavigation({ user }) {
     .then((res)=> res.images)
       .then((images) => {
         let dbImages = [];
-
         images.forEach((img) => {
           dbImages.push(img);
         });
@@ -142,7 +142,7 @@ export default function ProfileNavigation({ user }) {
             </Typography>
             <ThemeProvider theme={customButtonBlueGreen}>
               {/* are friends */} {/* and a friend request has not been sent */}
-              {user.id !== currentUser.id  ? (
+              {(user.id !== currentUser.id || currentUser.friends.includes(user.id)) ? (
                 <Button
                   color="primary"
                   className={classes.menuButton}
@@ -152,9 +152,7 @@ export default function ProfileNavigation({ user }) {
                 >
                   Add friend
                 </Button>
-              ) : (
-                ""
-              )}
+              ) : " " }
             </ThemeProvider>
           </Toolbar>
         </AppBar>

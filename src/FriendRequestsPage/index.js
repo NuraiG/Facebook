@@ -11,6 +11,8 @@ import styles from "./FriendRequestPage.module.scss";
 
 import { Grid } from "@material-ui/core";
 
+import no_friends from "./no_friends.svg";
+
 
 export default function FriendRequestPage() {
   const currentUser = useSelector((state) => state.currentUser.currentUser);
@@ -71,6 +73,16 @@ export default function FriendRequestPage() {
       <Grid item xs="auto" className={styles.profile_preview}>
         {selectedProfile !== "" ? <Profile userId={selectedProfile} hideHeader={true}/> : null}
       </Grid>
+      <Grid item xs="auto" >
+      {friendRequests.length === 0 ? 
+        <div className={styles.container} >
+          <img src={no_friends} alt="No Friends" className={styles.nofriends}></img>
+          <h1>No friend requests</h1>
+         </div>
+         :" "}
+      </Grid>
     </Grid>
   );
 }
+
+

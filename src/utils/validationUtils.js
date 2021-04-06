@@ -8,7 +8,7 @@ function validatePassword(password) {
 }
 
 function validateNames(name) {
-  return name.trim().length >= 2 && name[0] === name[0].toUpperCase();
+  return name.trim().length >= 2;
 }
 
 function validateDate(date) {
