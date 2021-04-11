@@ -15,7 +15,7 @@ import {
   getAllPosts,
   getMyFriendRequests,
   readNotifications,
-} from "../../service";
+} from "../../firebase/service";
 import { updateUserProfile } from "../../Profile/CurrentUser.actions";
 import { getServerTime } from "../../utils/timeUtils";
 

@@ -12,8 +12,8 @@ import {Avatar} from "@material-ui/core";
 import styles from "./EmptyComment.module.scss";
 
 import {useDropzone} from "react-dropzone";
-import {storage} from "../../firebase";
-import {createComment} from "../../service";
+import {storage} from "../../firebase/firebase";
+import {createComment} from "../../firebase/service";
 
 import Picker from 'emoji-picker-react';
 

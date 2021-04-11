@@ -1,5 +1,5 @@
-import { getUserById } from "../service";
-import firebase from "../firebase";
+import { getUserById } from "../firebase/service";
+import firebase from "../firebase/firebase";
 
 export const UPDATE_USER_PROFILE_PICTURE = "UPDATE_USER_PROFILE_PICTURE";
 export const UPDATE_USER_COVER_PICTURE = "UPDATE_USER_COVER_PICTURE";

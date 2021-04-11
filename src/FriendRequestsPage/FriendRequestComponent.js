@@ -3,7 +3,7 @@ import { blueGreenTheme, grayButtonTheme, grayTheme } from "../customThemes";
 import styles from "./FriendRequestComponent.module.scss";
 
 import { Avatar, Button, Paper, ThemeProvider } from "@material-ui/core";
-import { getUserById } from "../service";
+import { getUserById } from "../firebase/service";
 import { getServerTime, getShortDate } from "../utils/timeUtils";
 
 export default function FriendRequestComponent({

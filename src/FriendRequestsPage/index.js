@@ -5,7 +5,7 @@ import {
   acceptFriendRequest,
   getMyFriendRequests,
   rejectFriendRequest,
-} from "../service";
+} from "../firebase/service";
 import FriendRequestComponent from "./FriendRequestComponent";
 import styles from "./FriendRequestPage.module.scss";
 

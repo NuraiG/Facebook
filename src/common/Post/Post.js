@@ -33,7 +33,7 @@ import {
   getCommentsForPost,
   getUserById,
   likePostRequest,
-} from "../../service";
+} from "../../firebase/service";
 import PostOptionsBtn from "./PostOptionsBtn";
 
 import FbImageLibrary from "react-fb-image-grid";

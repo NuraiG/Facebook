@@ -9,7 +9,7 @@ import Post from "../common/Post/Post";
 
 import styles from "./Home.module.scss";
 import { Grid } from "@material-ui/core";
-import { getAllPosts } from "../service";
+import { getAllPosts } from "../firebase/service";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { NUMBER_OF_POSTS_PER_SCROLL } from "../constants/constants";
 

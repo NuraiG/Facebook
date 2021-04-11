@@ -7,8 +7,8 @@ import { Button, IconButton, makeStyles, Popper } from "@material-ui/core";
 
 import MoreHorizIcon from "@material-ui/icons/MoreHoriz";
 import { grayTheme } from "../../customThemes";
-import { deletePost, updatePost } from "../../service";
-import { storage } from "../../firebase";
+import { deletePost, updatePost } from "../../firebase/service";
+import { storage } from "../../firebase/firebase";
 import CreatePostDialog from "../CreatePost/CreatePostDialog";
 
 const useStyles = makeStyles(() => ({

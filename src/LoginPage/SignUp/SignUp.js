@@ -11,7 +11,7 @@ import {
 import styles from "./SignUp.module.scss";
 import { customButtonBlueGreen } from "../../customThemes";
 import { ThemeProvider } from "@material-ui/styles";
-import { addUserToCollection, register } from "../../service";
+import { addUserToCollection, register } from "../../firebase/service";
 import { getTimestampFromDate } from "../../utils/timeUtils";
 import { validateEmail, validatePassword,validateNames,validateDate } from "../../utils/validationUtils";
 import { useHistory } from "react-router-dom";

@@ -9,8 +9,8 @@ import CreatePostDialog from "../common/CreatePost/CreatePostDialog";
 import PopperComponent from "./PopperComponent/PopperComponent";
 import NotificationButton from "./Notifications/NotificationButton";
 
-import { createPost, logout } from "../service";
-import { storage } from "../firebase";
+import { createPost, logout } from "../firebase/service";
+import { storage } from "../firebase/firebase";
 
 import styles from "./Header.module.scss";
 import { grayButtonTheme } from "../customThemes";
