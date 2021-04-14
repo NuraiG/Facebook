@@ -1,4 +1,4 @@
-import React, { useCallback, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import i18n from "../localization/i18n";
@@ -44,8 +44,10 @@ export default function HeaderRight() {
   const [postTaggedUsers, setPostTaggedUsers] = useState([]);
   const [showFeelingsModal, setShowFeelingsModal] = useState(false);
   const [isEmojiPickerOpen, setEmojiPickerOpen] = useState(false);
-  const [chosenEmoji,setChosenEmoji]=useState(null);
-  const [isInEnglish, setIsInEnglish] = useState(currentUser.languagePreference === "en");
+  const [chosenEmoji, setChosenEmoji] = useState(null);
+  const [isInEnglish, setIsInEnglish] = useState(
+    currentUser.languagePreference.includes("en")
+  );
   const dispatch = useDispatch();
   const { t } = useTranslation();
 
@@ -59,9 +61,11 @@ export default function HeaderRight() {
   const onEmojiClick = (event, emojiObject) => {
     let add;
     setChosenEmoji(emojiObject.emoji);
-    chosenEmoji ? add = postValue + " " + chosenEmoji + " " : add = postValue;
+    chosenEmoji
+      ? (add = postValue + " " + chosenEmoji + " ")
+      : (add = postValue);
     setPostValue(add);
-};
+  };
 
   const removeFromAttachedFiles = (file) => {
     let copy = [...attachedFiles];
@@ -156,7 +160,7 @@ export default function HeaderRight() {
     let changedLanguage = isInEnglish ? "bg" : "en";
     setIsInEnglish(!isInEnglish);
     i18n.changeLanguage(changedLanguage);
-    editUser(currentUser.id, {languagePreference: changedLanguage});
+    editUser(currentUser.id, { languagePreference: changedLanguage });
     dispatch(
       updateUserProfile({
         ...currentUser,
@@ -164,6 +168,10 @@ export default function HeaderRight() {
       })
     );
   };
+
+  useEffect(() => {
+    i18n.changeLanguage(currentUser.languagePreference);
+  }, [currentUser.languagePreference]);
 
   return (
     <div className={styles.header__right}>
@@ -201,14 +209,11 @@ export default function HeaderRight() {
           postTaggedUsers={postTaggedUsers}
           setPostTaggedUsers={setPostTaggedUsers}
           isEmojiPickerOpen={isEmojiPickerOpen}
-          setEmojiPickerOpen = {setEmojiPickerOpen}
+          setEmojiPickerOpen={setEmojiPickerOpen}
           onEmojiClick={onEmojiClick}
         />
         <Tooltip title={<h6>{t("header.messenger")}</h6>} placement="bottom">
-          <IconButton
-            color="primary"
-            className={`${styles.icon_btn}`}
-          >
+          <IconButton color="primary" className={`${styles.icon_btn}`}>
             <ChatRoundedIcon />
           </IconButton>
         </Tooltip>

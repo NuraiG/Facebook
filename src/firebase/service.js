@@ -14,7 +14,8 @@ export function addUserToCollection(
   firstName,
   lastName,
   birthDate,
-  gender
+  gender,
+  language
 ) {
   return database
     .collection("users")
@@ -27,7 +28,7 @@ export function addUserToCollection(
       gender: gender,
       images: [],
       friends: [],
-      languagePreference: "en",
+      languagePreference: language,
       notificationsLastRead: firebase.firestore.FieldValue.serverTimestamp(),
       registrationDate: firebase.firestore.FieldValue.serverTimestamp(),
     })
