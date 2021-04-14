@@ -46,7 +46,7 @@ export default function HeaderRight() {
   const [isEmojiPickerOpen, setEmojiPickerOpen] = useState(false);
   const [chosenEmoji, setChosenEmoji] = useState(null);
   const [isInEnglish, setIsInEnglish] = useState(
-    currentUser.languagePreference.includes("en")
+    !currentUser.languagePreference.includes("bg")
   );
   const dispatch = useDispatch();
   const { t } = useTranslation();
