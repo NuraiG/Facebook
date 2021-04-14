@@ -35,6 +35,7 @@
     "helpCenter": "Visit Help Center"
   },
   "friendRequestsPage": {
+    "friendRequestsEmpty": "Нямате покани за приятелство",
     "confirm": "Потвърждаване",
     "remove": "Премахване"
   },

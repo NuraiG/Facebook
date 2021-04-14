@@ -30,12 +30,11 @@ import PostsFeed from "../ProfilePostsFeed";
 import {
   getActiveFriendRequestsBetweenUsers,
   sendFriendRequest,
-} from "../../service";
+  getUserById,
+} from "../../firebase/service";
 import { useEffect } from "react";
 
 import styles from "../Profile.module.scss";
-
-import { getUserById } from "../../service";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;

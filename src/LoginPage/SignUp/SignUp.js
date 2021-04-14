@@ -1,4 +1,5 @@
 import React , {useState} from "react";
+import { useTranslation } from "react-i18next";
 import {
   FormControl,
   FormLabel,
@@ -11,7 +12,7 @@ import {
 import styles from "./SignUp.module.scss";
 import { customButtonBlueGreen } from "../../customThemes";
 import { ThemeProvider } from "@material-ui/styles";
-import { addUserToCollection, register } from "../../service";
+import { addUserToCollection, register } from "../../firebase/service";
 import { getTimestampFromDate } from "../../utils/timeUtils";
 import { validateEmail, validatePassword,validateNames,validateDate } from "../../utils/validationUtils";
 import { useHistory } from "react-router-dom";
@@ -35,6 +36,7 @@ export default function Registration() {
   const [isValidPassword, setIsValidPassword]= useState(true);
   const [isValidAge, setIsValidAge] = useState(true);
 
+  const { i18n } = useTranslation();
   const history = useHistory();
 
  
@@ -86,7 +88,8 @@ export default function Registration() {
           firstName.trim(),
           lastName.trim(),
           getTimestampFromDate(bDate),
-          gender
+          gender,
+          i18n.language
         );
       })
       .catch((error) => {

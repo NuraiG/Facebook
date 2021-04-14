@@ -5,7 +5,7 @@ import styles from './Login.module.scss';
 import { ThemeProvider } from '@material-ui/styles';
 import facebook from './facebook-loginPage.svg';
 import { customButtonBlueGreen } from "../../customThemes";
-import { login } from '../../service';
+import { login } from '../../firebase/service';
 import { useHistory } from "react-router-dom";
 
 export default function Login() {

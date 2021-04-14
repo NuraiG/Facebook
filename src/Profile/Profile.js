@@ -8,7 +8,7 @@ import ProfileHeader from "./ProfileHeader/ProfileHeader";
 import { Grid } from "@material-ui/core";
 // import PostsFeed from "./ProfilePostsFeed";
 import ProfileNavigation from "./ProfileNavigation/ProfileNavigation";
-import { getUserById } from "../service";
+import { getUserById } from "../firebase/service";
 import { useSelector } from "react-redux";
 
 // userId and hideHeader are used for when the profile is shown from fried requests page

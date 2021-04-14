@@ -15,7 +15,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import { useSelector, useDispatch } from "react-redux";
 import { updateUserProfile } from "./../CurrentUser.actions";
 
-import { updateUserBirthPlace, updateUserResidence } from "../../service";
+import { updateUserBirthPlace, updateUserResidence } from "../../firebase/service";
 
 import IntroUpdateDialog from "./IntroUpdateDialog";
 

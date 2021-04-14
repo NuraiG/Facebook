@@ -1,7 +1,7 @@
 import React, { useState, useCallback } from "react";
 import { useTranslation } from "react-i18next";
-import { storage } from "../../firebase";
-import { updateUserBio, editProfileImage, editCoverImage } from "../../service";
+import { storage } from "../../firebase/firebase";
+import { updateUserBio, editProfileImage, editCoverImage } from "../../firebase/service";
 
 //material ui
 import {

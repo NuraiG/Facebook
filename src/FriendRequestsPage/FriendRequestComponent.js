@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { blueGreenTheme, grayButtonTheme, grayTheme } from "../customThemes";
 import styles from "./FriendRequestComponent.module.scss";
 
 import { Avatar, Button, Paper, ThemeProvider } from "@material-ui/core";
-import { getUserById } from "../service";
+import { getUserById } from "../firebase/service";
 import { getServerTime, getShortDate } from "../utils/timeUtils";
 
 export default function FriendRequestComponent({
@@ -12,6 +13,8 @@ export default function FriendRequestComponent({
   onAccept,
   onReject,
 }) {
+  const { t } = useTranslation();
+
   let formattedTimestamp = getShortDate(
     getServerTime()?.toDate(),
     new Date(friendRequestObj.timestamp?.toDate())
@@ -50,7 +53,7 @@ export default function FriendRequestComponent({
                   )
                 }
               >
-                Confirm
+                {t("friendRequestsPage.confirm")}
               </Button>
             </ThemeProvider>
             <ThemeProvider theme={grayButtonTheme}>
@@ -62,7 +65,7 @@ export default function FriendRequestComponent({
                   onReject(friendRequestObj.id, friendRequestObj.from)
                 }
               >
-                Remove
+                {t("friendRequestsPage.remove")}
               </Button>
             </ThemeProvider>
           </div>

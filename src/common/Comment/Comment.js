@@ -8,7 +8,7 @@ import { getServerTime, getShortDate } from "../../utils/timeUtils";
 
 import { truncateString } from "../../utils/utils";
 import { MAX_COMMENT_LENGTH } from "../../constants/constants";
-import { likeCommentRequest } from "../../service";
+import { likeCommentRequest } from "../../firebase/service";
 
 import FbImageLibrary from 'react-fb-image-grid';
 

@@ -26,8 +26,8 @@ import LocalOfferOutlinedIcon from "@material-ui/icons/LocalOfferOutlined";
 import MoodOutlinedIcon from "@material-ui/icons/MoodOutlined";
 import CreatePostDialog from "./CreatePostDialog";
 
-import { createPost } from "../../service";
-import { storage } from "../../firebase";
+import { createPost } from "../../firebase/service";
+import { storage } from "../../firebase/firebase";
 
 
 export default function CreatePost({ target }) {

@@ -1,4 +1,4 @@
-import React, { useCallback, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import i18n from "../localization/i18n";
@@ -9,8 +9,8 @@ import CreatePostDialog from "../common/CreatePost/CreatePostDialog";
 import PopperComponent from "./PopperComponent/PopperComponent";
 import NotificationButton from "./Notifications/NotificationButton";
 
-import { createPost, logout } from "../service";
-import { storage } from "../firebase";
+import { createPost, editUser, logout } from "../firebase/service";
+import { storage } from "../firebase/firebase";
 
 import styles from "./Header.module.scss";
 import { grayButtonTheme } from "../customThemes";
@@ -30,7 +30,7 @@ import AddIcon from "@material-ui/icons/Add";
 import ChatRoundedIcon from "@material-ui/icons/ChatRounded";
 import ArrowDropDownRoundedIcon from "@material-ui/icons/ArrowDropDownRounded";
 import ExitToAppRoundedIcon from "@material-ui/icons/ExitToAppRounded";
-import { logOutUser } from "../Profile/CurrentUser.actions";
+import { logOutUser, updateUserProfile } from "../Profile/CurrentUser.actions";
 
 export default function HeaderRight() {
   const [openAccount, setOpenAccount] = useState(false);
@@ -44,8 +44,10 @@ export default function HeaderRight() {
   const [postTaggedUsers, setPostTaggedUsers] = useState([]);
   const [showFeelingsModal, setShowFeelingsModal] = useState(false);
   const [isEmojiPickerOpen, setEmojiPickerOpen] = useState(false);
-  const [chosenEmoji,setChosenEmoji]=useState(null);
-  const [isInEnglish, setIsInEnglish] = useState(true);
+  const [chosenEmoji, setChosenEmoji] = useState(null);
+  const [isInEnglish, setIsInEnglish] = useState(
+    !currentUser.languagePreference.includes("bg")
+  );
   const dispatch = useDispatch();
   const { t } = useTranslation();
 
@@ -59,9 +61,11 @@ export default function HeaderRight() {
   const onEmojiClick = (event, emojiObject) => {
     let add;
     setChosenEmoji(emojiObject.emoji);
-    chosenEmoji ? add = postValue + " " + chosenEmoji + " " : add = postValue;
+    chosenEmoji
+      ? (add = postValue + " " + chosenEmoji + " ")
+      : (add = postValue);
     setPostValue(add);
-};
+  };
 
   const removeFromAttachedFiles = (file) => {
     let copy = [...attachedFiles];
@@ -148,16 +152,27 @@ export default function HeaderRight() {
         dispatch(logOutUser());
       })
       .catch((error) => {
-        // An error happened.
         console.log(error.message);
       });
   };
 
   const toggleChecked = () => {
-    let currentLanguage = isInEnglish ? "bg" : "en";
+    let changedLanguage = isInEnglish ? "bg" : "en";
     setIsInEnglish(!isInEnglish);
-    i18n.changeLanguage(currentLanguage);
+    i18n.changeLanguage(changedLanguage);
+    editUser(currentUser.id, { languagePreference: changedLanguage });
+    dispatch(
+      updateUserProfile({
+        ...currentUser,
+        languagePreference: changedLanguage,
+      })
+    );
   };
+
+  useEffect(() => {
+    i18n.changeLanguage(currentUser.languagePreference);
+  }, [currentUser.languagePreference]);
+
   return (
     <div className={styles.header__right}>
       <ThemeProvider theme={grayButtonTheme}>
@@ -194,18 +209,11 @@ export default function HeaderRight() {
           postTaggedUsers={postTaggedUsers}
           setPostTaggedUsers={setPostTaggedUsers}
           isEmojiPickerOpen={isEmojiPickerOpen}
-          setEmojiPickerOpen = {setEmojiPickerOpen}
+          setEmojiPickerOpen={setEmojiPickerOpen}
           onEmojiClick={onEmojiClick}
         />
         <Tooltip title={<h6>{t("header.messenger")}</h6>} placement="bottom">
-          <IconButton
-            color="primary"
-            className={`${styles.icon_btn}`}
-            // ref={anchorRef}
-            // aria-controls={open ? "menu-list-grow" : undefined}
-            // aria-haspopup="true"
-            // onClick={handleOpen}
-          >
+          <IconButton color="primary" className={`${styles.icon_btn}`}>
             <ChatRoundedIcon />
           </IconButton>
         </Tooltip>

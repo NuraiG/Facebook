@@ -15,7 +15,7 @@ import {
   getAllPosts,
   getMyFriendRequests,
   readNotifications,
-} from "../../service";
+} from "../../firebase/service";
 import { updateUserProfile } from "../../Profile/CurrentUser.actions";
 import { getServerTime } from "../../utils/timeUtils";
 
@@ -60,6 +60,20 @@ export default function NotificationButton() {
   };
 
   useEffect(() => {
+    const addNotificationsToAll = (notificationsToAdd) => {
+      let allNotificationIds = allNotifications.map((notif) => notif.id);
+      let newNotifications = notificationsToAdd.filter(
+        (fr) => allNotificationIds.indexOf(fr.id) === -1
+      );
+      if (newNotifications.length) {
+        newNotifications = newNotifications.map((el) => ({
+          ...el,
+          fromUser: { ...allUsers.find((user) => user.id === el.from || user.id === el.createdById) },
+        }));
+        setAllNotifications([...allNotifications, ...newNotifications]);
+      }
+    }
+
     if (allUsers && currentUser.id) {
       getMyFriendRequests(currentUser.id).onSnapshot((snapshot) => {
         let allFriendRequests = [];
@@ -77,17 +91,7 @@ export default function NotificationButton() {
             );
           }
         });
-        let allNotificationIds = allNotifications.map((notif) => notif.id);
-        let newNotifications = allFriendRequests.filter(
-          (fr) => allNotificationIds.indexOf(fr.id) === -1
-        );
-        if (newNotifications.length) {
-          newNotifications = newNotifications.map((el) => ({
-            ...el,
-            fromUser: { ...allUsers.find((user) => user.id === el.from) },
-          }));
-          setAllNotifications([...allNotifications, ...newNotifications]);
-        }
+        addNotificationsToAll(allFriendRequests);
       });
 
       getAllPosts(currentUser.id).onSnapshot((snapshot) => {
@@ -127,21 +131,7 @@ export default function NotificationButton() {
             );
           }
         });
-        // get all notification ids and filter only the new notifications
-        let allNotificationIds = allNotifications.map((notif) => notif.id); // array
-        let newNotifications = allPostsOnMyWall.filter(
-          (fr) => allNotificationIds.indexOf(fr.id) === -1
-        );
-        // if there are any new notifications
-        if (newNotifications.length) {
-          newNotifications = newNotifications.map((el) => ({
-            ...el,
-            fromUser: {
-              ...allUsers.find((user) => user.id === el.createdById),
-            },
-          }));
-          setAllNotifications([...allNotifications, ...newNotifications]);
-        }
+        addNotificationsToAll(allPostsOnMyWall);
       });
 
       getAllComments().onSnapshot((snapshot) => {
@@ -166,21 +156,7 @@ export default function NotificationButton() {
             );
           }
         });
-        // get all notification ids and filter only the new notifications
-        let allNotificationIds = allNotifications.map((notif) => notif.id);
-        let newNotifications = allCommentsOnMyPosts.filter(
-          (fr) => allNotificationIds.indexOf(fr.id) === -1
-        );
-        // if there are any new notifications
-        if (newNotifications.length) {
-          newNotifications = newNotifications.map((el) => ({
-            ...el,
-            fromUser: {
-              ...allUsers.find((user) => user.id === el.createdById),
-            },
-          }));
-          setAllNotifications([...allNotifications, ...newNotifications]);
-        }
+        addNotificationsToAll(allCommentsOnMyPosts);
       });
     }
   }, [currentUser.id, allNotifications, allUsers]);
