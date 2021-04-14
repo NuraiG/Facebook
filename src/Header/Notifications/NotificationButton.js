@@ -66,8 +66,6 @@ export default function NotificationButton() {
         (fr) => allNotificationIds.indexOf(fr.id) === -1
       );
       if (newNotifications.length) {
-        console.log(allUsers);
-        
         newNotifications = newNotifications.map((el) => ({
           ...el,
           fromUser: { ...allUsers.find((user) => user.id === el.from || user.id === el.createdById) },

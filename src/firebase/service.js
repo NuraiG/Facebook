@@ -27,6 +27,7 @@ export function addUserToCollection(
       gender: gender,
       images: [],
       friends: [],
+      languagePreference: "en",
       notificationsLastRead: firebase.firestore.FieldValue.serverTimestamp(),
       registrationDate: firebase.firestore.FieldValue.serverTimestamp(),
     })
@@ -157,6 +158,15 @@ export function readNotifications(currentUserId) {
   return database.collection("users").doc(currentUserId).update({
     notificationsLastRead: firebase.firestore.FieldValue.serverTimestamp(),
   });
+}
+
+export function editUser(userId, data) {
+  return database
+    .collection("users")
+    .doc(userId)
+    .update({
+      ...data,
+    });
 }
 
 export function createPost(postData) {

@@ -35,6 +35,7 @@
     "helpCenter": "Visit Help Center"
   },
   "friendRequestsPage": {
+    "friendRequestsEmpty": "No friend requests",
     "confirm": "Confirm",
     "remove": "Remove"
   },

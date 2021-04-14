@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import { useTranslation } from "react-i18next";
 import Profile from "../Profile/Profile";
 import {
   acceptFriendRequest,
@@ -18,6 +19,7 @@ export default function FriendRequestPage() {
   const currentUser = useSelector((state) => state.currentUser.currentUser);
   const [friendRequests, setFriendRequests] = useState([]);
   const [selectedProfile, setSelectedProfile] = useState("");
+  const { t } = useTranslation();
 
   useEffect(() => {
     if (currentUser.id) {
@@ -77,7 +79,7 @@ export default function FriendRequestPage() {
       {friendRequests.length === 0 ? 
         <div className={styles.container} >
           <img src={no_friends} alt="No Friends" className={styles.nofriends}></img>
-          <h1>No friend requests</h1>
+          <h1>{t("friendRequestsPage.friendRequestsEmpty")}</h1>
          </div>
          :" "}
       </Grid>

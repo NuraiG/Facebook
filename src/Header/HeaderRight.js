@@ -9,7 +9,7 @@ import CreatePostDialog from "../common/CreatePost/CreatePostDialog";
 import PopperComponent from "./PopperComponent/PopperComponent";
 import NotificationButton from "./Notifications/NotificationButton";
 
-import { createPost, logout } from "../firebase/service";
+import { createPost, editUser, logout } from "../firebase/service";
 import { storage } from "../firebase/firebase";
 
 import styles from "./Header.module.scss";
@@ -30,7 +30,7 @@ import AddIcon from "@material-ui/icons/Add";
 import ChatRoundedIcon from "@material-ui/icons/ChatRounded";
 import ArrowDropDownRoundedIcon from "@material-ui/icons/ArrowDropDownRounded";
 import ExitToAppRoundedIcon from "@material-ui/icons/ExitToAppRounded";
-import { logOutUser } from "../Profile/CurrentUser.actions";
+import { logOutUser, updateUserProfile } from "../Profile/CurrentUser.actions";
 
 export default function HeaderRight() {
   const [openAccount, setOpenAccount] = useState(false);
@@ -45,7 +45,7 @@ export default function HeaderRight() {
   const [showFeelingsModal, setShowFeelingsModal] = useState(false);
   const [isEmojiPickerOpen, setEmojiPickerOpen] = useState(false);
   const [chosenEmoji,setChosenEmoji]=useState(null);
-  const [isInEnglish, setIsInEnglish] = useState(true);
+  const [isInEnglish, setIsInEnglish] = useState(currentUser.languagePreference === "en");
   const dispatch = useDispatch();
   const { t } = useTranslation();
 
@@ -148,16 +148,23 @@ export default function HeaderRight() {
         dispatch(logOutUser());
       })
       .catch((error) => {
-        // An error happened.
         console.log(error.message);
       });
   };
 
   const toggleChecked = () => {
-    let currentLanguage = isInEnglish ? "bg" : "en";
+    let changedLanguage = isInEnglish ? "bg" : "en";
     setIsInEnglish(!isInEnglish);
-    i18n.changeLanguage(currentLanguage);
+    i18n.changeLanguage(changedLanguage);
+    editUser(currentUser.id, {languagePreference: changedLanguage});
+    dispatch(
+      updateUserProfile({
+        ...currentUser,
+        languagePreference: changedLanguage,
+      })
+    );
   };
+
   return (
     <div className={styles.header__right}>
       <ThemeProvider theme={grayButtonTheme}>
@@ -201,10 +208,6 @@ export default function HeaderRight() {
           <IconButton
             color="primary"
             className={`${styles.icon_btn}`}
-            // ref={anchorRef}
-            // aria-controls={open ? "menu-list-grow" : undefined}
-            // aria-haspopup="true"
-            // onClick={handleOpen}
           >
             <ChatRoundedIcon />
           </IconButton>
