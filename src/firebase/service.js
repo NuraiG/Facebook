@@ -170,6 +170,15 @@ export function editUser(userId, data) {
     });
 }
 
+export function addImagesToUser(userId, images) {
+  return database
+    .collection("users")
+    .doc(userId)
+    .update({
+      images: firebase.firestore.FieldValue.arrayUnion(...images),
+    });
+}
+
 export function createPost(postData) {
   return database
     .collection("posts")

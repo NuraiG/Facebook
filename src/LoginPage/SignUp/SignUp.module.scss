@@ -1,6 +1,8 @@
+@import "../../constants/constants.scss";
+
 .signUp {
     align-content: center;
-    background: #f0f2f5;
+    background: $primary-bg;
     min-height: 100vh;
     padding: 30px;
     text-align: center;
@@ -14,9 +16,9 @@
     }
     > .container1 {
         padding: 16px;
-        background: #fff;
+        background: $secondary-txt;
         border-radius: 8px;
-        border-top: 1px solid #dadde1;
+        border-top: 1px solid $border;
         margin: auto;
         width: 432px;
         border-radius: 8px;
@@ -30,7 +32,7 @@
 
         }
         > p {
-            color: rgb(129, 123, 123);
+            color: $secondary-background;
         }
         > .names {
             display: flex;
@@ -39,12 +41,12 @@
                 padding: 5px;
                 > span{
                     font-size: 10px;
-                    color: rgb(204, 42, 42);
+                    color: $red-accent;
                 }
             }
             .inputBase{
                 font-size: 16px; 
-                border: 1px solid gray;
+                border: 1px solid $secondary-background;
                 border-radius: 4px;
                 padding: 10px;
             }
@@ -58,11 +60,11 @@
             }
             >span{
                 font-size: 10px;
-                color: rgb(204, 42, 42);
+                color: $red-accent;
             }
             .inputBase{
                 font-size: 16px; 
-                border: 1px solid gray;
+                border: 1px solid $secondary-background;
                 border-radius: 4px;
                 padding: 10px;
                 margin: 10px 0;
@@ -71,7 +73,7 @@
         }
 
     }
-    >span{
-        color: rgb(204, 42, 42);
+    > span {
+        color: $red-accent;
     }
 }

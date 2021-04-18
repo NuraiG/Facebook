@@ -1,5 +1,5 @@
-$primary-icon: #1877f2;
-$primary-background: #eff2f5;
+@import "../../constants/constants.scss";
+
 .commentWrapper {
   display: flex;
   border-bottom: 1px solid $primary-background;
@@ -56,7 +56,7 @@ $primary-background: #eff2f5;
         padding: 4px;
         align-items: flex-end;
         .likeicon {
-          color: $primary-icon;
+          color: $accent;
           display: flex;
           align-items: center;
           padding-right: 4px;
@@ -68,7 +68,7 @@ $primary-background: #eff2f5;
         p {
           left: 20px;
           font-size: 13px;
-          color: gray;
+          color: $secondary-background;
           background-color: $primary-background;
           border-radius: 999px;
           top:-10px;
@@ -78,7 +78,7 @@ $primary-background: #eff2f5;
     button {
       border: none;
       font-weight: bold;
-      color: gray;
+      color: $secondary-background;
       background-color: inherit;
       margin-left: 1em;
       cursor: pointer;

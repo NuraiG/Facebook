@@ -1,3 +1,5 @@
+@import "../../constants/constants.scss";
+
 .dialog {
     box-sizing: border-box;
     .dialog_title {
@@ -21,7 +23,7 @@
             font-size: 18px;
         }
         > p {
-            color: gray;
+            color: $secondary-background;
             margin: 5px;
         }
         .profile_info {

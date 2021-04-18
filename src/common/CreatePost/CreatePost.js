@@ -26,7 +26,7 @@ import LocalOfferOutlinedIcon from "@material-ui/icons/LocalOfferOutlined";
 import MoodOutlinedIcon from "@material-ui/icons/MoodOutlined";
 import CreatePostDialog from "./CreatePostDialog";
 
-import { createPost } from "../../firebase/service";
+import { addImagesToUser, createPost } from "../../firebase/service";
 import { storage } from "../../firebase/firebase";
 
 
@@ -124,7 +124,7 @@ export default function CreatePost({ target }) {
         console.error("Error writing document: ", error);
       });
     if (attachedFiles.length > 0) {
-      // TODO: add images to profile
+      addImagesToUser(currentUser.id, attachedFiles);
       setAttachedFiles([]);
     }
     setPostValue("");

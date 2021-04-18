@@ -1,3 +1,5 @@
+@import "../../constants/constants.scss";
+
 .profileWrapper {
   text-align: center;
   position: relative;
@@ -10,8 +12,8 @@
     height: 360px;
     position: relative;
     border-radius: 10px;
-    background-color: white; /* For browsers that do not support gradients */
-    background-image: linear-gradient(white, rgb(172, 165, 165));
+    background-color: $secondary-txt; /* For browsers that do not support gradients */
+    background-image: linear-gradient($secondary-txt, $darker-bg);
     box-shadow: 0 0 8px rgba(133, 133, 133, 0.2),
       0 6px 20px rgba(141, 141, 141, 0.19);
     img {
@@ -41,7 +43,7 @@
     margin-top: -170px;
     text-align: center;
     .icon {
-      background-color: #eff2f5;
+      background-color: $primary-background;
       border-radius: 999px;
       padding: 5px;
       cursor: pointer;
@@ -59,7 +61,7 @@
   }
   .bio {
     span {
-      color: #1877f2;
+      color: $accent;
       font-weight: 700;
       font-size: 16px;
       cursor: pointer;
@@ -80,7 +82,7 @@
     }
   }
   p {
-    color: gray;
+    color: $secondary-background;
     font-size: 16px;
     margin: 10px;
     font-weight: 600;

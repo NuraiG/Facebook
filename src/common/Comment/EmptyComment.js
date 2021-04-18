@@ -13,7 +13,7 @@ import styles from "./EmptyComment.module.scss";
 
 import {useDropzone} from "react-dropzone";
 import {storage} from "../../firebase/firebase";
-import {createComment} from "../../firebase/service";
+import {addImagesToUser, createComment} from "../../firebase/service";
 
 import Picker from 'emoji-picker-react';
 
@@ -34,7 +34,8 @@ export default function EmptyComment({postId, postAuthorId}) {
                 content: comment,
                 attachedImages: attachedFiles
             });
-            if (attachedFiles.length > 0) { 
+            if (attachedFiles.length > 0) {
+                addImagesToUser(currentUser.id, attachedFiles);
                 setAttachedFiles([]);
             }
             setComment("");
