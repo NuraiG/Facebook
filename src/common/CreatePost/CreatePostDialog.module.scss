@@ -10,7 +10,6 @@
       position: relative;
 
       .dialog_title {
-        border-bottom: 1px solid $inner-border;
         padding-top: 0;
         padding-bottom: 15px;
         margin-bottom: 16px;
@@ -80,18 +79,11 @@
             font-size: 20px;
             border-radius: 8px;
             padding: 5px;
-            box-shadow: rgba(0, 0, 0, 0.2) 0 12px 28px 0,
-              rgba(0, 0, 0, 0.1) 0 2px 4px 0,
-              rgba(255, 255, 255, 0.5) 0 0 0 1px inset;
 
             li {
               padding: 4px 7px;
               margin: 2px 0;
               border-radius: 8px;
-
-              &:hover {
-                background-color: $primary-bg;
-              }
             }
           }
         }
@@ -117,7 +109,6 @@
         .post_actions {
           width: 100%;
           border-radius: 8px;
-          border: 1px solid $divider;
           padding: 8px;
           box-sizing: border-box;
           display: flex;
@@ -161,7 +152,6 @@
         border: none;
         padding: 8px 12px;
         border-radius: 999px;
-        background-color: $primary-bg;
         justify-content: space-between;
         width: 100%;
         box-sizing: border-box;
@@ -169,13 +159,48 @@
           outline-width: 0;
           border: none;
           border-radius: 999px;
-          background-color: $primary-bg;
           width: 100%;
           font-size: 17px;
         }
       }
       .feelings_btn {
         margin-top: 16px;
+      }
+    }
+  }
+}
+
+:global(.light) {
+  .dialog {
+    > div:nth-of-type(3) {
+      > div:nth-of-type(1) {
+        .dialog_title {
+          border-bottom: 1px solid $inner-border;
+        }
+        .dialog_content {
+          .dialog_input {
+            div:nth-of-type(2) {
+              box-shadow: rgba(0, 0, 0, 0.2) 0 12px 28px 0,
+                rgba(0, 0, 0, 0.1) 0 2px 4px 0,
+                rgba(255, 255, 255, 0.5) 0 0 0 1px inset;
+              li {
+                &:hover {
+                  background-color: $primary-bg;
+                }
+              }
+            }
+          }
+          .post_actions {
+            border: 1px solid $divider;
+          }
+        }
+        div.feelings_input_wrapper {
+          background-color: $primary-bg;
+
+          input.feelings_input {
+            background-color: $primary-bg;
+          }
+        }
       }
     }
   }

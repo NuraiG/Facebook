@@ -9,13 +9,11 @@
         word-break: break-word;
         font-size: 1.75rem;
         margin: 20px;
-        color: $secondary-background;
     }
     p {
         text-align: center;
         font-size: 16px;
         margin: 20px;
-        color: $secondary-background;
     }
     .error {
         height: 212px;
@@ -29,5 +27,16 @@
     }
     .cursor{
         cursor: pointer;
+    }
+}
+
+:global(.light) {
+    .container {
+        h1 {
+            color: $secondary-background;
+        }
+        p {
+            color: $secondary-background;
+        }
     }
 }

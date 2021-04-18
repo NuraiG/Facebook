@@ -16,14 +16,12 @@
     padding: 8px 12px;
     margin-left: 10px;
     border-radius: 999px;
-    background-color: $primary-bg;
     justify-content: space-between;
     width: 100%;
     input {
       outline-width: 0;
       border: none;
       border-radius: 999px;
-      background-color: $primary-bg;
       width: 100%;
       font-size: 17px;
     }
@@ -45,4 +43,13 @@
   }
 }
 
-
+:global(.light) {
+  .form_wrapper {
+    form {
+      background-color: $primary-bg;
+      input {
+        background-color: $primary-bg;
+      }
+    }
+  }
+}

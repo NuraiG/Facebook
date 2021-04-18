@@ -23,7 +23,6 @@
             font-size: 18px;
         }
         > p {
-            color: $secondary-background;
             margin: 5px;
         }
         .profile_info {
@@ -39,6 +38,14 @@
                 padding-right: 5px;
                 font-size: 26px;
             }
+        }
+    }
+}
+
+:global(.light) {
+    .dialog_content {
+        > p {
+            color: $secondary-background;
         }
     }
 }

@@ -8,9 +8,6 @@
   box-sizing: border-box;
   cursor: pointer;
 
-  &:hover {
-    background-color: $hover_overlay;
-  }
   div.avatar {
     width: 60px;
     height: 60px;
@@ -42,8 +39,23 @@
         font-size: 14px;
         text-transform: none;
         font-weight: 700;
-      }  
+      }
     }
   }
 }
 
+:global(.light) {
+  .wrapper {
+    &:hover {
+      background-color: $hover_overlay;
+    }
+  }
+}
+
+:global(.dark) {
+  .wrapper {
+    &:hover {
+      background-color: $dt-hover-overlay;
+    }
+  }
+}
