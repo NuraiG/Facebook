@@ -29,6 +29,7 @@ export function addUserToCollection(
       images: [],
       friends: [],
       languagePreference: language,
+      darkModeTurnedOn: false,
       notificationsLastRead: firebase.firestore.FieldValue.serverTimestamp(),
       registrationDate: firebase.firestore.FieldValue.serverTimestamp(),
     })

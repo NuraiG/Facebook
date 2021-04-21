@@ -48,6 +48,7 @@ export default function HeaderRight() {
   const [isInEnglish, setIsInEnglish] = useState(
     !currentUser.languagePreference.includes("bg")
   );
+  const [isDarkModeOn, setIsDarkModeOn] = useState(false);
   const dispatch = useDispatch();
   const { t } = useTranslation();
 
@@ -156,17 +157,26 @@ export default function HeaderRight() {
       });
   };
 
-  const toggleChecked = () => {
+  const toggleLanguage = () => {
     let changedLanguage = isInEnglish ? "bg" : "en";
     setIsInEnglish(!isInEnglish);
     i18n.changeLanguage(changedLanguage);
     editUser(currentUser.id, { languagePreference: changedLanguage });
     dispatch(
       updateUserProfile({
-        ...currentUser,
         languagePreference: changedLanguage,
       })
     );
+  };
+
+  const toggleDarkMode = () => {
+    editUser(currentUser.id, { darkModeTurnedOn: !isDarkModeOn });
+    dispatch(
+      updateUserProfile({
+        darkModeTurnedOn: !isDarkModeOn,
+      })
+    );
+    setIsDarkModeOn(!isDarkModeOn);
   };
 
   useEffect(() => {
@@ -251,8 +261,17 @@ export default function HeaderRight() {
             <h4>{t("header.languageChange")}</h4>
             <div className={styles.language_switch}>
               <div>en</div>
-              <Switch checked={!isInEnglish} onChange={toggleChecked} />
+              <Switch checked={!isInEnglish} onChange={toggleLanguage} />
               <div>bg</div>
+            </div>
+          </Card>
+          <Card className={styles.language_container}>
+            <h4>{t("header.darkMode")}</h4>
+            <p>{t("header.darkModeDesc")}</p>
+            <div className={styles.language_switch}>
+              <div>{t("header.off")}</div>
+              <Switch checked={isDarkModeOn} onChange={toggleDarkMode} />
+              <div>{t("header.on")}</div>
             </div>
           </Card>
         </PopperComponent>
