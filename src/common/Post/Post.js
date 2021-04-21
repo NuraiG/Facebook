@@ -9,7 +9,7 @@ import { calculateAndFormatTime, getServerTime } from "../../utils/timeUtils";
 
 // styles
 import styles from "./Post.module.scss";
-import { grayTheme, grayButtonTheme } from "../../customThemes";
+import { grayTheme, grayButtonTheme, grayThemeDark } from "../../customThemes";
 
 // Material-UI
 import {
@@ -132,7 +132,7 @@ export default function Post({ postObj }) {
   const classes = useStyles();
 
   return (
-    <ThemeProvider theme={grayTheme}>
+    <ThemeProvider theme={currentUser.darkModeTurnedOn ? grayThemeDark : grayTheme}>
       <Card color="secondary" className={styles.card}>
         <Box className={styles.post_header}>
           <Avatar src={postObj.createdByPic} />
@@ -181,7 +181,7 @@ export default function Post({ postObj }) {
                 {t("post.seeMore")}
               </span>
             )}
-          {postObj.attachedImages ? (
+          {postObj.attachedImages.length > 0 ? (
             <FbImageLibrary
               images={postObj.attachedImages}
               countFrom={2}

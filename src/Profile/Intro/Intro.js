@@ -8,7 +8,7 @@ import HomeRoundedIcon from "@material-ui/icons/HomeRounded";
 import RoomIcon from "@material-ui/icons/Room";
 import CakeIcon from "@material-ui/icons/Cake";
 import WatchLaterIcon from "@material-ui/icons/WatchLater";
-import { grayTheme } from "../../customThemes";
+import { grayTheme, grayThemeDark } from "../../customThemes";
 
 import { makeStyles } from "@material-ui/core/styles";
 
@@ -59,7 +59,7 @@ export default function Intro({ userProfileData }) {
   const classes = useStyles();
   return (
     <aside>
-      <ThemeProvider theme={grayTheme}>
+      <ThemeProvider theme={currentUser.darkModeTurnedOn ? grayThemeDark : grayTheme}>
         <Card color="secondary" className={styles.card}>
           <h2 className={styles.heading}>{t("profilePage.intro")}</h2>
           {userProfileData.residence && (

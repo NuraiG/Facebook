@@ -53,3 +53,14 @@
     }
   }
 }
+
+:global(.dark) {
+  .form_wrapper {
+    form {
+      background-color: $dt-primary-bg;
+      input {
+        background-color: $dt-primary-bg;
+      }
+    }
+  }
+}

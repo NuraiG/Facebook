@@ -20,7 +20,7 @@ import { useSelector } from "react-redux";
 
 import PersonAddIcon from "@material-ui/icons/PersonAdd";
 
-import { grayTheme, customButtonBlueGreen } from "../../customThemes";
+import { grayTheme, customButtonBlueGreen, grayThemeDark } from "../../customThemes";
 
 import Intro from "../Intro/Intro";
 import CreatePost from "../../common/CreatePost/CreatePost";
@@ -152,7 +152,7 @@ export default function ProfileNavigation({ user }) {
   }, [currentUser.id, user.id, friendInviteSent]);
 
   return (
-    <ThemeProvider theme={grayTheme}>
+    <ThemeProvider theme={currentUser.darkModeTurnedOn ? grayThemeDark : grayTheme}>
       <div className={classes.root}>
         <AppBar position="static">
           <Toolbar>

@@ -48,7 +48,7 @@ export default function HeaderRight() {
   const [isInEnglish, setIsInEnglish] = useState(
     !currentUser.languagePreference.includes("bg")
   );
-  const [isDarkModeOn, setIsDarkModeOn] = useState(false);
+  const [isDarkModeOn, setIsDarkModeOn] = useState(currentUser.darkModeTurnedOn);
   const dispatch = useDispatch();
   const { t } = useTranslation();
 

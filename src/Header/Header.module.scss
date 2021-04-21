@@ -266,3 +266,15 @@
     }
   }
 }
+
+:global(.dark) {
+  .header__input {
+    > input {
+      color: $dt-primary-txt;
+      background-color: $dt-primary-bg;
+    }
+    > svg {
+      color: $dt-placeholder;
+    }
+  }
+}

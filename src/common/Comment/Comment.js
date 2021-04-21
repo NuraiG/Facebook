@@ -10,7 +10,7 @@ import { truncateString } from "../../utils/utils";
 import { MAX_COMMENT_LENGTH } from "../../constants/constants";
 import { likeCommentRequest } from "../../firebase/service";
 
-import FbImageLibrary from 'react-fb-image-grid';
+import FbImageLibrary from "react-fb-image-grid";
 
 import { Avatar, Tooltip } from "@material-ui/core";
 
@@ -77,7 +77,14 @@ export default function Comment({ commentObj }) {
                 {t("comment.seeMore")}
               </span>
             )}
-            { commentObj.attachedImages ?  <FbImageLibrary images={commentObj.attachedImages} countFrom={2}/> : ""}
+            {commentObj.attachedImages.length > 0 ? (
+              <FbImageLibrary
+                images={commentObj.attachedImages}
+                countFrom={2}
+              />
+            ) : (
+              ""
+            )}
           </div>
           {commentObj.likes.length ? (
             <div className={styles.likes}>
@@ -89,9 +96,13 @@ export default function Comment({ commentObj }) {
           ) : null}{" "}
         </div>
         {isLiked ? (
-          <button onClick={() => addLikes()}><h6>{t("comment.unlike")}</h6></button>
+          <button onClick={() => addLikes()}>
+            <h6>{t("comment.unlike")}</h6>
+          </button>
         ) : (
-          <button onClick={() => addLikes()}><h6>{t("comment.like")}</h6></button>
+          <button onClick={() => addLikes()}>
+            <h6>{t("comment.like")}</h6>
+          </button>
         )}{" "}
         <Tooltip title={<h6>{fullDatePrettified}</h6>} placement="bottom">
           <span className={styles.timestamp}>{timeToDisplay}</span>

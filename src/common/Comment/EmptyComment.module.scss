@@ -47,12 +47,23 @@
 
 :global(.light) {
   .emptyComment {
-    border-bottom: 1px solid $primary-background;
     form {
-      background-color: $primary-background;
+      background-color: $primary-bg;
 
       input {
-        background-color: $primary-background;
+        background-color: $primary-bg;
+      }
+    }
+  }
+}
+
+:global(.dark) {
+  .emptyComment {
+    form {
+      background-color: $dt-primary-bg;
+
+      input {
+        background-color: $dt-primary-bg;
       }
     }
   }

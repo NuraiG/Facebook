@@ -170,7 +170,7 @@ export default function NotificationButton() {
     <>
       <Helmet>
         <title>
-          {getNewNotifications().length > 0
+          {getNewNotifications().length === 0
             ? "Facebook"
             : "(" + getNewNotifications().length + ") Facebook"}
         </title>

@@ -119,7 +119,7 @@ export default function CreatePostDialog({
         open={state}
         onClose={onClose}
         aria-labelledby="form-dialog-title"
-        className={styles.dialog}
+        className={`${styles.dialog} ${currentUser.darkModeTurnedOn ? "dark" : "light"}`}
       >
         <DialogTitle id="form-dialog-title" className={styles.dialog_title}>
           {showFeelingsModal

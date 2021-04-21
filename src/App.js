@@ -40,7 +40,7 @@ function App() {
     <BrowserRouter>
       <ThemeProvider theme={globalTheme}>
         <Paper className="body">
-          <div className="App light">
+          <div className={`App ${currentUser.darkModeTurnedOn ? "dark" : "light"}`}>
             {!isLoading ? (
               <Switch>
                 <Route exact path="/login">

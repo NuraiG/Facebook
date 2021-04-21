@@ -19,6 +19,7 @@ import {
   grayButtonTheme,
   blueGreenTheme,
   redOrangeTheme,
+  grayThemeDark,
 } from "../../customThemes";
 
 import PhotoOutlinedIcon from "@material-ui/icons/PhotoOutlined";
@@ -162,7 +163,7 @@ export default function CreatePost({ target }) {
       : t("post.placeholderOtherUser", {firstName: currentUser.firstName});
 
   return (
-    <ThemeProvider theme={grayTheme}>
+    <ThemeProvider theme={currentUser.darkModeTurnedOn ? grayThemeDark : grayTheme}>
       <Card color="secondary" className={styles.card}>
         <div className={styles.form_wrapper}>
           <Avatar src={currentUser.profile_image} />

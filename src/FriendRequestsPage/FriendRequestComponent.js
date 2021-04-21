@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { blueGreenTheme, grayButtonTheme, grayTheme } from "../customThemes";
+import { useSelector } from "react-redux";
+import { blueGreenTheme, grayButtonTheme, grayTheme, grayThemeDark } from "../customThemes";
 import styles from "./FriendRequestComponent.module.scss";
 
 import { Avatar, Button, Paper, ThemeProvider } from "@material-ui/core";
@@ -13,6 +14,7 @@ export default function FriendRequestComponent({
   onAccept,
   onReject,
 }) {
+  const isDarkModeOn = useSelector((state) => state.currentUser.currentUser.darkModeTurnedOn);
   const { t } = useTranslation();
 
   let formattedTimestamp = getShortDate(
@@ -31,7 +33,7 @@ export default function FriendRequestComponent({
   }, [friendRequestObj.from]);
 
   return (
-    <ThemeProvider theme={grayTheme}>
+    <ThemeProvider theme={isDarkModeOn ? grayThemeDark : grayTheme}>
       <Paper color="secondary" className={styles.wrapper} onClick={onClick}>
         <Avatar src={user.profile_image} className={styles.avatar} />
         <div className={styles.request_info_container}>

@@ -36,6 +36,28 @@ const grayTheme = createMuiTheme({
   },
 });
 
+const grayThemeDark = createMuiTheme({
+  palette: {
+    type: "dark",
+    primary: {
+      main: "#18191a",
+      dark: "#18191a",
+    },
+    secondary: {
+      main: "#242526",
+      dark: "#242526",
+    },
+  },
+  overrides: {
+    MuiPaper: {
+      root: {
+        backgroundColor: "#242526",
+        color: "#e4e6eb",
+      },
+    },
+  },
+});
+
 // darker gray + hover
 const grayButtonTheme = createMuiTheme({
   palette: {
@@ -122,6 +144,7 @@ const customButtonBlueGreen = createMuiTheme({
 export {
   globalTheme,
   grayTheme,
+  grayThemeDark,
   grayButtonTheme,
   blueGreenTheme,
   redOrangeTheme,
