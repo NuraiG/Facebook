@@ -9,7 +9,7 @@ import { calculateAndFormatTime, getServerTime } from "../../utils/timeUtils";
 
 // styles
 import styles from "./Post.module.scss";
-import { grayTheme, grayButtonTheme, grayThemeDark } from "../../customThemes";
+import { grayTheme, grayButtonTheme, grayThemeDark, grayButtonThemeDark } from "../../customThemes";
 
 // Material-UI
 import {
@@ -214,7 +214,7 @@ export default function Post({ postObj }) {
               </span>
             </Grid>
           </Grid>
-          <ThemeProvider theme={grayButtonTheme}>
+          <ThemeProvider theme={currentUser.darkModeTurnedOn ? grayButtonThemeDark : grayButtonTheme}>
             <Grid
               container
               className={`${styles.post_react} ${classes.btnContainer} ${

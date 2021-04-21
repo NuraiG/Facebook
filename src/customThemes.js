@@ -1,6 +1,9 @@
 import { unstable_createMuiStrictModeTheme as createMuiTheme } from "@material-ui/core/styles";
 
 const globalTheme = createMuiTheme({
+  palette: {
+    type: "light"
+  },
   typography: {
     fontFamily: [
       "Segoe UI Historic",
@@ -14,6 +17,31 @@ const globalTheme = createMuiTheme({
     MuiPaper: {
       root: {
         backgroundColor: "#f0f2f5",
+      },
+      rounded: {
+        borderRadius: "0",
+      },
+    },
+  },
+});
+
+const globalThemeDark = createMuiTheme({
+  palette: {
+    type: "dark"
+  },
+  typography: {
+    fontFamily: [
+      "Segoe UI Historic",
+      "Segoe UI",
+      "Helvetica",
+      "Arial",
+      "sans-serif",
+    ].join(","),
+  },
+  overrides: {
+    MuiPaper: {
+      root: {
+        backgroundColor: "#18191a",
       },
       rounded: {
         borderRadius: "0",
@@ -87,6 +115,48 @@ const grayButtonTheme = createMuiTheme({
           backgroundColor: "#d8dadf",
         },
       },
+      textSecondary: {
+        color: "#050505",
+      },
+    }
+  },
+});
+
+const grayButtonThemeDark = createMuiTheme({
+  palette: {
+    type: "dark",
+    primary: {
+      main: "#e4e6eb", // buttons
+      // dark: "#d8dadf",
+      // contrastText: "#050505"
+    },
+    secondary: {
+      main: "#b0b3b8", // icons
+    },
+  },
+  overrides: {
+    MuiIconButton: {
+      colorPrimary: {
+        backgroundColor: "#ffffff1a",
+        "&:hover": {
+          backgroundColor: "#4e4f50",
+        },
+      },
+    },
+    MuiButton: {
+      textPrimary: {
+        backgroundColor: "#e4e6eb",
+        color: "#e4e6eb",
+        "&:hover": {
+          backgroundColor: "#4e4f50",
+        },
+      },
+      textSecondary: {
+        color: "#e4e6eb",
+        "&:hover": {
+          backgroundColor: "#4e4f50",
+        },
+      },
     }
   },
 });
@@ -143,9 +213,11 @@ const customButtonBlueGreen = createMuiTheme({
 
 export {
   globalTheme,
+  globalThemeDark,
   grayTheme,
   grayThemeDark,
   grayButtonTheme,
+  grayButtonThemeDark,
   blueGreenTheme,
   redOrangeTheme,
   customButtonBlueGreen,

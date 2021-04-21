@@ -1,10 +1,11 @@
 import React, { useState } from "react";
+import { useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
 import HeaderNavOption from "./HeaderNavOption";
 
 // styles
 import styles from "./Header.module.scss";
-import { grayButtonTheme } from "../customThemes";
+import { grayButtonTheme, grayButtonThemeDark } from "../customThemes";
 
 // Material-UI
 import { ThemeProvider } from "@material-ui/styles";
@@ -15,6 +16,7 @@ import PeopleAltOutlinedIcon from "@material-ui/icons/PeopleAltOutlined";
 import PeopleAltIcon from "@material-ui/icons/PeopleAlt";
 
 export default function HeaderMiddle({activeTab}) {
+  const isDarkModeOn = useSelector((state) => state.currentUser.currentUser.darkModeTurnedOn);
   const { t } = useTranslation();
 
   let [allHeaderOptions, setAllHeaderOptions] = useState([
@@ -50,7 +52,7 @@ export default function HeaderMiddle({activeTab}) {
   };
 
   return (
-    <ThemeProvider theme={grayButtonTheme}>
+    <ThemeProvider theme={isDarkModeOn ? grayButtonThemeDark : grayButtonTheme}>
       <div className={styles.header__middle}>
         {allHeaderOptions.map((option) => (
           <HeaderNavOption

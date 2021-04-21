@@ -20,6 +20,7 @@ import {
   blueGreenTheme,
   redOrangeTheme,
   grayThemeDark,
+  grayButtonThemeDark,
 } from "../../customThemes";
 
 import PhotoOutlinedIcon from "@material-ui/icons/PhotoOutlined";
@@ -178,7 +179,7 @@ export default function CreatePost({ target }) {
             <button type="submit"></button>
           </form>
         </div>
-        <ThemeProvider theme={grayButtonTheme}>
+        <ThemeProvider theme={currentUser.darkModeTurnedOn ? grayButtonThemeDark : grayButtonTheme}>
           <Grid
             container
             className={`${styles.post_actions} ${classes.btnContainer}`}

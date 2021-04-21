@@ -9,7 +9,7 @@ import Loader from "./common/Loader/Loader";
 
 // styles
 import "./App.css";
-import { globalTheme } from "./customThemes";
+import { globalTheme, globalThemeDark } from "./customThemes";
 
 // Material-UI
 import { Paper, ThemeProvider } from "@material-ui/core";
@@ -38,9 +38,13 @@ function App() {
 
   return (
     <BrowserRouter>
-      <ThemeProvider theme={globalTheme}>
-        <Paper className="body">
-          <div className={`App ${currentUser.darkModeTurnedOn ? "dark" : "light"}`}>
+      <ThemeProvider
+        theme={currentUser.darkModeTurnedOn ? globalThemeDark : globalTheme}
+      >
+        <div
+          className={`App ${currentUser.darkModeTurnedOn ? "dark" : "light"}`}
+        >
+          <Paper className="body">
             {!isLoading ? (
               <Switch>
                 <Route exact path="/login">
@@ -81,8 +85,8 @@ function App() {
             ) : (
               <Loader />
             )}
-          </div>
-        </Paper>
+          </Paper>
+        </div>
       </ThemeProvider>
     </BrowserRouter>
   );

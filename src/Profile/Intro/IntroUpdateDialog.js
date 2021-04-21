@@ -1,4 +1,5 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
 import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
@@ -14,7 +15,7 @@ import RoomIcon from "@material-ui/icons/Room";
 
 import styles from "./IntroUpdateDialog.module.scss";
 
-import { grayButtonTheme, customButtonBlueGreen } from "../../customThemes";
+import { grayButtonTheme, customButtonBlueGreen, grayButtonThemeDark } from "../../customThemes";
 
 export default function IntroUpdateDialog({
   isOpen,
@@ -25,6 +26,7 @@ export default function IntroUpdateDialog({
   onChangeBirthPlace,
   onChangeResidence,
 }) {
+  const isDarkModeOn = useSelector((state) => state.currentUser.currentUser.darkModeTurnedOn);
   const { t } = useTranslation();
 
   return (
@@ -37,7 +39,7 @@ export default function IntroUpdateDialog({
       >
         <DialogTitle id="form-dialog-title" className={styles.dialog_title}>
           {t("profilePage.editDetails")}
-          <ThemeProvider theme={grayButtonTheme}>
+          <ThemeProvider theme={isDarkModeOn ? grayButtonThemeDark : grayButtonTheme}>
             <IconButton
               color="primary"
               onClick={onClose}

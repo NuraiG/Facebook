@@ -29,6 +29,7 @@ import {
   grayButtonTheme,
   blueGreenTheme,
   redOrangeTheme,
+  grayButtonThemeDark,
 } from "../../customThemes";
 import styles from "./CreatePostDialog.module.scss";
 
@@ -128,7 +129,7 @@ export default function CreatePostDialog({
             : isPostBeingEdited
             ? t("post.postHeaderEdit")
             : t("post.postHeaderCreate")}
-          <ThemeProvider theme={grayButtonTheme}>
+          <ThemeProvider theme={currentUser.darkModeTurnedOn ? grayButtonThemeDark : grayButtonTheme}>
             <IconButton
               color="primary"
               onClick={
@@ -198,7 +199,7 @@ export default function CreatePostDialog({
                 files.map((file) => (
                   <div key={file} className={styles.attached_images_container}>
                     <img alt="" src={file} className={styles.attached_images} />
-                    <ThemeProvider theme={grayButtonTheme}>
+                    <ThemeProvider theme={currentUser.darkModeTurnedOn ? grayButtonThemeDark : grayButtonTheme}>
                       <IconButton
                         color="primary"
                         onClick={() => removeImg(file)}

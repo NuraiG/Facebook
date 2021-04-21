@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
-import { blueGreenTheme, grayButtonTheme, grayTheme, grayThemeDark } from "../customThemes";
+import { blueGreenTheme, grayButtonTheme, grayButtonThemeDark, grayTheme, grayThemeDark } from "../customThemes";
 import styles from "./FriendRequestComponent.module.scss";
 
 import { Avatar, Button, Paper, ThemeProvider } from "@material-ui/core";
@@ -58,7 +58,7 @@ export default function FriendRequestComponent({
                 {t("friendRequestsPage.confirm")}
               </Button>
             </ThemeProvider>
-            <ThemeProvider theme={grayButtonTheme}>
+            <ThemeProvider theme={isDarkModeOn ? grayButtonThemeDark : grayButtonTheme}>
               <Button
                 color="primary"
                 variant="contained"

@@ -3,16 +3,16 @@ import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { Avatar, Button, ThemeProvider } from "@material-ui/core";
 import styles from "./AvatarComponent.module.scss";
-import { grayButtonTheme } from "../../customThemes";
+import { grayButtonTheme, grayButtonThemeDark } from "../../customThemes";
 
 export default function AvatarComponent({ className, showFullName, onClick }) {
   const currentUser = useSelector((state) => state.currentUser.currentUser);
 
   return (
-    <ThemeProvider theme={grayButtonTheme}>
+    <ThemeProvider theme={currentUser.darkModeTurnedOn ? grayButtonThemeDark : grayButtonTheme}>
       <Link to={`/profile/${currentUser.id}`} className={styles.link}>
         <Button
-          color="primary"
+          color="secondary"
           className={`${className} ${styles.avatar_wrapper}`}
           onClick={onClick}
         >

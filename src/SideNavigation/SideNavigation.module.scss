@@ -7,9 +7,10 @@ aside.container {
   position: fixed;
   max-width: 25%;
   box-sizing: border-box;
-  .link {
+
+  a {
     text-decoration: none;
-    color: inherit;
+    // color: inherit;
 
     &:active {
       color: inherit;
@@ -17,8 +18,12 @@ aside.container {
     &:visited {
       color: inherit;
     }
+    &:hover {
+      color: inherit;
+    }
   }
-  a.btn, button.btn {
+  a.btn,
+  button.btn {
     text-transform: none;
     font-weight: 700;
     font-size: 15px;
@@ -26,6 +31,7 @@ aside.container {
     border-radius: 8px;
     > span {
       justify-content: flex-start;
+      text-align: left;
       > span {
         > svg {
           font-size: 28px;
@@ -43,5 +49,17 @@ aside.container {
         }
       }
     }
+  }
+}
+
+:global(.light) {
+  a.btn {
+    color: black !important;
+  }
+}
+
+:global(.dark) {
+  a.btn {
+    color: white !important;
   }
 }

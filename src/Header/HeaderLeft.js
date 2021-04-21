@@ -6,7 +6,12 @@ import logo from "./logo.png";
 
 // styles
 import styles from "./Header.module.scss";
-import { grayButtonTheme, grayTheme } from "../customThemes";
+import {
+  grayButtonTheme,
+  grayButtonThemeDark,
+  grayTheme,
+  grayThemeDark,
+} from "../customThemes";
 
 // Material-UI
 import {
@@ -22,22 +27,15 @@ import SearchIcon from "@material-ui/icons/Search";
 import MenuRoundedIcon from "@material-ui/icons/MenuRounded";
 import HeaderNavOption from "./HeaderNavOption";
 
-const useStyles = makeStyles(() => ({
-  paper: {
-    backgroundColor: grayTheme.palette.secondary.main,
-    boxSizing: "border-box",
-    borderRadius: "8px",
-    boxShadow:
-      "rgba(0, 0, 0, 0.2) 0px 12px 28px 0px, rgba(0, 0, 0, 0.1) 0px 2px 4px 0px, rgba(255, 255, 255, 0.5) 0px 0px 0px 1px inset",
-  },
-}));
-
 export default function HeaderLeft() {
   let [btnSelected, setBtnSelected] = useState(false);
   let [searchInput, setSearchInput] = useState("");
   const [open, setOpen] = useState(false);
   const anchorRef = useRef(null);
   const allUsers = useSelector((state) => state.allUsers.allUsers);
+  const isDarkModeOn = useSelector(
+    (state) => state.currentUser.currentUser.darkModeTurnedOn
+  );
   const { t } = useTranslation();
 
   let onSelect = () => {
@@ -71,6 +69,18 @@ export default function HeaderLeft() {
             .includes(searchInput.toLowerCase())
         );
   }, [allUsers, searchInput]);
+
+  let theme = isDarkModeOn ? grayThemeDark : grayTheme;
+  const useStyles = makeStyles(() => ({
+    paper: {
+      backgroundColor: theme.palette.secondary.main,
+      boxSizing: "border-box",
+      borderRadius: "8px",
+      boxShadow: isDarkModeOn
+        ? "rgba(0, 0, 0, 0.2) 0px 12px 28px 0px, rgba(0, 0, 0, 0.1) 0px 2px 4px 0px, rgba(255, 255, 255, 0.05) 0px 0px 0px 1px inset"
+        : "rgba(0, 0, 0, 0.2) 0px 12px 28px 0px, rgba(0, 0, 0, 0.1) 0px 2px 4px 0px, rgba(255, 255, 255, 0.5) 0px 0px 0px 1px inset",
+    },
+  }));
 
   const classes = useStyles();
   return (
@@ -121,7 +131,9 @@ export default function HeaderLeft() {
         </div>
       </Popper>
 
-      <ThemeProvider theme={grayButtonTheme}>
+      <ThemeProvider
+        theme={isDarkModeOn ? grayButtonThemeDark : grayButtonTheme}
+      >
         <HeaderNavOption
           className={`${styles.header_btn} ${styles.header_responsive_btn}`}
           key={"Menu"}

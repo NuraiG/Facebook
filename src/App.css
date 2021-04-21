@@ -2,6 +2,14 @@
   min-height: 100vh;
 }
 
+.dark > div.body {
+  background-color: #18191a;
+}
+
+.light > div.body {
+  background-color: #f0f2f5;
+}
+
 .dark input::placeholder {
   color: #b0b3b8;
 }

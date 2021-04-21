@@ -13,7 +13,13 @@ import { createPost, editUser, logout } from "../firebase/service";
 import { storage } from "../firebase/firebase";
 
 import styles from "./Header.module.scss";
-import { grayButtonTheme } from "../customThemes";
+import {
+  globalTheme,
+  grayButtonTheme,
+  grayButtonThemeDark,
+  grayTheme,
+  grayThemeDark,
+} from "../customThemes";
 
 // Material-UI
 import {
@@ -48,7 +54,9 @@ export default function HeaderRight() {
   const [isInEnglish, setIsInEnglish] = useState(
     !currentUser.languagePreference.includes("bg")
   );
-  const [isDarkModeOn, setIsDarkModeOn] = useState(currentUser.darkModeTurnedOn);
+  const [isDarkModeOn, setIsDarkModeOn] = useState(
+    currentUser.darkModeTurnedOn
+  );
   const dispatch = useDispatch();
   const { t } = useTranslation();
 
@@ -185,7 +193,11 @@ export default function HeaderRight() {
 
   return (
     <div className={styles.header__right}>
-      <ThemeProvider theme={grayButtonTheme}>
+      <ThemeProvider
+        theme={
+          currentUser.darkModeTurnedOn ? grayButtonThemeDark : grayButtonTheme
+        }
+      >
         <AvatarComponent
           className={`${styles.header__info}`}
           showFullName={false}
@@ -199,29 +211,33 @@ export default function HeaderRight() {
             <AddIcon />
           </IconButton>
         </Tooltip>
-        <CreatePostDialog
-          state={isDialogOpen}
-          onClose={handleDialogClose}
-          placeholder={t("post.placeholderCurrentUser", {
-            firstName: currentUser.firstName,
-          })}
-          text={postValue}
-          onInput={setPostValue}
-          onSubmit={onSubmit}
-          onTag={onTag}
-          onDrop={onDrop}
-          files={attachedFiles}
-          removeImg={removeFromAttachedFiles}
-          setShowFeelingsModal={setShowFeelingsModal}
-          showFeelingsModal={showFeelingsModal}
-          postFeeling={postFeeling}
-          setPostFeeling={setPostFeeling}
-          postTaggedUsers={postTaggedUsers}
-          setPostTaggedUsers={setPostTaggedUsers}
-          isEmojiPickerOpen={isEmojiPickerOpen}
-          setEmojiPickerOpen={setEmojiPickerOpen}
-          onEmojiClick={onEmojiClick}
-        />
+        <ThemeProvider
+          theme={currentUser.darkModeTurnedOn ? grayThemeDark : grayTheme}
+        >
+          <CreatePostDialog
+            state={isDialogOpen}
+            onClose={handleDialogClose}
+            placeholder={t("post.placeholderCurrentUser", {
+              firstName: currentUser.firstName,
+            })}
+            text={postValue}
+            onInput={setPostValue}
+            onSubmit={onSubmit}
+            onTag={onTag}
+            onDrop={onDrop}
+            files={attachedFiles}
+            removeImg={removeFromAttachedFiles}
+            setShowFeelingsModal={setShowFeelingsModal}
+            showFeelingsModal={showFeelingsModal}
+            postFeeling={postFeeling}
+            setPostFeeling={setPostFeeling}
+            postTaggedUsers={postTaggedUsers}
+            setPostTaggedUsers={setPostTaggedUsers}
+            isEmojiPickerOpen={isEmojiPickerOpen}
+            setEmojiPickerOpen={setEmojiPickerOpen}
+            onEmojiClick={onEmojiClick}
+          />
+        </ThemeProvider>
         <Tooltip title={<h6>{t("header.messenger")}</h6>} placement="bottom">
           <IconButton color="primary" className={`${styles.icon_btn}`}>
             <ChatRoundedIcon />
@@ -240,41 +256,57 @@ export default function HeaderRight() {
             <ArrowDropDownRoundedIcon fontSize="large" />
           </IconButton>
         </Tooltip>
-        <PopperComponent
-          open={openAccount}
-          anchorEl={anchorRef.current}
-          handleClose={handleCloseLogout}
+        <ThemeProvider
+          theme={currentUser.darkModeTurnedOn ? grayThemeDark : grayTheme}
         >
-          <Card>
-            <Link to="/login">
-              <Button
-                onClick={() => logOut()}
-                fullWidth
-                style={{ fontSize: "14px" }}
-                startIcon={<ExitToAppRoundedIcon />}
-              >
-                {t("header.logout")}
-              </Button>
-            </Link>
-          </Card>
-          <Card className={styles.language_container}>
-            <h4>{t("header.languageChange")}</h4>
-            <div className={styles.language_switch}>
-              <div>en</div>
-              <Switch checked={!isInEnglish} onChange={toggleLanguage} />
-              <div>bg</div>
-            </div>
-          </Card>
-          <Card className={styles.language_container}>
-            <h4>{t("header.darkMode")}</h4>
-            <p>{t("header.darkModeDesc")}</p>
-            <div className={styles.language_switch}>
-              <div>{t("header.off")}</div>
-              <Switch checked={isDarkModeOn} onChange={toggleDarkMode} />
-              <div>{t("header.on")}</div>
-            </div>
-          </Card>
-        </PopperComponent>
+          <PopperComponent
+            open={openAccount}
+            anchorEl={anchorRef.current}
+            handleClose={handleCloseLogout}
+          >
+            <Card color="secondary">
+              <Link to="/login">
+                <Button
+                  onClick={() => logOut()}
+                  fullWidth
+                  style={{ fontSize: "14px" }}
+                  startIcon={<ExitToAppRoundedIcon />}
+                >
+                  {t("header.logout")}
+                </Button>
+              </Link>
+            </Card>
+            <Card className={styles.language_container} color="secondary">
+              <h4>{t("header.languageChange")}</h4>
+              <div className={styles.language_switch}>
+                <div>en</div>
+                <ThemeProvider theme={globalTheme}>
+                  <Switch
+                    checked={!isInEnglish}
+                    onChange={toggleLanguage}
+                    color="default"
+                  />
+                </ThemeProvider>
+                <div>bg</div>
+              </div>
+            </Card>
+            <Card className={styles.language_container} color="secondary">
+              <h4>{t("header.darkMode")}</h4>
+              <p>{t("header.darkModeDesc")}</p>
+              <div className={styles.language_switch}>
+                <div>{t("header.off")}</div>
+                <ThemeProvider theme={globalTheme}>
+                  <Switch
+                    checked={isDarkModeOn}
+                    onChange={toggleDarkMode}
+                    color="default"
+                  />
+                </ThemeProvider>
+                <div>{t("header.on")}</div>
+              </div>
+            </Card>
+          </PopperComponent>
+        </ThemeProvider>
       </ThemeProvider>
     </div>
   );
