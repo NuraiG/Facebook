@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useTranslation } from "react-i18next";
+import { Helmet } from "react-helmet";
 import NotificationsPopupContent from "./NotificationsPopupContent";
 import PopperComponent from "../PopperComponent/PopperComponent";
 
@@ -68,11 +69,15 @@ export default function NotificationButton() {
       if (newNotifications.length) {
         newNotifications = newNotifications.map((el) => ({
           ...el,
-          fromUser: { ...allUsers.find((user) => user.id === el.from || user.id === el.createdById) },
+          fromUser: {
+            ...allUsers.find(
+              (user) => user.id === el.from || user.id === el.createdById
+            ),
+          },
         }));
         setAllNotifications([...allNotifications, ...newNotifications]);
       }
-    }
+    };
 
     if (allUsers && currentUser.id) {
       getMyFriendRequests(currentUser.id).onSnapshot((snapshot) => {
@@ -163,6 +168,13 @@ export default function NotificationButton() {
 
   return (
     <>
+      <Helmet>
+        <title>
+          {getNewNotifications().length > 0
+            ? "Facebook"
+            : "(" + getNewNotifications().length + ") Facebook"}
+        </title>
+      </Helmet>
       <Tooltip title={<h6>{t("header.notifications")}</h6>} placement="bottom">
         <IconButton
           color="primary"
